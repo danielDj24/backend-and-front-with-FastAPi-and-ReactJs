@@ -1,10 +1,12 @@
-from pydantic import BaseModel
+from pydantic import BaseModel,EmailStr
 
 """Esquemas para los datos"""
 
 class UserData(BaseModel):
-    name : str
+    username : str
+    email :EmailStr
     password : str
 
 class UserID(UserData):
     id : int
+    

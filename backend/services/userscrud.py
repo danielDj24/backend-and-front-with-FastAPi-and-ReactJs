@@ -1,6 +1,6 @@
 from sqlalchemy.orm import session
-from models import User
-from schemas import UserData
+from models.users import User
+from schemas.users import UserData
 
 """Obtener todos los usuarios"""
 def GetUsers(db: session):
@@ -13,16 +13,14 @@ def GetUserID(db: session, id: int):
 
 
 """Obtener usuarios por nombre"""
-def GetUSerByName(db: session, name: str):
-    return db.query(User).filter(User.name == name). first()
+def get_user_by_name(db: session, username: str):
+    return db.query(User).filter(User.username == username). first()
 
 """Crear nuevo usuario"""
-def CreateUser(db:session,user: UserData):
-    fake_password = user.password + '#fake'
-    new_user = User(name =user.name, password = fake_password)
+def create_user(db:session,user: UserData):
+    new_user = User(username =user.username,email=user.email, password = user.password)
     db.add(new_user)
     db.commit()
     db.flush(new_user)
 
     return new_user
-

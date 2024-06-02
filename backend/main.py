@@ -1,14 +1,15 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI
 from sqlalchemy.orm import session
-import crud 
-from database import engine, localsession
-from schemas import UserData, UserID
-from models import Base
+from config.database import engine, localsession
+from models.users import Base
 from fastapi.middleware.cors import CORSMiddleware
-
+from routes.auth import auth_routes
 Base.metadata.create_all(bind=engine)
+from routes.registration import registration_router
 
 app = FastAPI()
+app.include_router(auth_routes, prefix="/api")
+app.include_router(registration_router)
 
 """ruta del front"""
 origin = [
@@ -23,36 +24,5 @@ app.add_middleware(
     allow_credentials = True )
 
 
-"""inicio de sesion a la base de datos"""
-def GetDB():
-    db = localsession()
-    try:
-        yield db
-    finally:
-        db.close()
 
-
-@app.get('/')
-def Root():
-    return('Hi my name is FASTAPI')
-
-"""ruta para obtener la base de datos"""
-@app.get('/api/users/',response_model=list[UserID])
-def GetUsers(db: session = Depends(GetDB)):
-    return crud.GetUsers(db=db)
-
-"""ruta para filtrar la base de datos por usuario"""
-@app.get('/api/users/{id:int}', response_model=UserID)
-def GetUser(id, db:session=Depends(GetDB)):
-    user_id = crud.GetUserID(db=db, id=id)
-    if user_id: 
-        return user_id
-    raise HTTPException(status_code= 404, detail='User not found')
-
-@app.post('/api/users/', response_model=UserID)
-def CreateUser(user: UserData, db:session=Depends(GetDB)):
-    check_name = crud.GetUSerByName(db=db, name= user.name)
-    if check_name:
-        raise HTTPException(status_code=400, detail=('user already exist'))
-    return crud.CreateUser(db=db, user=user)
 
