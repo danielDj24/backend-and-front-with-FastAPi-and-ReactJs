@@ -1,20 +1,23 @@
 from fastapi import FastAPI
-from sqlalchemy.orm import session
-from config.database import engine, localsession
+from config.database import engine
 from models.users import Base
 from fastapi.middleware.cors import CORSMiddleware
 from routes.auth import auth_routes
-Base.metadata.create_all(bind=engine)
 from routes.registration import registration_router
+from routes.configsiteroutes import config_routes
+from fastapi.staticfiles import StaticFiles
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+app.mount("/resources", StaticFiles(directory="resources"), name="resources")
+
 app.include_router(auth_routes, prefix="/api")
-app.include_router(registration_router)
+app.include_router(registration_router, prefix="/api")
+app.include_router(config_routes, prefix="/api")
 
 """ruta del front"""
-origin = [
-    '172.18.0.4:3000'
-]
+origin = ['*']
 
 """Middlewares para la conexion con el front"""
 app.add_middleware(

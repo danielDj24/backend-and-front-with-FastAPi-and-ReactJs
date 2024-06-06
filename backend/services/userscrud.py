@@ -18,7 +18,7 @@ def get_user_by_name(db: session, username: str):
 
 """Crear nuevo usuario"""
 def create_user(db:session,user: UserData):
-    new_user = User(username =user.username,email=user.email, password = user.password)
+    new_user = User(username =user.username,email=user.email,    password = user.password)
     db.add(new_user)
     db.commit()
     db.flush(new_user)

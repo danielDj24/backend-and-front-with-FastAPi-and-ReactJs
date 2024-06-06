@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
+from sqlalchemy import inspect
 
 load_dotenv()
 
@@ -20,5 +21,15 @@ engine = create_engine(URL_CONNECTION)
 localsession = sessionmaker(autoflush=False, autocommit = False, bind= engine)
 
 Base = declarative_base()
+
+from models.configsite import ConfigSite
+
+def table_exists(engine, table_name):
+    inspector = inspect(engine)
+    return inspector.has_table(table_name)
+
+# Crear las tablas solo si no existen
+if not table_exists(engine, 'configsite'):
+    Base.metadata.create_all(bind=engine)
 
 

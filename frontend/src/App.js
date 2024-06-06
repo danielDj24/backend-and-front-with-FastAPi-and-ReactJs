@@ -1,32 +1,13 @@
+import React from "react";
+import AppRoutes from "./routes/Approutes";
 
-import {useEffect, useState} from "react";
 
-import UserBox from "./components/UsersBox2";
-import CreateUser from "./components/CreateUser";
-
-function App() {
-  const [users, setUsers] = useState([])
-  useEffect(()=> {
-    fetch('http://172.18.0.3:8000/api/users') 
-    .then(res => res.json())
-    .then(res => setUsers(res))
-
-  }, [])
-
+const App = () => {
   return (
-    <main>
-      <h1>Frontend and backend app</h1>
-      
-      <CreateUser />
-      {
-        users.map(user => (
-          <UserBox name={user.name} password={user.password} id={user.id} key={user.id}/>
-        ))
-
-      }
-    </main>
-    
+      <div>
+          <AppRoutes></AppRoutes>
+      </div>
   );
-}
+};
 
 export default App;
