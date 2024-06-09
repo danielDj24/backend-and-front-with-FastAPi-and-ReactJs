@@ -8,6 +8,13 @@ const axiosInstance = axios.create({
     }
 });
 
+const axiosInstanceLogin = axios.create({
+    baseURL: 'http://127.0.0.1:8000/api',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+});
+
 const resourcesInstance = axios.create({
     baseURL: 'http://127.0.0.1:8000/', 
     timeout: 10000, 
@@ -17,5 +24,5 @@ const resourcesInstance = axios.create({
     },
 });
 
-export  { axiosInstance, resourcesInstance };
+export  { axiosInstance, resourcesInstance, axiosInstanceLogin };
 

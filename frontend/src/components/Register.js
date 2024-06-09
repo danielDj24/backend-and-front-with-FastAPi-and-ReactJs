@@ -1,48 +1,53 @@
 import React, {useState} from "react";
-import { axiosInstance } from './axiosConfig';
+import { axiosInstance } from './functions/axiosConfig';
+import "../styles/Register.css";
+import { ShowErrorAlter, ShowSuccesAlert } from './functions/Alerts';
 
 const Register = () => {
-    <div>
-    <h2>Register Page</h2>
-    </div>
     const [formData, setFormData ] = useState(
         {
             username : '',
             email : '',
-            password : ''
+            password : '',
+            confirmPassword : ''
         });
 
         const handleChange = (e) =>{
             const {name, value} = e.target;
             setFormData({
-                ...FormData,
-                [name]:value
+                ...formData,
+                [name]: value
             });
         };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (formData.password !== formData.confirmPassword){
+            ShowErrorAlter('Error',"las contraseñas no coinciden");
+            return;
+        }
         try {
             const response = await axiosInstance.post('/register', formData);
-            console.log('Registration succesful:', response.data);
+            ShowSuccesAlert('Registro exitoso',"te has registrado exitosamente");
         }catch(error){
-            console.error('Error during registration', error);
+            ShowErrorAlter('Error en el registro',`Error: ${error.response?.data?.message || error.message}`);
         }
     };
     return (
-        <div>
-            <h2>Register</h2>
+        <div className="register-container">
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>username:</label>
+                <div className="form-group">
+                    <label>usuario:</label>
                     <input 
                     type = "text"
                     name = "username"
                     value={formData.username}
                     onChange={handleChange}
+                    required
+                    className="form-control"
                     />
                 </div>
-                <div>
+                <div className="form-group">
                     <label>email:</label>
                     <input
                     type = "email"
@@ -50,17 +55,34 @@ const Register = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
+                    className="form-control"
                     />
                 </div>
-                <div>
-                    <label>password:</label>
+                <div className="form-group">
+                    <label>contraseña:</label>
                     <input 
                     type = "password"
                     name = "password"
                     value = {formData.password}
+                    onChange={handleChange}
                     required
+                    className="form-control"
                     />
                 </div>
+                <div className="form-group">
+                    <label>confirmar contraseña:</label>
+                    <input
+                    type = "password"
+                    name = "confirmPassword"
+                    value = {formData.confirmPassword}
+                    onChange={handleChange}
+                    required
+                    className="form-control"
+                    />
+                </div >
+                <button className="btn btn-success mt-3" type="submit">
+                    <i className="fa fa-paper-plane"></i> Enviar
+                </button>
             </form>
         </div>
     );

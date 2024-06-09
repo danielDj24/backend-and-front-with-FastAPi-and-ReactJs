@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Register from '../components/Register'
 import Login from "../components/Login";
@@ -13,7 +13,7 @@ const AppRoutes = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route exact path="/" element = {<Home></Home>}></Route>
+                <Route path="/" element = {<Home></Home>}></Route>
                 <Route path="/about" element = {<About></About>}></Route>
                 <Route path="/profile" element = {<Profile></Profile>}></Route>
                 <Route path="/register" element = {<Register></Register>}></Route>
