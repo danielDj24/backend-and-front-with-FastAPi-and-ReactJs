@@ -13,8 +13,8 @@ def GetUserID(db: session, id: int):
 
 
 """Obtener usuarios por nombre"""
-def get_user_by_name(db: session, username: str):
-    return db.query(User).filter(User.username == username). first()
+def get_user_by_name(db: session, identifier: str):
+    return db.query(User).filter((User.username == identifier) | (User.email == identifier)).first()
 
 """Crear nuevo usuario"""
 def create_user(db:session,user: UserData):

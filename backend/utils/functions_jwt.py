@@ -1,9 +1,12 @@
-from jwt import encode,decode
-from jwt import exceptions
 from datetime import datetime,timedelta
 from os import getenv
-from fastapi.responses import JSONResponse 
-import jwt
+from jose import jwt
+from typing import Annotated
+from fastapi import Depends, HTTPException
+
+from fastapi.security import OAuth2PasswordBearer
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl = '/api/token')
 
 
 def ExpirateDate(days: int):
@@ -12,21 +15,17 @@ def ExpirateDate(days: int):
     return(new_date)
 
 
-
-
-def WriteToken(data:dict):
-    expiration = datetime.now() + timedelta(days=1)  # Token válido por 1 hora
-    token = jwt.encode({"exp": expiration, **data}, getenv("SECRET_KEYS"), algorithm="HS256")
+def encode_token(payload:dict)-> str:
+    expiration = datetime.now() + timedelta(days=1)  
+    token = jwt.encode({"exp": expiration, **payload}, getenv("SECRET_KEYS"), algorithm="HS256")
     print(f"Generated token: {token}")
-    return {"token": token}
+    return token
 
-
-def ValidateToken(token, ouput=False):
+def decode_token(token : Annotated[str, Depends(oauth2_scheme)]) -> str:
     try:
         decoded_token = jwt.decode(token, getenv("SECRET_KEYS"), algorithms=["HS256"])
-        print(f"Decoded token: {decoded_token}")
-        return JSONResponse(content={"message": "Token is valid", "token": decoded_token})
-    except exceptions.DecodeError:
-        return JSONResponse(content={"message": "Invalid token"}, status_code=401)
-    except exceptions.ExpiredSignatureError:
-        return JSONResponse(content={"message": "Token expired"}, status_code=401)
+        return decoded_token
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token expired")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
