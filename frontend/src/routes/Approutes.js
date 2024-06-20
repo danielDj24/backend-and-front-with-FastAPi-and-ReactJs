@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Register from '../components/Register'
 import Login from "../components/Login";
 import Dashboard from "../components/Dashboard";
-
+import UserProfile from "../components/UserProfile";
 //importacion de las paginas principales del sitio
 import Home from "../pages/Home";
 import About from "../pages/About";
@@ -19,6 +19,7 @@ const AppRoutes = () => {
                 <Route path="/register" element = {<Register></Register>}></Route>
                 <Route path="/login" element = {<Login></Login>}></Route>
                 <Route path="/dashboard" element = {<Dashboard></Dashboard>}></Route>
+                <Route path="/user/profile" element = {<UserProfile></UserProfile>}> </Route>
             </Routes>
         </BrowserRouter>
     );

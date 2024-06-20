@@ -10,7 +10,13 @@ from fastapi.staticfiles import StaticFiles
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+"""mount para los recursos a utilizar """
 app.mount("/resources", StaticFiles(directory="resources"), name="resources")
+
+"""Mount de media para los recursos por parte de los usuarios"""
+app.mount("/media", StaticFiles(directory="media"), name="media")
+
 
 app.include_router(auth_routes, prefix="/api")
 app.include_router(registration_router, prefix="/api")

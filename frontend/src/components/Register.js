@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { axiosInstance } from './functions/axiosConfig';
+import { axiosInstance, axiosInstanceFiles } from './functions/axiosConfig';
 import "../styles/Register.css";
 import { ShowErrorAlter, ShowSuccesAlert } from './functions/Alerts';
 
@@ -11,6 +11,18 @@ const Register = () => {
             password : '',
             confirmPassword : ''
         });
+    //estado para controlar las vistas de los formularios
+    const [showSecondForm, setShowSecondForm] = useState(false);
+    const [showFirstForm, setShowFirstForm] = useState(true);
+    const [userId, setUserId] = useState(null);
+    //constante para controlar los campos en el formulario extra
+    const [additionalFormData, setAdditionalFormData] = useState({
+            phone:'',
+            address:'',
+            name_company:'',
+            nit_company:'',
+        });
+    const [selectedFile, setSelectedFile] = useState(null);
 
         const handleChange = (e) =>{
             const {name, value} = e.target;
@@ -19,23 +31,74 @@ const Register = () => {
                 [name]: value
             });
         };
+        
+        const HandleAdittionalChange = (e) => {
+            const {name, value} = e.target;
+            setAdditionalFormData({
+                ...additionalFormData,
+                [name] : value
+            });
+        };
+        const handleFileChange = (e) => {
+            setSelectedFile(e.target.files[0]);
+        };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (formData.password !== formData.confirmPassword){
-            ShowErrorAlter('Error',"las contraseñas no coinciden");
+        if (formData.password !== formData.confirmPassword) {
+            ShowErrorAlter('Error', "Las contraseñas no coinciden");
             return;
         }
         try {
             const response = await axiosInstance.post('/register', formData);
-            ShowSuccesAlert('Registro exitoso',"te has registrado exitosamente");
-        }catch(error){
-            ShowErrorAlter('Error en el registro',`Error: ${error.response?.data?.message || error.message}`);
+            if (response.data.phone === null || response.data.address === null || response.data.name_company === null || response.data.nit_company === null) {
+                setUserId(response.data.id);
+                setShowFirstForm(false);
+                setShowSecondForm(true);
+            } else {
+                ShowSuccesAlert('Registro exitoso', 'Te has registrado exitosamente');
+            }
+        } catch (error) {
+            if (error.response) {
+                if (error.response.status === 400) {
+                    const errorMessage = error.response.data.detail;
+                    ShowErrorAlter('Error en el registro', errorMessage);
+                } else {
+                    ShowErrorAlter('Error en el registro', `Error: ${error.response.data.detail || error.response.statusText}`);
+                }
+            } else {
+                ShowErrorAlter('Error en el registro', `Error: ${error.message}`);
+            }
         }
     };
+    
+    const adittionalHandleSubmit = async (e) => {
+        e.preventDefault();
+            try {
+                const combinedData = {
+                    ...formData,
+                    ...additionalFormData,
+                    
+                };    
+            await axiosInstance.post('/register/verify/data', combinedData);
+
+            if (selectedFile) {
+                const formData = new FormData();
+                formData.append('file', selectedFile);
+
+                await axiosInstanceFiles.post(`/register/upload/rut_company/${userId}`, formData);
+            }
+            ShowSuccesAlert('Registro exitoso',"te has registrado exitosamente");
+        } catch (error){
+            ShowErrorAlter('Error en los datos ingresados', `Error : ${error.response?.data?.message || error.message}`);
+        }
+    };
+
+
     return (
         <div className="register-container">
-            <form onSubmit={handleSubmit}>
+            {showFirstForm && (
+                <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>usuario:</label>
                     <input 
@@ -80,10 +143,77 @@ const Register = () => {
                     className="form-control"
                     />
                 </div >
-                <button className="btn btn-success mt-3" type="submit">
-                    <i className="fa fa-paper-plane"></i> Enviar
+                <button className="btn btn-secondary mt-3" type="submit">
+                        Siguiente <i className="fa fa-arrow-right"></i>
                 </button>
             </form>
+            )}
+            {showSecondForm && (
+                <form onSubmit={adittionalHandleSubmit}>
+                    <div className="form-group">
+                        <label>Numero de contacto:</label>
+                        <input
+                            type="text"
+                            name="phone"
+                            value={additionalFormData.phone}
+                            onChange={HandleAdittionalChange}
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Dirección</label>
+                        <input
+                            type="text"
+                            name="address"
+                            value={additionalFormData.address}
+                            onChange={HandleAdittionalChange}
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Compañía</label>
+                        <input
+                            type="text"
+                            name="name_company"
+                            value={additionalFormData.name_company}
+                            onChange={HandleAdittionalChange}
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Nit de la Compañía</label>
+                        <input 
+                            type="text"
+                            name="nit_company"
+                            value={additionalFormData.nit_company}
+                            onChange={HandleAdittionalChange}
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Subir PDF:</label>
+                        <input
+                            type="file"
+                            onChange={handleFileChange}
+                            accept="application/pdf"
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="button-group">
+                    <button className="btn btn-secondary mt-3" onClick={() => { setShowFirstForm(true); setShowSecondForm(false); }}>
+                            <i className="fa fa-arrow-left"></i> Atrás
+                        </button>
+                        <button className="btn btn-success mt-3" type="submit">
+                            <i className="fa fa-paper-plane"></i>Enviar
+                        </button>
+                    </div>
+                </form>
+            )}
         </div>
     );
 };

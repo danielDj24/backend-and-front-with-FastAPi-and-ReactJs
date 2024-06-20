@@ -32,3 +32,8 @@
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+}

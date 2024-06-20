@@ -8,6 +8,20 @@ const axiosInstance = axios.create({
     }
 });
 
+const axiosInstanceFiles = axios.create({
+    baseURL: 'http://127.0.0.1:8000/api',
+    headers: {
+        'Content-Type': 'multipart/form-data'
+    }
+});
+const axiosInstanceAuth = (token) => axios.create({
+    baseURL:"http://127.0.0.1:8000/api",
+    headers:{
+        'Content-Type':'application/json',
+        'Authorization':`Bearer ${token}`
+    }
+});
+
 const axiosInstanceLogin = axios.create({
     baseURL: 'http://127.0.0.1:8000/api',
     headers: {
@@ -24,5 +38,5 @@ const resourcesInstance = axios.create({
     },
 });
 
-export  { axiosInstance, resourcesInstance, axiosInstanceLogin };
+export  { axiosInstance, resourcesInstance, axiosInstanceLogin, axiosInstanceAuth, axiosInstanceFiles };
 

@@ -2,13 +2,13 @@ import React, {useState} from "react";
 import { axiosInstanceLogin } from './functions/axiosConfig';
 import "../styles/Login.css";
 import { ShowErrorAlter, ShowSuccesAlert } from './functions/Alerts';
+import useAuthStore from "./store/userAuthToken";
 
 const Login = () => {
     const [FormData, setFormData] = useState({
         username: '',
         password:''
     });
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
         
     const handleChange = (e) => {
         const {name,value} = e.target;
@@ -18,12 +18,15 @@ const Login = () => {
         });
     };
 
+    const { setToken } = useAuthStore();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await axiosInstanceLogin.post('/token', FormData);
+            const token = response.data.access_token;
+            setToken(token);
             ShowSuccesAlert('Inicio de sesión exitoso', `Bienvenido: ${FormData .username}`);
-            setIsLoggedIn(true);
         }catch(error){
             ShowErrorAlter('Error al iniciar sesion',`Error: ${error.response?.data?.message || error.message}`);
         }

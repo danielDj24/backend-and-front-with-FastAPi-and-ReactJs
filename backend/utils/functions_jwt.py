@@ -18,7 +18,6 @@ def ExpirateDate(days: int):
 def encode_token(payload:dict)-> str:
     expiration = datetime.now() + timedelta(days=1)  
     token = jwt.encode({"exp": expiration, **payload}, getenv("SECRET_KEYS"), algorithm="HS256")
-    print(f"Generated token: {token}")
     return token
 
 def decode_token(token : Annotated[str, Depends(oauth2_scheme)]) -> str:
