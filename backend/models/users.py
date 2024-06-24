@@ -15,5 +15,6 @@ class User(Base):
     nit_company = Column(String(500), index=True)
     rut_company = Column(Text)
     is_active = Column(Boolean, default=True)
+    role = Column(String(50))
 
 

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import { axiosInstance, axiosInstanceFiles } from './functions/axiosConfig';
-import "../styles/Register.css";
-import { ShowErrorAlter, ShowSuccesAlert } from './functions/Alerts';
+import { axiosInstance, axiosInstanceFiles } from '../functions/axiosConfig';
+import "./styles-network/Register.css";
+import { ShowErrorAlter, ShowSuccesAlert } from '../functions/Alerts';
 
 const Register = () => {
     const [formData, setFormData ] = useState(

@@ -1,7 +1,7 @@
 from fastapi import APIRouter,Depends
 from models.users import User
-from schemas.users import UserID
-from services.userscrud import get_user_by_name, update_user
+from schemas.users import UserID, pwd_context
+from services.userscrud import get_user_by_name,delete_users_by_id, activate_user, GetUserID,GetUsers
 from sqlalchemy.orm import session
 from config.database import localsession
 from fastapi.exceptions import HTTPException
@@ -24,30 +24,49 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/token")
 
 auth_routes = APIRouter()
 
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
 
 @auth_routes.post("/token")
 def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],db: session = Depends(GetDB)):
     user = get_user_by_name(db, form_data.username)
-    if not user or not user.password == form_data.password:  
+    if not user or not verify_password(form_data.password, user.password):  
         raise HTTPException(status_code=400, detail="Incorrect username or password")
     if not user.is_active:
         raise HTTPException(status_code = 400, detail= "User is not active")
-    token = encode_token({"id": user.id,"username" : user.username, "email" : user.email }) 
-    return {"access_token" : token }
+    token = encode_token({"id": user.id,"username" : user.username, "email" : user.email, "role": user.role}) 
+    return {"access_token" : token, "role": user.role} 
 
-
-@auth_routes.get("/users/profile")
-def profile(my_user: Annotated[dict, Depends(decode_token)]):
-    return my_user 
-
-@auth_routes.put("/users/update/profile")
-def update_profile(user_update: UserID, my_user: Annotated[dict, Depends(decode_token)], db: session = Depends(GetDB)):
-    user_id = my_user["id"]  
-    user_updated = update_user(db, user_id, user_update)
-    return user_updated
-
+"""obtener toda la informacion de los usuarios"""
 @auth_routes.get("/users", response_model=List[UserID])
-def get_users(db: session = Depends(GetDB)):
-    users = db.query(User).all()
-    return users
+def get_users(db: session = Depends(GetDB),token: str = Depends(oauth2_scheme)):
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+
+    if user.role != "admin":
+        raise HTTPException(status_code=403, detail="Not authorized to get users")
+    
+    return GetUsers(db)
+
+"""eliminar usuarios"""
+@auth_routes.delete("/users/{user_id}")
+def delete_user(user_id: int, db: session = Depends(GetDB),token: str = Depends(oauth2_scheme)):
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+    if user.role != "admin":
+        raise HTTPException(status_code=403, detail="Not authorized to delete users")
+    delete_users_by_id(db, user_id)
+    return {"detail": "User deleted successfully"}
+    
+
+"""activar usuarios"""
+@auth_routes.patch("user/active/{user_id}")
+def active_user(user_id :int,token: str = Depends(oauth2_scheme), db : session = Depends(GetDB)):
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+    if user.role != "admin":
+        raise HTTPException(status_code=403, detail="Not authorized to delete users")
+    user = activate_user(db, user_id)
+    return {"detail": "User activated successfully", "user": user}
+
 

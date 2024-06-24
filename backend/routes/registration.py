@@ -23,19 +23,28 @@ def GetDB():
 
 @registration_router.post('/register/', response_model=UserID)
 def create_ser(user: UserData, db:session=Depends(GetDB)):
-    check_name = userscrud.get_user_by_name(db=db, identifier=user.username)
-    if check_name:
-        if not check_name.phone or not check_name.address or not check_name.name_company or not check_name.nit_company:
-            return check_name
-        else:
-            raise HTTPException(status_code=400, detail='El nombre de usuario ya existe y ha completado los datos adicionales')
-    
-    check_email = userscrud.get_user_by_email(db=db, identifier=user.email)
-    if check_email:
-        raise HTTPException(status_code=400, detail='El correo electrónico ya existe')
-    
-    return userscrud.create_user(db=db, user=user, is_active = False)
+    try:
+        user.hash_password()
 
+        check_name = userscrud.get_user_by_name(db=db, identifier=user.username)
+        if check_name:
+            if not check_name.phone or not check_name.address or not check_name.name_company or not check_name.nit_company:
+                return check_name
+            else:
+                raise HTTPException(status_code=400, detail='El nombre de usuario ya existe y ha completado los datos adicionales')
+        
+        check_email = userscrud.get_user_by_email(db=db, identifier=user.email)
+        if check_email:
+            raise HTTPException(status_code=400, detail='El correo electrónico ya existe')
+        if user.role == "admin":
+            user.is_active = True
+        
+        new_user = userscrud.create_user(db=db, user=user, is_active=user.is_active)
+        return new_user 
+    
+    except Exception as e:
+        raise HTTPException(status_code = 500, detail = str(e))
+    
 """ruta de registro con los datos extra para la validacion de los datos ingresados por el usuario"""
 
 @registration_router.post('/register/verify/data', response_model=UserID)

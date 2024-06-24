@@ -1,10 +1,10 @@
 import React, {useState} from "react";
-import { axiosInstanceLogin } from './functions/axiosConfig';
-import "../styles/Login.css";
-import { ShowErrorAlter, ShowSuccesAlert } from './functions/Alerts';
-import useAuthStore from "./store/userAuthToken";
+import { axiosInstanceLogin } from '../functions/axiosConfig';
+import "./styles-network/Login.css";
+import { ShowErrorAlter, ShowSuccesAlert } from '../functions/Alerts';
+import useAuthStore from "../store/userAuthToken";
 
-const Login = () => {
+const Login = ({ onLoginSuccess }) => {
     const [FormData, setFormData] = useState({
         username: '',
         password:''
@@ -25,8 +25,10 @@ const Login = () => {
         try {
             const response = await axiosInstanceLogin.post('/token', FormData);
             const token = response.data.access_token;
+            const role = response.data.role;
             setToken(token);
             ShowSuccesAlert('Inicio de sesión exitoso', `Bienvenido: ${FormData .username}`);
+            onLoginSuccess(role);
         }catch(error){
             ShowErrorAlter('Error al iniciar sesion',`Error: ${error.response?.data?.message || error.message}`);
         }

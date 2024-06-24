@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { axiosInstance, resourcesInstance } from "./functions/axiosConfig";
-import "../styles/menuStyles.css";
-import {CustomModal} from "./functions/CustomModal";
+import { axiosInstance, resourcesInstance } from "../functions/axiosConfig";
+import {CustomModal} from "../functions/CustomModal";
 import Login from "./Login";
 import Register from "./Register";
+import { Link } from "react-router-dom";
+
+//estilos
+import "./styles-network/menuStyles.css";
 
 const MenuComponent = () => {
     //constantes que obtienen el logo y campos para agregarlos al menu
@@ -15,6 +18,10 @@ const MenuComponent = () => {
     //constantes para controlar el login y el registro en el modal de usuarios
     const [activeForm, setActiveForm] = useState('login');
     const [showLoginModal, setShowLoginModal] = useState(false);
+
+    //control de rutas para el login admin
+    const [userRole, setUserRole] = useState(null);
+
     const handleOpenLoginModal = () => setShowLoginModal(true);
     const handleCloseLoginModal = () => setShowLoginModal(false);
 
@@ -32,7 +39,11 @@ const MenuComponent = () => {
             console.error('Error fetching data', error);
         });
     }, []);
-
+        
+    const handleLoginSuccess = (role) => {
+            setUserRole(role); 
+            setShowLoginModal(false);
+    };
     return (
     <div className="Menu">
         <div className="menu-container" style={{ backgroundColor: primaryColor }}>
@@ -47,6 +58,15 @@ const MenuComponent = () => {
                     <i className="fa-solid fa-sign-in-alt"></i> Ingresar
                 </button>
             </div>
+            {userRole === 'admin' && (
+                    <div className="admin-container">
+                        <Link to="/intranet/config/home">
+                        <button className="btn btn-dark">
+                            <i className="fa-solid fa-user-shield"></i> Intranet
+                        </button>
+                        </Link>
+                    </div>
+                )}
         </div>
         <CustomModal show={showLoginModal} handleClose={handleCloseLoginModal} title="Iniciar sesión">
             <div className="form-toggle"> 
@@ -63,7 +83,7 @@ const MenuComponent = () => {
                         Registrarse
                     </p>
             </div>
-            {activeForm === 'login' ? <Login/> : <Register/> }
+            {activeForm === 'login' ? <Login onLoginSuccess={handleLoginSuccess} /> : <Register/> }
         </CustomModal>
     </div>
     

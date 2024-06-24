@@ -1,14 +1,14 @@
 import React from "react";
-import MenuComponent from "../components/network/MenuComponent";
+import Welcome from "../components/intranet/Welcome" 
 import { CustomModal } from "../components/functions/CustomModal";
 
-const Home = () => {
+const IntranetHome = () => {
     return (
         <div>
-            <MenuComponent></MenuComponent>
+            <Welcome></Welcome>
             <CustomModal></CustomModal> 
         </div>
     );
 };
 
-export default Home;
+export default IntranetHome;

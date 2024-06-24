@@ -23,23 +23,27 @@ def get_user_by_email(db: session, identifier: str):
 
 """Crear nuevo usuario"""
 def create_user(db:session,user: UserData,is_active: bool = False):
-    new_user = User(username = user.username,email=user.email, password = user.password, is_active = is_active)
+    new_user = User(username = user.username,email=user.email, password = user.password, role = user.role, is_active = is_active)
     db.add(new_user)
     db.commit()
     db.flush(new_user)
     return new_user
 
-
-"""actualizar datos del usuario"""
-def update_user(db:session, user_id: int, user_update: UserID) -> User:
+"""Eliminar usuarios"""
+def delete_users_by_id(db: session, user_id: int):
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code = 404,detail="user not found")
+    db.delete(user)
+    db.commit()
+    return user
 
-    if user_update.username:
-        user.username = user_update.username
-    if user_update.email:
-        user.email = user_update.email
+"""Activar usuarios"""
+def activate_user(db: session, user_id: int):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code = 404, detail = "user not found")
+    user.is_active = True
     db.commit()
     db.refresh(user)
     return user
