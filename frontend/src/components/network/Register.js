@@ -3,7 +3,7 @@ import { axiosInstance, axiosInstanceFiles } from '../functions/axiosConfig';
 import "./styles-network/Register.css";
 import { ShowErrorAlter, ShowSuccesAlert } from '../functions/Alerts';
 
-const Register = () => {
+const Register = ({ onRegisterSuccess }) => {
     const [formData, setFormData ] = useState(
         {
             username : '',
@@ -57,6 +57,7 @@ const Register = () => {
                 setShowSecondForm(true);
             } else {
                 ShowSuccesAlert('Registro exitoso', 'Te has registrado exitosamente');
+                onRegisterSuccess();
             }
         } catch (error) {
             if (error.response) {
@@ -89,6 +90,7 @@ const Register = () => {
                 await axiosInstanceFiles.post(`/register/upload/rut_company/${userId}`, formData);
             }
             ShowSuccesAlert('Registro exitoso',"te has registrado exitosamente");
+            onRegisterSuccess();
         } catch (error){
             ShowErrorAlter('Error en los datos ingresados', `Error : ${error.response?.data?.message || error.message}`);
         }

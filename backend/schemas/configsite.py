@@ -10,7 +10,6 @@ class ConfigSiteData(BaseModel):
     twitter_link : Optional[str] = None
     contact_email : Optional[str] = None
     contact_phone : Optional[str] = None
-    menu : str 
 
 class COnfigSiteCreateData(ConfigSiteData):
     pass
@@ -19,6 +18,21 @@ class COnfigSiteCreateData(ConfigSiteData):
 class ConfigSiteDataResponse(ConfigSiteData):
     id : int
     logo_site : Optional[str] = None 
+
+    class Config: 
+        orm_mode = True 
+
+
+class BannersData(BaseModel):
+    link_url : Optional[str] = None
+    position : Optional[int] = None
+
+class BannersCreateData(BannersData):
+    pass
+
+class BannersDataResponse(BannersData):
+    id : int
+    image : Optional[str] = None
 
     class Config: 
         orm_mode = True 

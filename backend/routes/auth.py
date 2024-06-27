@@ -60,7 +60,7 @@ def delete_user(user_id: int, db: session = Depends(GetDB),token: str = Depends(
     
 
 """activar usuarios"""
-@auth_routes.patch("user/active/{user_id}")
+@auth_routes.patch("/user/active/{user_id}")
 def active_user(user_id :int,token: str = Depends(oauth2_scheme), db : session = Depends(GetDB)):
     decoded_token = decode_token(token)
     user = GetUserID(db, decoded_token["id"])

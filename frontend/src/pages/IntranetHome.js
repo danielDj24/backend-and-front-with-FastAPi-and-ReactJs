@@ -1,11 +1,11 @@
 import React from "react";
-import Welcome from "../components/intranet/Welcome" 
+import Intranet from "../components/intranet/HomeIntranet" 
 import { CustomModal } from "../components/functions/CustomModal";
 
 const IntranetHome = () => {
     return (
         <div>
-            <Welcome></Welcome>
+            <Intranet></Intranet>
             <CustomModal></CustomModal> 
         </div>
     );

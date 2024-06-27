@@ -1,11 +1,14 @@
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Header
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from routes.registration import GetDB
-from models.configsite import ConfigSite
-from schemas.configsite import COnfigSiteCreateData,ConfigSiteDataResponse
+from models.configsite import ConfigSite, Banners
+from schemas.configsite import COnfigSiteCreateData,ConfigSiteDataResponse, BannersCreateData, BannersDataResponse
+
+
 from sqlalchemy.orm import session
 from sqlalchemy import desc
 import os
 
+from typing import List
 
 
 
@@ -41,6 +44,11 @@ def delete_config(config_id: int, db: session = Depends(GetDB)):
     if not config:
         raise HTTPException(status_code=404, detail="Config not found")
     
+    if config.logo_site:
+        if os.path.exists(config.logo_site):
+            os.remove(config.logo_site)
+        else:
+            raise HTTPException(status_code=404, detail="Logo file not found")
     db.delete(config)
     db.commit()
     
@@ -65,3 +73,58 @@ def upload_logo(config_id: int, file: UploadFile = File(...), db:session = Depen
     db.refresh(config)
     
     return config
+
+"""control de banners"""
+
+@config_routes.post("/config/banners/upload", response_model=BannersDataResponse)
+def create_banners(banner_data: BannersCreateData,  db: session = Depends(GetDB)):
+    # Crear el banner en la base de datos
+    banner = Banners(
+        link_url=banner_data.link_url,
+        position=banner_data.position,
+    )
+    db.add(banner)
+    db.commit()
+    db.refresh(banner)
+    return banner
+
+@config_routes.post("/config/banners/{banner_id}/banner", response_model=BannersDataResponse)
+def upload_banner_image(banner_id: int, file: UploadFile = File(...), db: session = Depends(GetDB)):
+    banner = db.query(Banners).filter(Banners.id == banner_id).first()
+    if not banner:
+        raise HTTPException(status_code=404, detail="Banner not found")
+
+    uploads_dir = "resources/banners"
+    os.makedirs(uploads_dir, exist_ok=True)
+    file_path = os.path.join(uploads_dir, file.filename)
+    with open(file_path, "wb") as file_object:
+        file_object.write(file.file.read())
+
+    banner.image = file_path
+    db.commit()
+    db.refresh(banner)
+    
+    return banner
+
+@config_routes.get("config/banners", response_model= List[BannersDataResponse])
+def get_banners(db: session = Depends(GetDB)):
+    banners = db.query(Banners).all()
+    if not banners:
+        raise HTTPException(status_code=404, detail="No banners found")
+    return  banners
+
+@config_routes.delete("/config/banners/{banner_id}", response_model=BannersDataResponse)
+def delete_banner(banner_id: int, db: session = Depends(GetDB)):
+    banner = db.query(Banners).filter(Banners.id == banner_id).first()
+    if not banner:
+        raise HTTPException(status_code=404, detail="Banner not found")
+
+    if banner.image:
+        if os.path.exists(banner.image):
+            os.remove(banner.image)
+        else:
+            raise HTTPException(status_code=404, detail="Image file not found")
+    db.delete(banner)
+    db.commit()
+    
+    return banner

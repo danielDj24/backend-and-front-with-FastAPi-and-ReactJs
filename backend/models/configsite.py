@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer,Text,LargeBinary
+from sqlalchemy import Column, String, Integer
 from config.database import Base
 
 class ConfigSite(Base):
@@ -12,5 +12,14 @@ class ConfigSite(Base):
     twitter_link = Column(String(30), index= True)
     contact_email = Column(String(30), index= True)
     contact_phone = Column(String(30), index= True)
-    menu = Column(Text)
     logo_site = Column(String(), index=True, nullable=True)
+
+
+class Banners(Base):
+    __tablename__ = 'banners'
+    id = Column(Integer, primary_key=True, index=True)
+    link_url = Column(String(500), index = True, nullable=True)
+    position = Column(Integer, default = 1)
+    image = Column(String(500), index = True, nullable=True)
+
+

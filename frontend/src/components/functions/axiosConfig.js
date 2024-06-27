@@ -38,5 +38,18 @@ const resourcesInstance = axios.create({
     },
 });
 
-export  { axiosInstance, resourcesInstance, axiosInstanceLogin, axiosInstanceAuth, axiosInstanceFiles };
+const activateUser = async (token, userId) => {
+    const axiosAuth = axiosInstanceAuth(token);
+    const response = await axiosAuth.patch(`/user/active/${userId}`);
+    return response.data;
+};
+
+
+const deleteUser = async (token, userId) => {
+    const axiosAuth = axiosInstanceAuth(token);
+    const response = await axiosAuth.delete(`/users/${userId}`);
+    return response.data;
+};
+
+export  { axiosInstance, resourcesInstance, axiosInstanceLogin, axiosInstanceAuth, axiosInstanceFiles, activateUser, deleteUser };
 

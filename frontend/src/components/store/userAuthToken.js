@@ -4,7 +4,6 @@ import Cookies from "js-cookie";
 const useAuthStore = create((set) =>({
     token : null,
     setToken : (token) =>{ 
-    console.log("Token received and stored:");
     set({ token });
     Cookies.set('auth_token', token, {expires: 2})},
     
@@ -12,6 +11,13 @@ const useAuthStore = create((set) =>({
         Cookies.remove('auth_token');
         set({ token:null });
     },
+
+    checkToken: () => {
+        const token = Cookies.get('auth_token');
+        if (token) {
+            set({ token });
+        }
+    }
 }));
 
 export default useAuthStore;
