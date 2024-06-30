@@ -84,5 +84,5 @@ async def upload_rut_company(user_id: int, file: UploadFile = File(...), db: ses
         file_object.write(await file.read())
     user.rut_company = file_path
     db.commit()
-    db.refresh(user)
+    db.refresh(user)    
     return user

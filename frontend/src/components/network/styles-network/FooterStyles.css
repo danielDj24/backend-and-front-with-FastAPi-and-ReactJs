@@ -1,0 +1,82 @@
+:root {
+    --primary-color:#DDDDDD 0% 0% no-repeat padding-box;
+    --secondary-color: #white; 
+    
+    }
+    .footer-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        background-color: var(--secondary-color);
+        color: var(--primary-color);
+    }
+    
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 1200px;
+        flex-wrap: wrap;
+        gap: 20px; 
+        padding: 15px;
+    }
+    
+    .footer-content > div {
+        flex: 1;
+        min-width: 150px;
+    } 
+    
+    .footer-logo-container img {
+        object-fit: cover;
+        width: 100%;
+    }
+    
+    .address-container, .contact-container, .access-container, .social-links-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .social-icon  {
+        width: 18%; 
+        height: 18%;
+        transition: transform 0.3s ease; 
+    }
+    .github-icon, .behance-icon{
+        width: 5%; 
+        height: 5%;
+        gap: 5px; 
+        fill: var(--secondary-color);
+        transition: transform 0.3s ease, fill 0.3s ease;
+        margin-left: 10px;
+    }
+    .social-icon:hover, .github-icon:hover, .behance-icon:hover {
+        transform: scale(1.2); 
+    }
+    
+    .social-links-container a {
+        margin-right: 10px;
+        fill: #ff6347;
+    }
+    
+    .copyright-container {
+        text-align: center;
+        margin-top: 2px;
+    }
+
+    p {
+        font-size: 1rem; 
+        font-family: 'Arial', sans-serif; /* Fuente atractiva */
+        margin-bottom: 2px; /* Espacio inferior entre los párrafos */
+    }
+    
+    p a {
+        margin-left: 5px; /* Espacio entre el texto y los iconos */
+        vertical-align: middle; /* Alinear iconos verticalmente con el texto */
+    }
+    
+    p a img {
+        margin-left: 10px; /* Espacio entre el texto y los iconos */
+        vertical-align: middle; /* Alinear iconos verticalmente con el texto */
+    }
+    

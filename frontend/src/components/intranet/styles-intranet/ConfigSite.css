@@ -1,0 +1,89 @@
+
+.background-container {
+    width: 100%;
+    height: 100%;
+    background: #F1F1F1;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 22px;
+    opacity: 1;
+    padding: 20px; 
+}
+
+.container-resources{
+    display: inline-block;
+    flex-direction: column;
+    justify-content: space-between; 
+    align-items: center; /* Centra horizontalmente */
+    padding: 10px;
+    margin-right: 20px;
+
+}
+.config-title {
+    text-align: center;
+    font: normal normal bold 40px/47px Helvetica;
+    letter-spacing: 0px;
+    color: #707070;
+    opacity: 1;
+}
+
+.config-item {
+    display: inline-block;
+    align-items: center;
+    justify-content: space-between;
+    height: 25%;
+    padding: 10px;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 10px;
+    background-color: white;
+    margin-right: 50px;
+}
+
+.config-image-logo {
+    width: 60%;
+    border-radius: 10px;
+    opacity: 1;
+    margin-bottom: 10px;
+}
+.config-image {
+    width: 70%;
+    border-radius: 10px;
+    opacity: 1;
+    margin-bottom: 10px;
+}
+
+.delete-button-config {
+    width: 100%;
+    height: 40px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+
+.config-form {
+    width: 100%;
+}
+.form-group-config {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group-config label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.form-control-config{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

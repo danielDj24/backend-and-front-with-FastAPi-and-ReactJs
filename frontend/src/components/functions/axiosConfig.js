@@ -8,10 +8,11 @@ const axiosInstance = axios.create({
     }
 });
 
-const axiosInstanceFiles = axios.create({
+const axiosInstanceFiles = (token) => axios.create({
     baseURL: 'http://127.0.0.1:8000/api',
     headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        'Authorization':`Bearer ${token}`
     }
 });
 const axiosInstanceAuth = (token) => axios.create({

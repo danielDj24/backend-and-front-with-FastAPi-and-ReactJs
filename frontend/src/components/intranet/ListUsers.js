@@ -94,6 +94,8 @@ const UsersList = () => {
     return(
         <div>
             <div className="container">
+            <div className="background-user-container">
+
                 <h1 className="text-center my-4">Lista de usuarios</h1>
                 <div className="mb-3">
                     <div className="d-flex mb-2">
@@ -122,6 +124,7 @@ const UsersList = () => {
                 message={modalMessage}
             />
         </div>
+    </div>
     );
 };
 const UserDetails = ({ user, onActivate, onDelete  }) => {
