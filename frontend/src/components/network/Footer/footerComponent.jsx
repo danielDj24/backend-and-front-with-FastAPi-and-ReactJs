@@ -1,17 +1,17 @@
 import React, {useState,useEffect} from "react";
-import { axiosInstance, resourcesInstance } from "../functions/axiosConfig";
+import { axiosInstance, resourcesInstance } from "../../functions/axiosConfig";
 
 //styles 
-import "./styles-network/FooterStyles.css"
+import "./FooterStyles.css"
 
 //assets
-import FacebookIcon from "../../assets/facebook-icon.svg";
+import FacebookIcon from "../../../assets/facebook-icon.svg";
 //import InstagramIcon from "../assets/IconInstagram.svg";
-import WhatsAppIcon from "../../assets/whatsapp-icon.svg";
-import YoutubeIcon from "../../assets/youtube-icon.svg";
-import TwitterIcon from "../../assets/twitter-icon.svg";
-import BehanceIcon from "../../assets/behance-logo.svg";
-import GithubIcon from "../../assets/github-logo.svg";
+import WhatsAppIcon from "../../../assets/whatsapp-icon.svg";
+import YoutubeIcon from "../../../assets/youtube-icon.svg";
+import TwitterIcon from "../../../assets/twitter-icon.svg";
+import BehanceIcon from "../../../assets/behance-logo.svg";
+import GithubIcon from "../../../assets/github-logo.svg";
 
 
 
@@ -128,7 +128,7 @@ const FooterComponent = ({handleOpenLoginModal, userRole, handleLogout}) => {
                 <a href="https://www.behance.net/cristhirodrigu21" target="_blank" rel="noopener noreferrer">
                             <img src={BehanceIcon} alt="Behance" className="behance-icon" />
                         </a>
-                    Designs by Camilo Mora
+                    Desings by Camilo Mora
                 </p>
             </div>
         </div>

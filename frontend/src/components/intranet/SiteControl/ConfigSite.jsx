@@ -1,14 +1,15 @@
 import React, {useEffect,useState} from "react";
-import useAuthStore from "../store/userAuthToken";
-import { axiosInstanceAuth, resourcesInstance, axiosInstance, axiosInstanceFiles } from '../functions/axiosConfig';
+import useAuthStore from "../../store/userAuthToken";
+import { axiosInstanceAuth, resourcesInstance, axiosInstance, axiosInstanceFiles } from '../../functions/axiosConfig';
 
-import { ShowErrorAlter, ShowSuccesAlert } from '../functions/Alerts';
-import { ConfirmationModal } from "../functions/CustomModal";
+import { ShowErrorAlter, ShowSuccesAlert } from '../../functions/Alerts';
+import { ConfirmationModal } from "../../functions/CustomModal";
 
 //estilos
-import "./styles-intranet/ConfigSite.css";
+import "./ConfigSite.css";
 
 const ConfigSite = () => {
+    
     //token
     const {token, checkToken } = useAuthStore();
     const [showModal, setShowModal] = useState(false);
@@ -31,7 +32,7 @@ const ConfigSite = () => {
     const [favIconFileIdToDelete, setfavIconFileIdToDelete] = useState(null);
 
     //fecth config 
-    const [config,setConfig] = useState([]);
+    const [config, setConfig] = useState({ fav_icon: '' });
     const [loading, setLoading] = useState(true);
 
 
@@ -143,6 +144,13 @@ const ConfigSite = () => {
             ShowErrorAlter("Error", "No se encontró el token o el archivo. Por favor, inicia sesión y selecciona un archivo.");
         }
     };
+
+    useEffect(() => {
+        const favicon = document.querySelector("link[rel='icon']");
+        if (favicon) {
+            favicon.href = `${resourcesInstance.defaults.baseURL}${config.fav_icon}`;
+        }
+    }, [config.fav_icon]);
 
     const handleOpenModal = () => {
         setModalMessage("¿Estás seguro de cambiar la configuración del sitio?");

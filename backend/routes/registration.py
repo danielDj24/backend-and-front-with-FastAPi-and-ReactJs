@@ -4,20 +4,10 @@ from schemas.users import UserData,UserID
 from sqlalchemy.orm import session
 from services import userscrud
 from sqlalchemy.orm import session
-from config.database import localsession
 from models.users import User
+from services.dbconnection import GetDB
 
 registration_router = APIRouter()
-
-"""inicio de sesion a la base de datos"""
-
-def GetDB():
-    db = localsession()
-    try:
-        yield db    
-    finally:
-        db.close()
-
 
 """ruta de registro con los datos iniciales"""
 

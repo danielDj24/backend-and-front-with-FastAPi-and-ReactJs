@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { axiosInstance, resourcesInstance } from '../functions/axiosConfig';
+import { axiosInstance, resourcesInstance } from '../../functions/axiosConfig';
 
 //carrusel
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 //estilos
-import "./styles-network/Banners.css";
+import "./Banners.css";
 
 
 const Banners = ({ positionFilter }) => {
@@ -41,7 +41,7 @@ const Banners = ({ positionFilter }) => {
     return (
         <div className="banners-container-get">
             {filteredBanners.length > 1 ? (
-                <Carousel showThumbs={true} showIndicators={false} autoPlay interval={3000} infiniteLoop>
+                <Carousel showThumbs={false} showIndicators={false} autoPlay interval={3000} infiniteLoop>
                     {filteredBanners.map((banner) => (
                         <div key={banner.id}>
                             <div className="banner-wrapper-get">

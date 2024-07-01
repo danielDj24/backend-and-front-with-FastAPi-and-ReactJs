@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
-import { axiosInstanceAuth, activateUser, deleteUser } from "../functions/axiosConfig";
-import useAuthStore from "../store/userAuthToken";
-import { ShowErrorAlter, ShowSuccesAlert } from '../functions/Alerts';
-import { ConfirmationModal } from "../functions/CustomModal";
+import { axiosInstanceAuth, activateUser, deleteUser } from "../../functions/axiosConfig";
+import useAuthStore from "../../store/userAuthToken";
+import { ShowErrorAlter, ShowSuccesAlert } from '../../functions/Alerts';
+import { ConfirmationModal } from "../../functions/CustomModal";
 
-import "./styles-intranet/usersList.css"
+import "./usersList.css"
+
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 

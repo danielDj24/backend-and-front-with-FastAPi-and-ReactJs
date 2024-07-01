@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from "react";
-import useAuthStore from "../store/userAuthToken";
-import { axiosInstanceAuth, resourcesInstance, axiosInstance, axiosInstanceFiles } from '../functions/axiosConfig';
+import useAuthStore from "../../store/userAuthToken";
+import { axiosInstanceAuth, resourcesInstance, axiosInstance, axiosInstanceFiles } from '../../functions/axiosConfig';
 
-import { ShowErrorAlter, ShowSuccesAlert } from '../functions/Alerts';
-import { ConfirmationModal } from "../functions/CustomModal";
+import { ShowErrorAlter, ShowSuccesAlert } from '../../functions/Alerts';
+import { ConfirmationModal } from "../../functions/CustomModal";
 
-import "./styles-intranet/BannersUpload.css"
+import "./BannersUpload.css"
 
 const UploadBanner = () => {
     const [linkUrl, setLinkUrl] = useState('');
@@ -16,7 +16,7 @@ const UploadBanner = () => {
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
     const [error, setError] = useState(null);
-    const [banners, setBanners] = useState([]);
+    const [banners, setBanners] = useState(null);
     const [loading, setLoading] = useState(true);
     const [bannerIdToDelete, setBannerIdToDelete] = useState(null);
 

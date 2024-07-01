@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { axiosInstance, resourcesInstance } from "../functions/axiosConfig";
+import { axiosInstance, resourcesInstance } from "../../functions/axiosConfig";
 
 
 //estilos
-import "./styles-network/menuStyles.css";
+import "./menuStyles.css";
 
 const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout }) => {
     const [logo, setLogo] = useState('');

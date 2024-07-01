@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from routes.auth import auth_routes
 from routes.registration import registration_router
 from routes.configsiteroutes import config_routes
+from routes.brands import brands_router
 from fastapi.staticfiles import StaticFiles
 
 Base.metadata.create_all(bind=engine)
@@ -21,6 +22,7 @@ app.mount("/media", StaticFiles(directory="media"), name="media")
 app.include_router(auth_routes, prefix="/api")
 app.include_router(registration_router, prefix="/api")
 app.include_router(config_routes, prefix="/api")
+app.include_router(brands_router, prefix="/api")
 
 """ruta del front"""
 origin = ['*']

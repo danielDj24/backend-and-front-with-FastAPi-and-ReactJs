@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import { axiosInstanceLogin } from '../functions/axiosConfig';
-import "./styles-network/Login.css";
-import { ShowErrorAlter, ShowSuccesAlert } from '../functions/Alerts';
-import useAuthStore from "../store/userAuthToken";
+import { axiosInstanceLogin } from '../../functions/axiosConfig';
+import "./Login.css";
+import { ShowErrorAlter, ShowSuccesAlert } from '../../functions/Alerts';
+import useAuthStore from "../../store/userAuthToken";
 
 const Login = ({ onLoginSuccess }) => {
     const [FormData, setFormData] = useState({

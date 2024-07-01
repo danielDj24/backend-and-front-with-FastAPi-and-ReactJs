@@ -1,24 +1,16 @@
 from fastapi import APIRouter,Depends
-from models.users import User
 from schemas.users import UserID, pwd_context
 from services.userscrud import get_user_by_name,delete_users_by_id, activate_user, GetUserID,GetUsers
 from sqlalchemy.orm import session
-from config.database import localsession
 from fastapi.exceptions import HTTPException
 from typing import List
+from services.dbconnection import GetDB
 
 from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from utils.functions_jwt import encode_token, decode_token
 
-"""inicio de sesion a la base de datos"""
-def GetDB():
-    db = localsession()
-    try:
-        yield db    
-    finally:
-        db.close()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/token")
 
