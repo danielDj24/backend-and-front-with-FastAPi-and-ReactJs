@@ -4,7 +4,6 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from services.dbconnection import GetDB
 from sqlalchemy.orm import session
-from sqlalchemy import desc
 from services.userscrud import GetUserID
 from utils.functions_jwt import decode_token
 from routes.auth import oauth2_scheme
@@ -12,7 +11,7 @@ from routes.auth import oauth2_scheme
 
 """ORM"""
 from models.products import Brand
-from schemas.products import BrandData,BrandDataCreateData,BrandDataResponse
+from schemas.products import BrandDataCreateData,BrandDataResponse
 
 
 brands_router = APIRouter()
@@ -63,7 +62,7 @@ def upload_logo_brand(brand_id : int, file: UploadFile = File(...), db: session 
     
     return brand
 
-@brands_router.delete("/brands/delete/{brand_id}", response_model = BrandDataResponse)
+@brands_router.delete("brands/delete/{brand_id}", response_model = BrandDataResponse)
 def delete_brand(brand_id : int ,db: session = Depends(GetDB), token: str = Depends(oauth2_scheme)):
     
     decoded_token = decode_token(token)
