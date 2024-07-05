@@ -2,6 +2,7 @@ import React, {useState,useEffect} from "react";
 import MenuComponent from "../../components/network/Menu/MenuComponent";
 import Banners from "../../components/network/Banners/bannerscomponet";
 import FooterComponent from "../../components/network/Footer/footerComponent"
+import Blogcomponent from "../../components/network/Blog/BlogComponent";
 
 import {CustomModal} from "../../components/functions/CustomModal";
 import Login from "../../components/network/Login/Login";
@@ -171,6 +172,13 @@ const Home = () => {
                             <button className="play-button" onClick={handlePlayVideo}>
                                 <FontAwesomeIcon icon={faPlay} />
                             </button>
+                        </div>
+                    </div>
+                                    
+                    <div className="blog-component-home">
+                        <div className="content-blog-home">
+                        <h1>Noticias</h1>
+                        <Blogcomponent view="home"/>
                         </div>
                     </div>
 

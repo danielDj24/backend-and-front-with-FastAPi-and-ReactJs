@@ -1,18 +1,33 @@
+.banners-container-get {
+    width: 100%;
+    margin: 0 auto; /* Centra el contenedor en la página */
+}
+
 .banner-wrapper-get {
-    position: relative; 
+    position: relative;
+    margin-bottom: 20px; /* Espacio entre banners */
 }
 
 .banners-img-get {
-    width: 100%; 
-    height: auto; 
-    max-height: 400px; 
-    object-fit: cover; 
+    width: 100%;
+    max-height: 600px; /* Ajusta la altura máxima de los banners */
+    object-fit: cover; /* Ajusta el modo de ajuste de la imagen */
 }
 
 .button-container-get {
     position: absolute;
-    bottom: 10px; 
-    left: 50%; 
-    transform: translateX(-50%); 
+    bottom: 10px;
+    left: 48%;
+    transform: translateX(-50%);
     text-align: center;
+}
+
+.button-container-get .btn {
+    display: inline-block; /* Asegura que el botón se muestre como un bloque inline */
+    padding: 10px 20px; /* Ajusta el padding según sea necesario */
+    background-color: #007bff; /* Color de fondo del botón */
+    color: #fff; /* Color del texto del botón */
+    border: none; /* Quita el borde del botón */
+    border-radius: 5px; /* Borde redondeado del botón */
+    text-decoration: none; /* Quita subrayado del enlace */
 }

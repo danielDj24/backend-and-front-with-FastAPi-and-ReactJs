@@ -1,10 +1,13 @@
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, DateTime
 from config.database import Base
+from datetime import datetime
 
 
 class Blog(Base):
     __tablename__ = 'blog'
     id = Column(Integer, primary_key = True, index = True)
     categorie = Column(String(300), index = True)
+    title = Column(String(300), index = True)
     notice_content = Column(String(), index = True)
     img_notice = Column(String(), index = True)
+    date = Column(DateTime, default=datetime.utcnow, index=True)
