@@ -7,9 +7,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 10px;
+        padding: 5px;
         background-color: var(--secondary-color);
         color: var(--primary-color);
+        
     }
     
     .footer-content {
@@ -20,6 +21,7 @@
         flex-wrap: wrap;
         gap: 20px; 
         padding: 15px;
+        
     }
     
     .footer-content > div {
@@ -43,8 +45,8 @@
         transition: transform 0.3s ease; 
     }
     .github-icon, .behance-icon{
-        width: 5%; 
-        height: 5%;
+        width: 3%; 
+        height: 3%;
         gap: 5px; 
         fill: var(--secondary-color);
         transition: transform 0.3s ease, fill 0.3s ease;
@@ -61,7 +63,6 @@
     
     .copyright-container {
         text-align: center;
-        margin-top: 2px;
     }
 
     p {

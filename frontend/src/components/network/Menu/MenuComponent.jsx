@@ -24,12 +24,15 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout }) => {
             });
     }, []);
 
+    const handleLogoClick = () => {
+        window.location.href = '/';
+    };
+
     return (
         <div className="Menu">
             <div className="menu-container" style={{ backgroundColor: primaryColor }}>
-                <img src={`${resourcesInstance.defaults.baseURL}${logo}`} alt="Site logo" className="logo-img" />
+                <img src={`${resourcesInstance.defaults.baseURL}${logo}`} alt="Site logo" className="logo-img" onClick={handleLogoClick} style={{ cursor: 'pointer' }}/>
                 <div className="menu-items">
-                    <a href="/" className="menu-item">Inicio</a>
                     <a href="/sobre-nosotros" className="menu-item">Sobre nosotros</a>
                     <a href="/por-que-nosotros" className="menu-item">Por qué nosotros</a>
                     <a href="/blog" className="menu-item">Blog</a>
@@ -47,7 +50,7 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout }) => {
                 </div>
                 {userRole === 'admin' && (
                     <div className="admin-container">
-                        <button className="btn btn-dark" onClick={() => window.open('/intranet/config/home', '__blank')}>
+                        <button className="btn btn-dark" onClick={() => window.open('/intranet/', '__blank')}>
                             <i className="fa-solid fa-user-shield"></i> Intranet
                         </button>
                     </div>

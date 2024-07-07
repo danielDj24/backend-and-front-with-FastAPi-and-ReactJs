@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { axiosInstance, resourcesInstance } from "../../functions/axiosConfig";
-import { Route, Routes, useParams, Link } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import "./Blogcomponent.css";
 
 const DetailViewComponent = () => {

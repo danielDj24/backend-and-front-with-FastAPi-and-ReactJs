@@ -2,7 +2,7 @@ import { create } from "zustand";
 import Cookies from "js-cookie";
 
 const useAuthStore = create((set) =>({
-    token : null,
+    token: Cookies.get('auth_token') || null,
     setToken : (token) =>{ 
     set({ token });
     Cookies.set('auth_token', token, {expires: 2})},

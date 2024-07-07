@@ -104,7 +104,6 @@ const Home = () => {
             />
                 <Banners positionFilter={1} />
                 <div className="components-elements-home">
-                    <BrandsComponent/>  
                     <div className="information-container">
                         <h1><strong>Frames. es un distribuidor global impulsado a la venta en volumen de gafas de diseñador.</strong></h1>
                         <h3>Con una cartera diversa de más de 100 marcas que van desde colecciones de alta gama hasta líneas de moda actuales, NYWD Inc. es un socio confiable para la distribución mundial de anteojos.</h3>

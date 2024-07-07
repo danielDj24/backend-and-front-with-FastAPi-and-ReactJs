@@ -65,12 +65,15 @@ const FooterComponent = ({handleOpenLoginModal, userRole, handleLogout}) => {
     if (error) {
         return <div>Error: {error}</div>;
     }
+    const handleLogoClick = () => {
+        window.location.href = '/';
+    };
     
     return(
         <footer className="footer-container" style={{ backgroundColor: secondaryColor, color: primaryColor }}>
         <div className="footer-content">
             <div className="footer-logo-container">
-                <img src={`${resourcesInstance.defaults.baseURL}${logo}`} alt="Logo" />
+                <img src={`${resourcesInstance.defaults.baseURL}${logo}`} alt="Logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}/>
             </div>
             <div className="address-container">
                 <div>

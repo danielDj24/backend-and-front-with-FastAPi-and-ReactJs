@@ -15,6 +15,16 @@ const axiosInstanceFiles = (token) => axios.create({
         'Authorization':`Bearer ${token}`
     }
 });
+
+const axiosInstanceFilesRegister = axios.create({
+    baseURL: 'http://127.0.0.1:8000/api',
+    headers: {
+        'Content-Type': 'multipart/form-data',
+
+    }
+});
+
+
 const axiosInstanceAuth = (token) => axios.create({
     baseURL:"http://127.0.0.1:8000/api",
     headers:{
@@ -52,5 +62,5 @@ const deleteUser = async (token, userId) => {
     return response.data;
 };
 
-export  { axiosInstance, resourcesInstance, axiosInstanceLogin, axiosInstanceAuth, axiosInstanceFiles, activateUser, deleteUser };
+export  { axiosInstance, resourcesInstance, axiosInstanceLogin, axiosInstanceAuth, axiosInstanceFiles, activateUser, deleteUser, axiosInstanceFilesRegister };
 

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { axiosInstance, axiosInstanceFiles } from '../../functions/axiosConfig';
+import { axiosInstance, axiosInstanceFilesRegister } from '../../functions/axiosConfig';
 import "./Register.css";
 import { ShowErrorAlter, ShowSuccesAlert } from '../../functions/Alerts';
 
@@ -87,7 +87,7 @@ const Register = ({ onRegisterSuccess }) => {
                 const formData = new FormData();
                 formData.append('file', selectedFile);
 
-                await axiosInstanceFiles.post(`/register/upload/rut_company/${userId}`, formData);
+                await axiosInstanceFilesRegister.post(`/register/upload/rut_company/${userId}`, formData);
             }
             ShowSuccesAlert('Registro exitoso',"te has registrado exitosamente");
             onRegisterSuccess();
