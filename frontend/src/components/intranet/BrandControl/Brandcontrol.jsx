@@ -14,7 +14,7 @@ const UploadBrands = () => {
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
     const [brandIdToDelete, setBrandIdToDelete] = useState(null);
-    const [brands, setBrands] = useState(null);
+    const [brands, setBrands] = useState([]);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');

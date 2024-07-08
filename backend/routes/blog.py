@@ -80,7 +80,7 @@ def upload_banner_notice(notice_id: int, file: UploadFile = File(...), db: sessi
     
     return notice
 
-@blog_routes.delete("data/notice/delete/{notice_id}", response_model = BlogDataResponse)
+@blog_routes.delete("/data/notice/delete/{notice_id}", response_model = BlogDataResponse)
 def delete_notice(notice_id: int, db: session = Depends(GetDB), token: str = Depends(oauth2_scheme)):
     decoded_token = decode_token(token)
     user = GetUserID(db, decoded_token["id"])

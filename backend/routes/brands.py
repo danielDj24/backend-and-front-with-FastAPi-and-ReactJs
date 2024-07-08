@@ -62,7 +62,7 @@ def upload_logo_brand(brand_id : int, file: UploadFile = File(...), db: session 
     
     return brand
 
-@brands_router.delete("brands/delete/{brand_id}", response_model = BrandDataResponse)
+@brands_router.delete("/brands/delete/{brand_id}", response_model = BrandDataResponse)
 def delete_brand(brand_id : int ,db: session = Depends(GetDB), token: str = Depends(oauth2_scheme)):
     
     decoded_token = decode_token(token)

@@ -14,6 +14,8 @@ import UsersList from "../components/intranet/UsersControl/ListUsers";
 import UploadBanner from "../components/intranet/BannerControl/BannersUpload";
 import ConfigSite from "../components/intranet/SiteControl/ConfigSite";
 import UploadBrands from "../components/intranet/BrandControl/Brandcontrol";
+
+
 //importacion de las paginas principales del sitio
 import Home from "../pages/Home/Home";
 import Blog from "../pages/Blog/Blog"
@@ -23,11 +25,14 @@ import Intranet from "../pages/HomeIntranet/HomeIntranet";
 
 //proteccion de rutas 
 import ProtectedRoute from "../components/store/ProtectedRoute";
+import UpdateTitleAndFavIcon from "../components/functions/updateTitlendFavIcon";
+
 
 const AppRoutes = () => {
     
     return (
         <BrowserRouter>
+        <UpdateTitleAndFavIcon/>
             <Routes>
                 <Route path="/*" element = {<Home/>} />
                 <Route path="/sobre-nosotros" element={< AboutUs/>}/>

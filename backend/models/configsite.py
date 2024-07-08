@@ -13,8 +13,8 @@ class ConfigSite(Base):
     contact_email = Column(String(500), index= True)
     contact_phone = Column(String(500), index= True)
     address = Column(String(500), index = True)
-    logo_site = Column(String(), index=True, nullable=True)
-    fav_icon = Column(String(), index=True, nullable=True )
+    logo_site = Column(String(500), index=True, nullable=True)
+    fav_icon = Column(String(500), index=True, nullable=True )
 
 
 class Banners(Base):

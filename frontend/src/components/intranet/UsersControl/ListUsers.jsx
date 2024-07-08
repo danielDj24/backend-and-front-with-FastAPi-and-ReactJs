@@ -17,7 +17,7 @@ const UsersList = () => {
     const [activeFilter, setActiveFilter] = useState("");
     const [roleFilter, setRoleFilter] = useState("");
 
-    const [error, setError] = useState(null);
+    const [setError] = useState(null);
     const {token, checkToken } = useAuthStore();
     const [showModal, setShowModal] = useState(false);
     const [modalAction, setModalAction] = useState(null);

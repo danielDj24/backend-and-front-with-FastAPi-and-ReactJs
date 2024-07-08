@@ -8,6 +8,6 @@ class Blog(Base):
     id = Column(Integer, primary_key = True, index = True)
     categorie = Column(String(300), index = True)
     title = Column(String(300), index = True)
-    notice_content = Column(String(), index = True)
-    img_notice = Column(String(), index = True)
+    notice_content = Column(String(500), index = True)
+    img_notice = Column(String(500), index = True)
     date = Column(DateTime, default=datetime.utcnow, index=True)
