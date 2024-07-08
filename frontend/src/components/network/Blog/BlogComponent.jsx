@@ -39,12 +39,12 @@ const DetailViewComponent = () => {
         </div>
         <div className="view-notice-content-detail">
             <div className="notice-info-top">
-                <p className="notice-date">{notice.date}</p>
+                <p>{new Date(notice.date).toLocaleDateString()}</p>
                 <p className="notice-categorie">{notice.categorie}</p>
             </div>
             <h1>{notice.title}</h1>
-            <p>{notice.notice_content}</p>
-        </div>
+            <div dangerouslySetInnerHTML={{ __html: notice.notice_content }} />
+            </div>
     </div>
     );
 };
@@ -64,7 +64,7 @@ const BlockViewComponent = ({ notices }) => {
                         />
                         <div className="notice-content">
                             <h2>{notice.title}</h2>
-                            <p>{notice.date}</p>
+                            <p>{new Date(notice.date).toLocaleDateString()}</p>
                             <button
                                 onClick={() => window.open(`/notice/${notice.id}`, '_blank')}
                                 className="read-more-button"

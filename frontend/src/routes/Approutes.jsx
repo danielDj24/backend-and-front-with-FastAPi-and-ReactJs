@@ -14,7 +14,7 @@ import UsersList from "../components/intranet/UsersControl/ListUsers";
 import UploadBanner from "../components/intranet/BannerControl/BannersUpload";
 import ConfigSite from "../components/intranet/SiteControl/ConfigSite";
 import UploadBrands from "../components/intranet/BrandControl/Brandcontrol";
-
+import UploadNotices from "../components/intranet/NoticesControl/NoticesControl";
 
 //importacion de las paginas principales del sitio
 import Home from "../pages/Home/Home";
@@ -62,6 +62,10 @@ const AppRoutes = () => {
                 <Route
                     path="/intranet/config/upload/brands"
                     element={<ProtectedRoute roles={['admin']} element={UploadBrands} />}
+                />
+                <Route
+                    path="/intranet/config/upload/notices"
+                    element={<ProtectedRoute roles={['admin']} element={UploadNotices} />}
                 />
             </Routes>
         </BrowserRouter>

@@ -21,7 +21,7 @@ const Intranet = () => {
                         <div className="image-container">
                             <img src={ExampleImg} alt="control intranet" />
                             <Link to="/intranet/config/control/users">
-                                <button type="button" className="btn btn-light">Control de usuarios</button>
+                                <button type="button" className="btn btn-light">Usuarios</button>
                             </Link>
                         </div>
                     </div>
@@ -46,6 +46,14 @@ const Intranet = () => {
                             <img src={ExampleImg} alt="control intranet" />
                             <Link to="/intranet/config/edit/configsite">
                                 <button type="button" className="btn btn-light">Configurar Sitio</button>
+                            </Link>
+                        </div>
+                    </div>
+                    <div className="buttom-intranet-control">
+                        <div className="image-container">
+                            <img src={ExampleImg} alt="control intranet" />
+                            <Link to="/intranet/config/upload/notices">
+                                <button type="button" className="btn btn-light">Noticias</button>
                             </Link>
                         </div>
                     </div>

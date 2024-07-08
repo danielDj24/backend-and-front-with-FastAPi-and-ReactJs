@@ -13,7 +13,7 @@
     display: inline-block;
     flex-direction: column;
     justify-content: space-between; 
-    align-items: center; /* Centra horizontalmente */
+    align-items: center; 
     padding: 10px;
     margin-right: 20px;
 
