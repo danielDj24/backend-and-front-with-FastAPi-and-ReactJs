@@ -20,41 +20,41 @@ const Intranet = () => {
                     <div className="buttom-intranet-control">
                         <div className="image-container">
                             <img src={ExampleImg} alt="control intranet" />
-                            <Link to="/intranet/config/control/users">
+                            <a href="/intranet/config/control/users" target="_blank" rel="noopener noreferrer">
                                 <button type="button" className="btn btn-light">Usuarios</button>
-                            </Link>
+                            </a>
                         </div>
                     </div>
                     <div className="buttom-intranet-control">
                         <div className="image-container">
                             <img src={ExampleImg} alt="control intranet" />
-                            <Link to="/intranet/config/upload/banners">
-                                <button type="button" className="btn btn-light">Subir Banner</button>
-                            </Link>
+                            <a href="/intranet/config/upload/banners" target="_blank" rel="noopener noreferrer">
+                                <button type="button" className="btn btn-light">Banners</button>
+                            </a>
                         </div>
                     </div>
                     <div className="buttom-intranet-control">
                         <div className="image-container">
                             <img src={ExampleImg} alt="control intranet" />
-                            <Link to="/intranet/config/upload/brands">
-                                <button type="button" className="btn btn-light">Subir Marca</button>
-                            </Link>
+                            <a href="/intranet/config/upload/brands" target="_blank" rel="noopener noreferrer">
+                                <button type="button" className="btn btn-light">Marcas</button>
+                            </a>
                         </div>
                     </div>
                     <div className="buttom-intranet-control">
                         <div className="image-container">
                             <img src={ExampleImg} alt="control intranet" />
-                            <Link to="/intranet/config/edit/configsite">
-                                <button type="button" className="btn btn-light">Configurar Sitio</button>
-                            </Link>
+                            <a href="/intranet/config/edit/configsite" target="_blank" rel="noopener noreferrer">
+                                <button type="button" className="btn btn-light">Configuraciones</button>
+                            </a>
                         </div>
                     </div>
                     <div className="buttom-intranet-control">
                         <div className="image-container">
                             <img src={ExampleImg} alt="control intranet" />
-                            <Link to="/intranet/config/upload/notices">
+                            <a href="/intranet/config/upload/notices" target="_blank" rel="noopener noreferrer">
                                 <button type="button" className="btn btn-light">Noticias</button>
-                            </Link>
+                            </a>
                         </div>
                     </div>
                 </div>

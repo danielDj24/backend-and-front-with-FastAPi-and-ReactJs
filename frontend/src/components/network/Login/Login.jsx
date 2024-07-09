@@ -3,8 +3,10 @@ import { axiosInstanceLogin } from '../../functions/axiosConfig';
 import "./Login.css";
 import { ShowErrorAlter, ShowSuccesAlert } from '../../functions/Alerts';
 import useAuthStore from "../../store/userAuthToken";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ onLoginSuccess }) => {
+    const navigate = useNavigate();
     const [FormData, setFormData] = useState({
         username: '',
         password:''
@@ -27,6 +29,7 @@ const Login = ({ onLoginSuccess }) => {
             const token = response.data.access_token;
             const role = response.data.role;
             setToken(token);
+            navigate("/e-commerce");
             ShowSuccesAlert('Inicio de sesión exitoso', `Bienvenido: ${FormData .username}`);
             onLoginSuccess(role);
         }catch(error){

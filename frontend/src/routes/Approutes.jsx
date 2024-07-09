@@ -23,6 +23,9 @@ import AboutUs from "../pages/AboutUs/aboutUs";
 import WhatUs from "../pages/WhatUS/whatUs";
 import Intranet from "../pages/HomeIntranet/HomeIntranet";
 
+//importacion paginas del e-commerce 
+import HomeEcomerce from "../pages/homeStore/homeStore";
+
 //proteccion de rutas 
 import ProtectedRoute from "../components/store/ProtectedRoute";
 import UpdateTitleAndFavIcon from "../components/functions/updateTitlendFavIcon";
@@ -34,6 +37,8 @@ const AppRoutes = () => {
         <BrowserRouter>
         <UpdateTitleAndFavIcon/>
             <Routes>
+                {/* rutas del website */}
+
                 <Route path="/*" element = {<Home/>} />
                 <Route path="/sobre-nosotros" element={< AboutUs/>}/>
                 <Route path="/por-que-nosotros" element={< WhatUs/>}/>
@@ -43,6 +48,9 @@ const AppRoutes = () => {
                 <Route path="/register" element = {<Register/>} />
                 <Route path="/login" element={<Login/>} />
                 
+
+                {/* rutas de la intranet */}
+
                 <Route
                     path="/intranet/"
                     element={<ProtectedRoute roles={['admin']} element={Intranet} />}
@@ -66,6 +74,11 @@ const AppRoutes = () => {
                 <Route
                     path="/intranet/config/upload/notices"
                     element={<ProtectedRoute roles={['admin']} element={UploadNotices} />}
+                />
+                {/* rutas e-commerce */}
+                <Route
+                path = "/e-commerce"
+                element= {<ProtectedRoute roles={['admin', 'client']} element={HomeEcomerce} />}
                 />
             </Routes>
         </BrowserRouter>
