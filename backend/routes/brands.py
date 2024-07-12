@@ -10,8 +10,8 @@ from routes.auth import oauth2_scheme
 
 
 """ORM"""
-from models.products import Brand
-from schemas.products import BrandDataCreateData,BrandDataResponse
+from models.brands import Brand
+from schemas.brands import BrandDataCreateData,BrandDataResponse
 
 
 brands_router = APIRouter()

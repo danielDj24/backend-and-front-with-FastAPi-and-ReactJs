@@ -39,14 +39,21 @@
         };
         return (
             <div className="home-ecommerce">
-                <MenuComponent
-                    handleOpenLoginModal={handleOpenLoginModal}
-                    userRole={userRole}
-                    handleLogout={handleLogout}
-                    isECommerce={true}
-                />
-                    <Banners positionFilter={2} />
+            <MenuComponent
+                handleOpenLoginModal={handleOpenLoginModal}
+                userRole={userRole}
+                handleLogout={handleLogout}
+                isECommerce={true}
+            />
+            <Banners positionFilter={2} />
+            <div classname="ecommerce-elements">
 
+            </div>
+            <FooterComponent 
+            handleOpenLoginModal={handleOpenLoginModal} 
+            userRole={userRole}
+            handleLogout={handleLogout}
+            />
             </div>
         )
     };

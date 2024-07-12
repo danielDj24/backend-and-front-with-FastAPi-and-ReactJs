@@ -9,7 +9,7 @@ from routes.registration import registration_router
 from routes.configsiteroutes import config_routes
 from routes.brands import brands_router
 from routes.blog import blog_routes
-
+from routes.products import product_routes
 from fastapi.staticfiles import StaticFiles
 
 Base.metadata.create_all(bind=engine)
@@ -28,6 +28,7 @@ app.include_router(registration_router, prefix="/api")
 app.include_router(config_routes, prefix="/api")
 app.include_router(brands_router, prefix="/api")
 app.include_router(blog_routes, prefix="/api")
+app.include_router(product_routes, prefix="/api")
 
 """ruta del front"""
 origin = ['*']

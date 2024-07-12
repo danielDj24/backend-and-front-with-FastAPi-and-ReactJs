@@ -36,6 +36,28 @@ const UpdateTitleAndFavIcon  = ()=>{
             case '/blog':
                 title = 'Blog - e-commerce';
                 break;
+            case '/intranet/':
+                title = 'Intranet - Home';
+                break;
+            case '/intranet/config/control/users':
+                title = 'Intranet - Usuarios';
+                break;
+            case '/intranet/config/upload/banners':
+                title = 'Intranet - Banners';
+                break;
+            case '/intranet/config/edit/configsite':
+            title = 'Intranet - configuración';
+            break;
+            case '/intranet/config/upload/brands':
+            title = 'Intranet - Marcas';
+            break;
+            case '/intranet/config/upload/notices':
+                title = 'Intranet - Noticias';
+                break;
+            case '/e-commerce':
+                title = 'e-commerce - Home';
+                break;
+            
             default:
                 title = 'e-commerce';
         }
