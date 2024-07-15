@@ -11,7 +11,7 @@ from routes.auth import oauth2_scheme
 
 """ORM"""
 from models.products import Product, Discount, Shape
-from schemas.products import ProductsCreateData, ProductsDataResponse
+from schemas.products import ProductsCreateData, ProductsDataResponse, ProductsDataDeleteResponse
 from models.brands import Brand
 from sqlalchemy.orm import joinedload
 
@@ -38,7 +38,11 @@ def get_all_products(db: session = Depends(GetDB), token : str = Depends(oauth2_
 
 #productos por id 
 @product_routes.get("/products/existing/{product_id}", response_model = ProductsDataResponse)
-def products_by_id(product_id : int, db: session = Depends(GetDB)):
+def products_by_id(product_id : int, db: session = Depends(GetDB), token : str = Depends(oauth2_scheme)):
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+    if user.role not in ["admin", "client"]:
+        raise HTTPException(status_code=403, detail="Not authorized to access products")
     query = db.query(Product).options(
         joinedload(Product.brand),
         joinedload(Product.discount),
@@ -141,4 +145,80 @@ def create_product(product_data : ProductsCreateData, db : session = Depends(Get
     db.add(product)
     db.commit()
     db.refresh(product)
+    return product
+
+@product_routes.post("/create/products/{product_id}/picture_center", response_model = ProductsDataResponse)
+def upload_center_picture(product_id : int, file: UploadFile = File(...), db: session = Depends(GetDB), token: str = Depends(oauth2_scheme)):
+    
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+    if user.role != "admin":
+        raise HTTPException(status_code=403, detail="Not authorized to create brad")
+    
+    product = db.query(Product).filter(Product.id == product_id).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="product not found")
+    
+    uploads_dir = "media/products/pictures/center"
+    os.makedirs(uploads_dir, exist_ok=True)
+    file_path = os.path.join(uploads_dir, file.filename)
+    with open(file_path, "wb") as file_object:
+        file_object.write(file.file.read())
+
+    product.center_picture = file_path
+    db.commit()
+    db.refresh(product)
+    
+    return product      
+
+@product_routes.post("/create/products/{product_id}/side_picture", response_model = ProductsDataResponse)
+def upload_center_picture(product_id : int, file: UploadFile = File(...), db: session = Depends(GetDB), token: str = Depends(oauth2_scheme)):
+    
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+    if user.role != "admin":
+        raise HTTPException(status_code=403, detail="Not authorized to create brad")
+    
+    product = db.query(Product).filter(Product.id == product_id).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="product not found")
+    
+    uploads_dir = "media/products/pictures/side"
+    os.makedirs(uploads_dir, exist_ok=True)
+    file_path = os.path.join(uploads_dir, file.filename)
+    with open(file_path, "wb") as file_object:
+        file_object.write(file.file.read())
+
+    product.side_picture = file_path
+    db.commit()
+    db.refresh(product)
+    
+    return product      
+
+@product_routes.delete("products/delete/{product_id}", response_model=ProductsDataDeleteResponse)
+def delete_product(product_id: int, db: session = Depends(GetDB), token: str = Depends(oauth2_scheme)):
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+    if user.role != "admin":
+        raise HTTPException(status_code=403, detail="Not authorized to delete logo")
+    
+    product = db.query(Product).filter(Product.id == product_id).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="product not found")
+    
+    if product.center_picture:
+        if os.path.exists(product.center_picture):
+            os.remove(product.center_picture)
+        else:
+            raise HTTPException(status_code=404, detail="product file not found")
+        
+    if product.side_picture:
+        if os.path.exists(product.side_picture):
+            os.remove(product.side_picture)
+        else:
+            raise HTTPException(status_code=404, detail="side_picture file not found")
+        
+    db.delete(product)
+    db.commit()
+    
     return product

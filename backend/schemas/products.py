@@ -55,4 +55,11 @@ class ProductsDataResponse(ProductsData):
     class Config:
         from_attributes  = True
         
-    
+
+class ProductsDataDeleteResponse(ProductsData):
+    id: int
+    shape: Optional[int] = None
+    brand: Optional[int] = None
+    discount: Optional[int] = None
+    center_picture: Optional[str] = None
+    side_picture: Optional[str] = None
