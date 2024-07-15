@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from config.database import engine
 from models.users import Base
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi_pagination import add_pagination
 
 """Rutas de la app"""
 from routes.auth import auth_routes
@@ -10,7 +11,10 @@ from routes.configsiteroutes import config_routes
 from routes.brands import brands_router
 from routes.blog import blog_routes
 from routes.products import product_routes
+from routes.shapes import shapes_routes
+from routes.discounts import discount_routes
 from fastapi.staticfiles import StaticFiles
+
 
 Base.metadata.create_all(bind=engine)
 
@@ -28,7 +32,12 @@ app.include_router(registration_router, prefix="/api")
 app.include_router(config_routes, prefix="/api")
 app.include_router(brands_router, prefix="/api")
 app.include_router(blog_routes, prefix="/api")
+app.include_router(shapes_routes, prefix="/api")
+app.include_router(discount_routes, prefix="/api")
 app.include_router(product_routes, prefix="/api")
+
+
+add_pagination(app)
 
 """ruta del front"""
 origin = ['*']

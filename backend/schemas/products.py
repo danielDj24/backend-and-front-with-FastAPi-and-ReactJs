@@ -54,3 +54,5 @@ class ProductsDataResponse(ProductsData):
 
     class Config:
         from_attributes  = True
+        
+    

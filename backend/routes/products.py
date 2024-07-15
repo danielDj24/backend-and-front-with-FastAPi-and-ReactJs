@@ -1,6 +1,7 @@
 import os
 from typing import List
 
+from fastapi_pagination import Page, paginate
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from services.dbconnection import GetDB
 from sqlalchemy.orm import session
@@ -10,60 +11,100 @@ from routes.auth import oauth2_scheme
 
 """ORM"""
 from models.products import Product, Discount, Shape
-from schemas.products import ProductsCreateData, ProductsDataResponse, DiscountCreateData, DiscountResponseData, ShapeResponseData, ShapeCreateData
+from schemas.products import ProductsCreateData, ProductsDataResponse
 from models.brands import Brand
 from sqlalchemy.orm import joinedload
 
 product_routes = APIRouter()
 
-"""rutas para manejar las formas de los lentes"""
-
-@product_routes.post("/product/create/shape", response_model=ShapeResponseData)
-def create_shape(shape_data : ShapeCreateData, db : session = Depends(GetDB), token : str = Depends(oauth2_scheme)):
-    decoded_token = decode_token(token)
-    user = GetUserID(db, decoded_token["id"])
-    if user.role != "admin":
-        raise HTTPException(status_code=403, detail="Not authorized to create product")
-    
-    shape = Shape(
-        name_shape = shape_data.name_shape,
-    )
-    db.add(shape)
-    db.commit()
-    db.refresh(shape)
-    return shape
-
-
-"""rutas para manejar los descuentos"""
-@product_routes.post("/product/create/discount", response_model=DiscountResponseData)
-def create_discount(discount_data : DiscountCreateData, db : session = Depends(GetDB), token : str = Depends(oauth2_scheme)):
-    decoded_token = decode_token(token)
-    user = GetUserID(db, decoded_token["id"])
-    if user.role != "admin":
-        raise HTTPException(status_code=403, detail="Not authorized to create product")
-    
-    discount = Discount(
-        discount_percentage = discount_data.discount_percentage,
-        description = discount_data.description,
-    )
-    db.add(discount)
-    db.commit()
-    db.refresh(discount)
-    return discount
-
-
 """rutas de los productos"""
-@product_routes.get("/products", response_model=List[ProductsDataResponse])
-def get_all_products(db: session = Depends(GetDB)):
-    products = db.query(Product).options(
+#todos los productos
+@product_routes.get("/products", response_model=Page[ProductsDataResponse])
+def get_all_products(db: session = Depends(GetDB), token : str = Depends(oauth2_scheme)):
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+    if user.role not in ["admin", "client"]:
+        raise HTTPException(status_code=403, detail="Not authorized to access products")
+    query = db.query(Product).options(
         joinedload(Product.brand),
         joinedload(Product.discount),
         joinedload(Product.shape)
-    ).all()
+    )
+    products = query.all()
     if not products:
         raise HTTPException(status_code=404, detail="No products found")
-    return products
+    
+    return paginate(products)
 
+#productos por id 
+@product_routes.get("/products/existing/{product_id}", response_model = ProductsDataResponse)
+def products_by_id(product_id : int, db: session = Depends(GetDB)):
+    query = db.query(Product).options(
+        joinedload(Product.brand),
+        joinedload(Product.discount),
+        joinedload(Product.shape)
+    ).filter(Product.id == product_id)
+    
+    product = query.first()
+    if not product:
+        raise HTTPException(status_code=404, detail="product not found")
+    return product
+
+#productos por su forma
+@product_routes.get("/products/shape/{shape_id}", response_model=Page[ProductsDataResponse])
+def get_products_by_shape(shape_id: int, db : session = Depends(GetDB), token : str = Depends(oauth2_scheme)):
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+    if user.role not in ["admin", "client"]:
+        raise HTTPException(status_code=403, detail="Not authorized to access products")
+    query = db.query(Product).options(
+        joinedload(Product.brand),
+        joinedload(Product.discount),
+        joinedload(Product.shape)
+    ).filter(Product.shape_id == shape_id)
+    
+    products = query.all()
+    
+    if not products:
+        raise HTTPException(status_code=404, detail="No products found for the specified shape")
+    
+    return paginate(products)
+
+#poductos por descuento
+@product_routes.get("/products/discount/{discount_id}", response_model=Page[ProductsDataResponse])
+def get_products_by_discount(discount_id: int, db : session = Depends(GetDB), token : str = Depends(oauth2_scheme)):
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+    if user.role not in ["admin", "client"]:
+        raise HTTPException(status_code=403, detail="Not authorized to access products")
+    query = db.query(Product).options(
+        joinedload(Product.brand),
+        joinedload(Product.discount),
+        joinedload(Product.shape)
+    ).filter(Product.discount_id == discount_id)
+    
+    products = query.all()
+    if not products:
+        raise HTTPException(status_code=404, detail="No products found for the specified discount")
+    return paginate(products)
+
+#productos por marca
+@product_routes.get("/products/brand/{brand_id}", response_model=Page[ProductsDataResponse])
+def get_products_by_discount(brand_id: int, db : session = Depends(GetDB), token : str = Depends(oauth2_scheme)):
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+    if user.role not in ["admin", "client"]:
+        raise HTTPException(status_code=403, detail="Not authorized to access products")
+    query = db.query(Product).options(
+        joinedload(Product.brand),
+        joinedload(Product.discount),
+        joinedload(Product.shape)
+    ).filter(Product.brand_id == brand_id)
+    
+    products = query.all()
+    if not products:
+        raise HTTPException(status_code=404, detail="No products found for the specified brand")
+    return paginate(products)
 
 @product_routes.post("/create/product", response_model=ProductsDataResponse)
 def create_product(product_data : ProductsCreateData, db : session = Depends(GetDB), token : str = Depends(oauth2_scheme)):
@@ -80,6 +121,11 @@ def create_product(product_data : ProductsCreateData, db : session = Depends(Get
         discount = db.query(Discount).filter(Discount.id == product_data.discount_id).first()
         if not discount:
             raise HTTPException(status_code=400, detail="Discount ID not found")
+    
+    if product_data.shape_id:
+        shape = db.query(Shape).filter(Shape.id == product_data.shape_id).first()
+        if not shape:
+            raise HTTPException(status_code=400, detail="shape ID not found")
     
     product = Product(
         brand_id = product_data.brand_id,
