@@ -140,7 +140,8 @@ def create_product(product_data : ProductsCreateData, db : session = Depends(Get
         color = product_data.color,
         size = product_data.size,
         gender = product_data.gender,
-        quantity = product_data.quantity
+        quantity = product_data.quantity,
+        price_product = product_data.price_product
     )
     db.add(product)
     db.commit()

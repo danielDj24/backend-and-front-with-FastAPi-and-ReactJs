@@ -26,7 +26,7 @@ class DiscountCreateData(DiscountData):
 
 class DiscountResponseData(DiscountData):
     id : int
-    
+
     class config:
         from_attributes : True
 
@@ -38,11 +38,15 @@ class ProductsData(BaseModel):
     size : Optional[str] = None
     gender :  Optional[str] = None
     quantity : Optional[int] = None
-
+    price_product :  Optional[int] = None
+    
 
 
 class ProductsCreateData(ProductsData):
     pass
+    shape_id: Optional[int] = None
+    brand_id: Optional[int] = None
+    discount_id: Optional[int] = None
 
 class ProductsDataResponse(ProductsData):
     id: int

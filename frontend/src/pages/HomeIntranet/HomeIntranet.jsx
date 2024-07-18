@@ -57,6 +57,14 @@ const Intranet = () => {
                             </a>
                         </div>
                     </div>
+                    <div className="buttom-intranet-control">
+                        <div className="image-container">
+                            <img src={ExampleImg} alt="control intranet" />
+                            <a href="/intranet/config/upload/products" target="_blank" rel="noopener noreferrer">
+                                <button type="button" className="btn btn-light">Productos</button>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
