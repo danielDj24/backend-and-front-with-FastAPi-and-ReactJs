@@ -196,7 +196,7 @@ def upload_center_picture(product_id : int, file: UploadFile = File(...), db: se
     
     return product      
 
-@product_routes.delete("products/delete/{product_id}", response_model=ProductsDataDeleteResponse)
+@product_routes.delete("/products/delete/{product_id}", response_model=ProductsDataDeleteResponse)
 def delete_product(product_id: int, db: session = Depends(GetDB), token: str = Depends(oauth2_scheme)):
     decoded_token = decode_token(token)
     user = GetUserID(db, decoded_token["id"])

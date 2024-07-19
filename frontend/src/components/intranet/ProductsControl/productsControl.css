@@ -1,0 +1,103 @@
+
+.background-container {
+    width: 100%;
+    height: 100%;
+    background: #F1F1F1;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 22px;
+    opacity: 1;
+    padding: 20px; 
+    margin-top: 25px;
+}
+
+.title {
+    text-align: center;
+    font: normal normal bold 40px/47px Helvetica;
+    letter-spacing: 0px;
+    color: #707070;
+    opacity: 1;
+    margin-bottom: 20px; 
+}
+.form-control{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: center;
+}
+
+.filter-group {
+    align-items: center;
+    min-width: 25%; 
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; 
+    margin: 20px 0; 
+}
+
+.pagination-controls button,
+.pagination-controls select {
+    margin: 0 5px;
+}
+
+.pagination-controls span {
+    margin: 0 10px; 
+}
+
+.product-list {
+    padding: 20px;
+    align-items:center ;
+}
+
+.product-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+}
+
+.product-image-container {
+    position: relative;
+    margin-right: 20px;
+}
+
+.product-image {
+    max-width: 150px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.product-details {
+    flex-grow: 1;
+}
+
+.product-info {
+    font-size: 14px;
+    margin: 5px 0;
+    color: #555;
+}
+.control-buttons{
+    display: flex;
+    align-items: center;
+}
+.delete-button {
+    width: 10%;
+    height: 40px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}

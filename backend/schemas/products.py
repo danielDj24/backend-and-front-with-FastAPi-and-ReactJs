@@ -43,16 +43,15 @@ class ProductsData(BaseModel):
 
 
 class ProductsCreateData(ProductsData):
-    pass
     shape_id: Optional[int] = None
     brand_id: Optional[int] = None
     discount_id: Optional[int] = None
 
 class ProductsDataResponse(ProductsData):
     id: int
-    shape: ShapeResponseData
-    brand: BrandDataResponse
-    discount: Optional[DiscountResponseData]
+    shape: Optional[ShapeResponseData] = None
+    brand: Optional[BrandDataResponse] = None
+    discount: Optional[DiscountResponseData] = None
     center_picture: Optional[str] = None
     side_picture: Optional[str] = None
 
@@ -62,8 +61,8 @@ class ProductsDataResponse(ProductsData):
 
 class ProductsDataDeleteResponse(ProductsData):
     id: int
-    shape: Optional[int] = None
-    brand: Optional[int] = None
-    discount: Optional[int] = None
+    shape_id: Optional[int] = None
+    brand_id: Optional[int] = None
+    discount_id: Optional[int] = None
     center_picture: Optional[str] = None
     side_picture: Optional[str] = None

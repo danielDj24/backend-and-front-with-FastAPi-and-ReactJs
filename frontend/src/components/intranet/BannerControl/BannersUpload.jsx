@@ -179,7 +179,9 @@ const UploadBanner = () => {
                                         <p>Redirección: {banner.link_url}</p>
                                         <p>Posición: {banner.position}</p>
                                         {banner.image && <img src={`${resourcesInstance.defaults.baseURL}${banner.image}`} alt={`Banner ${banner.id}`} className="banner-image banners-img" />}
-                                        <button className="delete-button-banners mb-2" onClick={() => handleOpenDeleteModal(banner.id)}>Eliminar</button>
+                                        <div className="control-buttons">
+                                            <button className="delete-button-banners mb-2" onClick={() => handleOpenDeleteModal(banner.id)}>Eliminar</button>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
