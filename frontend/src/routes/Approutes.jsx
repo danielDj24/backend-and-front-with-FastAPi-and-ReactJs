@@ -27,8 +27,10 @@ import Intranet from "../pages/HomeIntranet/HomeIntranet";
 
 //importacion paginas del e-commerce 
 import HomeEcomerce from "../pages/homeStore/homeStore";
+import SearchProductsByDiscount from "../pages/Discounts/DiscountPage";
 import ProductsByType from "../components/e-commerce/productsType/productsComponent";
-
+import ProductsByDiscounts from "../components/e-commerce/productsDiscounts/productsDiscounts";
+import ProductsByBrand from "../components/e-commerce/productsBrands/productsBrands";
 //proteccion de rutas 
 import ProtectedRoute from "../components/store/ProtectedRoute";
 import UpdateTitleAndFavIcon from "../components/functions/updateTitlendFavIcon";
@@ -92,13 +94,26 @@ const AppRoutes = () => {
                 />
                 
                 {/* rutas e-commerce */}
+                
                 <Route
                 path = "/e-commerce"
                 element= {<ProtectedRoute roles={['admin', 'client']} element={HomeEcomerce} />}
                 />
                 <Route
+                    path="/e-commerce/products/discounts"
+                    element={<ProtectedRoute roles={['admin', 'client']} element={SearchProductsByDiscount} />} 
+                />
+                <Route
                     path="/e-commerce/products/gender/:gender"
                     element={<ProtectedRoute roles={['admin', 'client']} element={ProductsByType} />} 
+                />
+                <Route
+                    path="/e-commerce/products/discounts/:discountId"
+                    element={<ProtectedRoute roles={['admin', 'client']} element={ProductsByDiscounts} />} 
+                />
+                <Route
+                    path="/e-commerce/products/brands/:brandId"
+                    element={<ProtectedRoute roles={['admin', 'client']} element={ProductsByBrand} />} 
                 />
             </Routes>
         </BrowserRouter>

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { axiosInstance, resourcesInstance } from "../../functions/axiosConfig";
+import { axiosInstance, resourcesInstance,axiosInstanceAuth } from "../../functions/axiosConfig";
 import getRoleFromToken from "../../functions/DecodeToken";
 import useAuthStore from "../../store/userAuthToken";
 import { useNavigate } from "react-router-dom";
-
+import { ShowErrorAlter } from "../../functions/Alerts";
 // estilos
 import "./menuStyles.css";
 
@@ -14,9 +14,15 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
     const storedToken = useAuthStore.getState().token;
     const roleFromToken = getRoleFromToken(storedToken);
     const [submenuOpen, setSubmenuOpen] = useState(false);
+    const [submenuBrandsOpen, setSubmenuBrandsOpen] = useState(false);
     const navigate = useNavigate();
+    const [brands, setBrands] = useState([]);
+    const { token, checkToken } = useAuthStore();
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        fetchBrands();
         axiosInstance.get('/config')
             .then(response => {
                 const data = response.data;
@@ -30,6 +36,20 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
             });
     }, []);
 
+    const fetchBrands = async () => {
+        if (token) {
+            const axiosAuth = axiosInstanceAuth(token);
+            try {
+                const response = await axiosAuth.get("/uploaded/brands");
+                setBrands(response.data);
+            } catch (error) {
+                setError(error.response ? error.response.data.detail : "Error fetching brands");
+            } finally {
+                setLoading(false);
+            }
+        }
+    };
+
     const handleLogoClick = () => {
         if (storedToken){
             window.location.href = '/e-commerce';
@@ -41,9 +61,14 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
     const toggleSubmenu = () => {
         setSubmenuOpen(prevState => !prevState);
     };
-    
+    const toggleBrandsSubmenu = () => {
+        setSubmenuBrandsOpen(prevState => !prevState);
+    };
     const handleNavigateBrands = (gender) => {
         navigate(`/e-commerce/products/gender/${gender}`);
+    };
+    const handleNavigateToBrand = (brandId) => {
+        navigate(`/e-commerce/products/brands/${brandId}`);
     };
 
     return (
@@ -59,13 +84,26 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
                         </div>
                         {submenuOpen && (
                             <div className="submenu" style={{ backgroundColor: primaryColor }}>
+                                <a href="/e-commerce/tienda" className="submenu-item">Tienda</a>
                                 <a onClick={() => handleNavigateBrands('Hombre')} className="submenu-item">Hombre </a>
                                 <a onClick={() => handleNavigateBrands('Mujer')} className="submenu-item">Mujer</a>
                                 <a onClick={() => handleNavigateBrands('Lentes de sol')} className="submenu-item">Lentes de Sol</a>
                                 <a onClick={() => handleNavigateBrands('Optico')} className="submenu-item">Ópticos</a>
                             </div>
                         )}
-                        <a className="menu-item">Marcas</a>
+                        <div className="menu-item" onClick={toggleBrandsSubmenu}>
+                            Marcas
+                            <i className={`fa-solid ${submenuBrandsOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
+                        </div>
+                        {submenuBrandsOpen && (
+                            <div className="submenu" style={{ backgroundColor: primaryColor }}>
+                                {brands.map((brand) => (
+                                    <a key={brand.id} className="submenu-item" onClick={() => handleNavigateToBrand(brand.id)}>
+                                        {brand.name}
+                                    </a>
+                                ))}
+                            </div>
+                        )}
                     <a href="/e-commerce/buscador" className="menu-item">Buscador</a>
                     <a href="/e-commerce/contactanos" className="menu-item">Contáctanos</a>
                     <button className="btn btn-dark" onClick={handleLogout}>

@@ -59,3 +59,10 @@
     margin: 5px 0;
     color: #555;
 }
+
+.form-control{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

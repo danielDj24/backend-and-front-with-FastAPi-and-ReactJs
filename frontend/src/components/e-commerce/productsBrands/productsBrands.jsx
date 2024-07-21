@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from "react";
+import React,{useEffect,useState} from "react";
 import useAuthStore from "../../store/userAuthToken";
 import { axiosInstanceAuth, resourcesInstance } from '../../functions/axiosConfig';
 import { ShowErrorAlter } from '../../functions/Alerts';
@@ -7,10 +7,11 @@ import { useParams } from 'react-router-dom';
 import MenuComponent from "../../network/Menu/MenuComponent";
 import FooterComponent from "../../network/Footer/footerComponent"
 
+import './productsBrands.css'
 import BannerPlus from "../../../assets/bannersBurn/PLusssizeBanner.jpg"
 
-const ProductsByType = () =>{
-    const { gender } = useParams();
+const ProductsByBrand = () => {
+    const {brandId} = useParams();
     const [products, setProducts] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -19,12 +20,13 @@ const ProductsByType = () =>{
     const [totalPages, setTotalPages] = useState(0);
     const {token, checkToken } = useAuthStore();
 
-    // Constantes para controlar el login y el registro en el modal de usuarios
+    
     const [ setShowLoginModal] = useState(false);
 
     // Control de rutas para el login admin
     const [userRole, setUserRole] = useState(null);
 
+    
     const handleOpenLoginModal = () => setShowLoginModal(true);
 
     useEffect(() => {
@@ -38,20 +40,20 @@ const ProductsByType = () =>{
     };
 
     useEffect(() => {
-        if (gender) {
+        if (brandId) {
             fetchProducts();
         } else {
             setLoading(false);
-            setError("Gender is not defined");
+            setError("brandId is not defined");
         }
-        }, [currentPage, pageSize, gender]);
+        }, [currentPage, pageSize, brandId]);
 
     const fetchProducts = async () => {
         setLoading(true);
         if (token) {
             const axiosAuth = axiosInstanceAuth(token);
             try {
-                const response = await axiosAuth.get(`/products/gender/${gender}`, {
+                const response = await axiosAuth.get(`/products/brand/${brandId}`, {
                     params: {
                         page: currentPage,
                         size: pageSize,
@@ -86,7 +88,6 @@ const ProductsByType = () =>{
     if (error) {
         return <div>Error: {error}</div>;
     }
-
     return (
         <div className="product-container">
         <MenuComponent
@@ -102,7 +103,7 @@ const ProductsByType = () =>{
                         </div>
                     </div>
         <div className="background-container">
-            <div className="pagination-controls">
+            <div className="pagination-controls-discounts">
                 <button className="btn btn-light" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
                     Anterior
                 </button>
@@ -150,4 +151,4 @@ const ProductsByType = () =>{
     );
 };
 
-export default ProductsByType;
+export default ProductsByBrand;

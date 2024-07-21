@@ -14,6 +14,10 @@ import GafasSol from "../../assets/resources-ecommerce/Gafas-de-sol.jpg";
 import HombreGafas from "../../assets/resources-ecommerce/Gafas-hombre.jpg";
 import  MujerGafas from "../../assets/resources-ecommerce/Gafas-mujer.jpg";
 import GafasOpticos from "../../assets/resources-ecommerce/gafas-opticas.jpg";
+import Discounts from "../../assets/resources-ecommerce/Promociones.jpg";
+
+import FilterDiscounts from "../../assets/resources-ecommerce/opticas-mujer-gafas.jpg";
+import FilterPrices from "../../assets/resources-ecommerce/mujer-gafas-opticas-colombia.jpg";
 
     const HomeEcomerce = () =>{
         // Constantes para controlar el login y el registro en el modal de usuarios
@@ -42,6 +46,9 @@ import GafasOpticos from "../../assets/resources-ecommerce/gafas-opticas.jpg";
             navigate(`/e-commerce/products/gender/${gender}`);
         };
 
+        const handleNavigateDiscounts = (discountId) => {
+            navigate(`/e-commerce/products/discounts/${discountId}`);
+        };
         return (
             <div className="home-ecommerce">
             <MenuComponent
@@ -70,6 +77,25 @@ import GafasOpticos from "../../assets/resources-ecommerce/gafas-opticas.jpg";
                     <div onClick={() => handleNavigate('Optico')}>
                         <img src={GafasOpticos} alt="Lentes ópticos" />
                         <p>Lentes Ópticos</p>
+                    </div>
+                </div>
+                <div className="discount-element">
+                    <div onClick={() => handleNavigateDiscounts(2)}>
+                        <img src={Discounts} alt="discount" />
+                    </div>
+                </div>
+                <div className="filter-elements">
+                    <div>
+                        <img src={FilterDiscounts} alt="filter discounts" />
+                        <a href="/e-commerce/products/discounts">
+                            <p>En descuento</p>
+                        </a>
+                    </div>
+                    <div>
+                        <img src={FilterPrices} alt="filter prices" />
+                        <a href="/intranet/config/edit/configsite">
+                            <p>Más económico</p>
+                        </a>
                     </div>
                 </div>
             </div>

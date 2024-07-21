@@ -88,13 +88,11 @@ html, body {
 }
 
 .pluss-size-container img {
-    width: 100%; /* Ajusta el tamaño de la imagen al ancho del contenedor */
+    width: 100%;
     height: auto;
     display: block;
     border-radius: 10px;    
     box-shadow: 0px 3px 6px #00000029;
-
-
 }
 
 .pluss-size-container p {

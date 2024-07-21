@@ -24,6 +24,7 @@ html, body {
     border-radius: 10px;  
     margin-bottom: 25px;  
     margin-top: 25px; 
+
 }
 
 .container-images-e-commerce {
@@ -34,6 +35,8 @@ html, body {
     padding: 10px;
     gap: 20px;
     cursor: pointer;
+    margin-top: 20px;
+
 }
 
 .container-images-e-commerce div {
@@ -68,6 +71,88 @@ html, body {
 }
 
 .container-images-e-commerce div:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+.discount-element{
+    position: relative;
+    width: 100%;
+    max-width: 100vw;
+    border-radius: 10px;    
+    box-shadow: 0px 3px 6px #00000029;
+    cursor: pointer;
+    margin-top: 20px;
+
+}
+.discount-element img {
+    width: 100%; 
+    height: auto;
+    display: block;
+    border-radius: 10px;    
+    box-shadow: 0px 3px 6px #00000029;
+}
+
+.discount-element div {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.discount-element div:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+
+.filter-elements {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; 
+    flex-wrap: nowrap; 
+    padding: 10px;
+    gap: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    text-decoration: none;
+
+}
+
+.filter-elements div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 10px;    
+
+}
+
+.filter-elements img {
+    width: 90%; 
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 10px;    
+    box-shadow: 0px 3px 6px #00000029;
+
+}
+.filter-elements a {
+    text-decoration: none; 
+    color: inherit; 
+}
+
+.filter-elements p {
+    text-align: center;
+    font: normal normal normal 34px/35px Bell MT;
+    letter-spacing: 0px;
+    color: #707070;
+    text-decoration: none;
+}
+
+.filter-elements div {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.filter-elements div:hover {
     transform: scale(1.05); 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
