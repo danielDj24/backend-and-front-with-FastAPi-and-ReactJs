@@ -16,7 +16,8 @@ import ConfigSite from "../components/intranet/SiteControl/ConfigSite";
 import UploadBrands from "../components/intranet/BrandControl/Brandcontrol";
 import UploadNotices from "../components/intranet/NoticesControl/NoticesControl";
 import CreateProduct from "../components/intranet/ProductsControl/ProductsControl";
-
+import CreateShape from "../components/intranet/ShapeControl/shapeControl";
+import CreateDiscount from "../components/intranet/DiscountsControl/discountControl";
 //importacion de las paginas principales del sitio
 import Home from "../pages/Home/Home";
 import Blog from "../pages/Blog/Blog"
@@ -79,6 +80,14 @@ const AppRoutes = () => {
                 <Route
                     path="/intranet/config/upload/products"
                     element={<ProtectedRoute roles={['admin']} element={CreateProduct} />}
+                />
+                <Route
+                    path="/intranet/config/upload/shapes"
+                    element={<ProtectedRoute roles={['admin']} element={CreateShape} />}
+                />
+                <Route
+                    path="/intranet/config/upload/discounts"
+                    element={<ProtectedRoute roles={['admin']} element={CreateDiscount} />}
                 />
                 
                 {/* rutas e-commerce */}

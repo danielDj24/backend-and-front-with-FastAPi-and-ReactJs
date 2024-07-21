@@ -57,6 +57,12 @@ const UpdateTitleAndFavIcon  = ()=>{
             case '/intranet/config/upload/products':
                 title = 'Intranet - Productos';
                 break;
+            case '/intranet/config/upload/shapes':
+                title = 'Intranet - Formas';
+                break;
+            case '/intranet/config/upload/discounts':
+                title = 'Intranet - Descuentos';
+                break;
             case '/e-commerce':
                 title = 'e-commerce - Home';
                 break;

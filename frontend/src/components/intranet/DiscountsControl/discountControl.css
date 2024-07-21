@@ -1,0 +1,58 @@
+.background-container-discounts {
+    width: 100%;
+    height: 100%;
+    background: #F1F1F1;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 22px;
+    opacity: 1;
+    padding: 20px; 
+}
+
+.discount-title {
+    text-align: center;
+    font: normal normal bold 40px/47px Helvetica;
+    letter-spacing: 0px;
+    color: #707070;
+    opacity: 1;
+    margin-bottom: 20px; 
+}
+
+.form-control{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.discount-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 10px;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.button-container {
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.delete-button-discount {
+    width: 50%;
+    height: 40px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}

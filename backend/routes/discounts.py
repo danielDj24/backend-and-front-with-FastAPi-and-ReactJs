@@ -51,9 +51,11 @@ def delete_discount(discount_id : int, db : session = Depends(GetDB), token : st
     if user.role != "admin":
         raise HTTPException(status_code=403, detail="Not authorized to delete discount")
     
-    discount = db.query(Discount).filter(discount.id == discount_id).first()
-    if not discount:
-        raise HTTPException(status_code=404, detail="discount not found")
-    db.delete(discount)
+    discount_to_delete = db.query(Discount).filter(Discount.id == discount_id).first()
+    if not discount_to_delete:
+        raise HTTPException(status_code=404, detail="Discount not found")
+    
+    db.delete(discount_to_delete)
     db.commit()
-    return discount
+    
+    return discount_to_delete
