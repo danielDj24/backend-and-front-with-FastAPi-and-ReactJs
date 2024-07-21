@@ -110,6 +110,19 @@ def get_products_by_discount(brand_id: int, db : session = Depends(GetDB), token
         raise HTTPException(status_code=404, detail="No products found for the specified brand")
     return paginate(products)
 
+#productos por publico de destino
+@product_routes.get("/products/gender/{gender}", response_model=Page[ProductsDataResponse])
+def get_products_by_gender( gender : str , db : session = Depends(GetDB), token : str = Depends(oauth2_scheme)):
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+    if user.role not in ["admin", "client"]:
+        raise HTTPException(status_code=403, detail="Not authorized to access products")
+    if gender:
+        products = db.query(Product).filter(Product.gender == gender).all()
+    else:
+        products = db.query(Product).all()
+    return paginate(products)
+    
 @product_routes.post("/create/product", response_model=ProductsDataResponse)
 def create_product(product_data : ProductsCreateData, db : session = Depends(GetDB), token : str = Depends(oauth2_scheme)):
     decoded_token = decode_token(token)

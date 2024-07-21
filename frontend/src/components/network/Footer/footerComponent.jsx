@@ -5,13 +5,13 @@ import { axiosInstance, resourcesInstance } from "../../functions/axiosConfig";
 import "./FooterStyles.css"
 
 //assets
-import FacebookIcon from "../../../assets/facebook-icon.svg";
+import FacebookIcon from "../../../assets/icons/facebook-icon.svg";
 //import InstagramIcon from "../assets/IconInstagram.svg";
-import WhatsAppIcon from "../../../assets/whatsapp-icon.svg";
-import YoutubeIcon from "../../../assets/youtube-icon.svg";
-import TwitterIcon from "../../../assets/twitter-icon.svg";
-import BehanceIcon from "../../../assets/behance-logo.svg";
-import GithubIcon from "../../../assets/github-logo.svg";
+import WhatsAppIcon from "../../../assets/icons/whatsapp-icon.svg";
+import YoutubeIcon from "../../../assets/icons/youtube-icon.svg";
+import TwitterIcon from "../../../assets/icons/twitter-icon.svg";
+import BehanceIcon from "../../../assets/icons/behance-logo.svg";
+import GithubIcon from "../../../assets/icons/github-logo.svg";
 
 
 

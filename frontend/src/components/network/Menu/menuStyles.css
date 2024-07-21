@@ -1,5 +1,5 @@
 :root {
-    --secondary-color: #blue; /* Color por defecto o inicial */
+    --secondary-color: #blue; 
     --primaryColor:#white;
 }
 .menu-container {
@@ -9,6 +9,9 @@
     padding: 4px;
     opacity: 1;
     background-color: var(--primaryColor);
+    position: relative;
+    width: 100%;
+
 }
 
 .logo-img {
@@ -35,6 +38,8 @@
     color: var(--secondary-color); 
     text-decoration: none; 
     transition: color 0.3s; 
+    cursor: pointer;
+
 }
 
 .menu-item:hover {
@@ -53,7 +58,6 @@
     font-size: 1em; 
 }
 
-/*estilos para el modal*/
 .form-toggle {
     display: flex;
     justify-content: center;
@@ -70,7 +74,7 @@
 }
 
 .form-toggle-item.active {
-    background-color: #28a745; /* Color verde */
+    background-color: #28a745; 
     color: white;
     border-color: #28a745;
 }
@@ -79,3 +83,31 @@
     background-color: #f0f0f0;
     border-color: #ccc;
 }   
+.submenu {
+    display: flex;
+    flex-direction: row-reverse; 
+    justify-content: center; 
+    position: absolute; 
+    top: 100%; 
+    left: 0;
+    background-color: var(--primaryColor); 
+    border: 1px solid var(--secondary-color);
+    z-index: 1000;
+    padding: 0.5rem 0; 
+    width: 100%;
+    cursor: pointer;
+
+}
+
+
+.submenu-item {
+    margin-right: 20px;
+    color: var(--secondary-color); 
+    text-decoration: none; 
+    transition: color 0.3s; 
+}
+
+
+.submenu-item:hover {
+    color: white; 
+}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { axiosInstance, resourcesInstance } from "../../functions/axiosConfig";
 import getRoleFromToken from "../../functions/DecodeToken";
 import useAuthStore from "../../store/userAuthToken";
+import { useNavigate } from "react-router-dom";
 
 // estilos
 import "./menuStyles.css";
@@ -12,7 +13,8 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
     const [secondaryColor, setSecondaryColor] = useState('');
     const storedToken = useAuthStore.getState().token;
     const roleFromToken = getRoleFromToken(storedToken);
-
+    const [submenuOpen, setSubmenuOpen] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         axiosInstance.get('/config')
@@ -29,7 +31,19 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
     }, []);
 
     const handleLogoClick = () => {
-        window.location.href = '/';
+        if (storedToken){
+            window.location.href = '/e-commerce';
+        } else  {
+            window.location.href = '/';
+        }
+    };
+
+    const toggleSubmenu = () => {
+        setSubmenuOpen(prevState => !prevState);
+    };
+    
+    const handleNavigateBrands = (gender) => {
+        navigate(`/e-commerce/products/gender/${gender}`);
     };
 
     return (
@@ -39,6 +53,21 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
             
             {(roleFromToken === 'admin' || roleFromToken === 'client') && isECommerce ? (
                 <div className="menu-items ecommerce-menu-items">
+                    <div className="menu-item" onClick={toggleSubmenu}>
+                            Monturas
+                            <i className={`fa-solid ${submenuOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
+                        </div>
+                        {submenuOpen && (
+                            <div className="submenu" style={{ backgroundColor: primaryColor }}>
+                                <a onClick={() => handleNavigateBrands('Hombre')} className="submenu-item">Hombre </a>
+                                <a onClick={() => handleNavigateBrands('Mujer')} className="submenu-item">Mujer</a>
+                                <a onClick={() => handleNavigateBrands('Lentes de sol')} className="submenu-item">Lentes de Sol</a>
+                                <a onClick={() => handleNavigateBrands('Optico')} className="submenu-item">Ópticos</a>
+                            </div>
+                        )}
+                        <a className="menu-item">Marcas</a>
+                    <a href="/e-commerce/buscador" className="menu-item">Buscador</a>
+                    <a href="/e-commerce/contactanos" className="menu-item">Contáctanos</a>
                     <button className="btn btn-dark" onClick={handleLogout}>
                         <i className="fa-solid fa-sign-out-alt"></i> Cerrar sesión
                     </button>

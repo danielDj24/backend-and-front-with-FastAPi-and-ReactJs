@@ -260,7 +260,7 @@ const CreateProduct = () => {
     return (
         <div className="container">
         <div className="background-container">
-            <h2 className = "title">Crear Productos</h2>
+            <h2 className = "titles-control">Crear Productos</h2>
             <form onSubmit={(e) => {e.preventDefault(); handleOpenModal();}}>
                 <div className="form-group">
                     <label>Nombre del producto:</label>
@@ -279,12 +279,14 @@ const CreateProduct = () => {
                     <input type="text" value={size} onChange={(e) => setSize(e.target.value)}  className="form-control"/>
                 </div>
                 <div className="form-group">
-                    <label>Genero:</label>
+                    <label>Tipo de producto:</label>
                     <select value={gender} onChange={(e) => setGender(e.target.value)} className="form-control">
-                        <option value="">Seleccionar publico de destino</option>
+                        <option value="">Seleccionar tipo de producto</option>
                         <option value="Hombre">Hombre</option>
                         <option value="Mujer">Mujer</option>
                         <option value="Unisex">Unisex</option>
+                        <option value="Optico">Óptico</option>
+                        <option value="Lentes de sol">Lentes de sol</option>
                     </select>
                 </div>
                 <div className="form-group">

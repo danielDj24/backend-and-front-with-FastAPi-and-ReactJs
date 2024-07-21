@@ -16,12 +16,12 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import "./Home.css"
 
 //assets
-import HombreLentes from "../../assets/hombre_con_lentes.jpg";
-import MujerLentes from "../../assets/mujer-gafas.jpg";
-import LentesSol from "../../assets/lentes-sol.jpg";
-import LentesOpticos from "../../assets/lentes-opticos.jpg";
+import HombreLentes from "../../assets/resources-home/hombre_con_lentes.jpg";
+import MujerLentes from "../../assets/resources-home/mujer-gafas.jpg";
+import LentesSol from "../../assets/resources-home/lentes-sol.jpg";
+import LentesOpticos from "../../assets/resources-home/lentes-opticos.jpg";
 import BannerPlus from "../../assets/bannersBurn/PLusssizeBanner.jpg"
-import confiabilidad from "../../assets/lentes-opticos.jpg"
+import confiabilidad from "../../assets/resources-home/lentes-opticos.jpg"
 import videoThumbnail from "../../assets/bannersBurn/PLusssizeBanner.jpg";
 
 const Home = () => {
@@ -136,8 +136,8 @@ const Home = () => {
 
                     <div className="experience-section">
                         <h2>Nuestra experiencia</h2>
-                        <div className="title-container">
-                            <div className="titles">
+                        <div className="title-container-home">
+                            <div className="titles-home">
                                 {titleContents.map((item, index) => (
                                     <div 
                                         key={index} 
