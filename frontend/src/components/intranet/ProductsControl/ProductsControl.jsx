@@ -63,7 +63,9 @@ const CreateProduct = () => {
             } finally {
                 setLoading(false);
             }
-        } 
+        } else {
+            ShowErrorAlter("Error", "No se encontró el token. Por favor, inicia sesión.");
+        }
         
     };
 

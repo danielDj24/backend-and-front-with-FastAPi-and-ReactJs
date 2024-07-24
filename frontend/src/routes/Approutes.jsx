@@ -27,6 +27,7 @@ import Intranet from "../pages/HomeIntranet/HomeIntranet";
 
 //importacion paginas del e-commerce 
 import HomeEcomerce from "../pages/homeStore/homeStore";
+import SearchPage from "../pages/SearchPage/SearchComponent";
 import SearchProductsByDiscount from "../pages/Discounts/DiscountPage";
 import ProductsByType from "../components/e-commerce/productsType/productsComponent";
 import ProductsByDiscounts from "../components/e-commerce/productsDiscounts/productsDiscounts";
@@ -98,6 +99,10 @@ const AppRoutes = () => {
                 <Route
                 path = "/e-commerce"
                 element= {<ProtectedRoute roles={['admin', 'client']} element={HomeEcomerce} />}
+                />
+                <Route
+                    path="/e-commerce/products/search"
+                    element={<ProtectedRoute roles={['admin', 'client']} element={SearchPage} />} 
                 />
                 <Route
                     path="/e-commerce/products/discounts"

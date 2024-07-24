@@ -69,6 +69,9 @@ const UpdateTitleAndFavIcon  = ()=>{
             case '/e-commerce/products/discounts':
                 title = 'e-commerce - Descuentos';
                 break;
+            case '/e-commerce/products/search':
+                title = 'e-commerce - Buscador';
+                break;
             default:
                 title = 'e-commerce - Monturas';
         }

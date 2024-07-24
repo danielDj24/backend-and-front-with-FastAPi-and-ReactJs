@@ -3,7 +3,6 @@ import { axiosInstance, resourcesInstance,axiosInstanceAuth } from "../../functi
 import getRoleFromToken from "../../functions/DecodeToken";
 import useAuthStore from "../../store/userAuthToken";
 import { useNavigate } from "react-router-dom";
-import { ShowErrorAlter } from "../../functions/Alerts";
 // estilos
 import "./menuStyles.css";
 
@@ -104,7 +103,7 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
                                 ))}
                             </div>
                         )}
-                    <a href="/e-commerce/buscador" className="menu-item">Buscador</a>
+                    <a href="/e-commerce/products/search" className="menu-item">Buscador</a>
                     <a href="/e-commerce/contactanos" className="menu-item">Contáctanos</a>
                     <button className="btn btn-dark" onClick={handleLogout}>
                         <i className="fa-solid fa-sign-out-alt"></i> Cerrar sesión

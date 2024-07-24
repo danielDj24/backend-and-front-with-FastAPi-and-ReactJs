@@ -86,14 +86,14 @@ import FilterPrices from "../../assets/resources-ecommerce/mujer-gafas-opticas-c
                 </div>
                 <div className="filter-elements">
                     <div>
-                        <img src={FilterDiscounts} alt="filter discounts" />
                         <a href="/e-commerce/products/discounts">
+                        <img src={FilterDiscounts} alt="filter discounts" />
                             <p>En descuento</p>
                         </a>
                     </div>
                     <div>
-                        <img src={FilterPrices} alt="filter prices" />
                         <a href="/intranet/config/edit/configsite">
+                        <img src={FilterPrices} alt="filter prices" />
                             <p>Más económico</p>
                         </a>
                     </div>
