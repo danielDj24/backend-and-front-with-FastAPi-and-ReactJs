@@ -27,35 +27,101 @@
     margin: 0 10px; 
 }
 
-.product-list {
-    padding: 20px;
-    align-items:center ;
+.product-list-discounts{
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-radius: 15px; 
+    border: 1px solid #ddd; 
+    overflow: hidden; 
+    background: #fff; 
 }
-
-.product-item {
+.product-item-discounts{
     display: flex;
     align-items: center;
     border-bottom: 1px solid #ddd;
-    padding: 15px 0;
+    padding: 5px 0;
 }
 
-.product-image-container {
+.product-image-container-discount {
     position: relative;
     margin-right: 20px;
+    width: 30%; 
+    height: 50%; 
+    overflow: hidden;
 }
 
-.product-image {
-    max-width: 150px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.center-image {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
 }
 
-.product-details {
-    flex-grow: 1;
+.side-imagen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.product-info {
-    font-size: 14px;
-    margin: 5px 0;
+.product-item-discounts:hover .side-imagen {
+    opacity: 1;
+}
+
+.product-item-discounts:hover .center-image {
+    opacity: 0;
+}
+
+.product-details-discount {
+    display: flex;
+    align-items: center;
+    margin: 5%;
+}
+
+.description-list {
+    flex: 1;
+    padding-right: 50px;
+}
+
+.products-buy-details-discount {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    margin-right: 65px;
+}
+
+.product-info-discount {
+    font: normal normal normal 22px/29px Roboto;
     color: #555;
+    margin: 0; 
 }
+
+.product-price {
+    font-size: 50px; 
+    font: normal normal normal 32px/29px Roboto;
+}
+
+.shop-control-elements {
+    display: flex;
+    justify-content: center; /* Centra el botón horizontalmente */
+    align-items: center;
+}
+
+.shop-control-elements button {
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+    display: flex;
+    justify-content: center; /* Centra el botón horizontalmente */
+    align-items: center; /* Centra el botón verticalmente si es necesario */
+}
+
+.shop-control-elements button:hover {
+    background-color: #495057; /* Color de fondo del botón al pasar el ratón */
+    border-color: #495057; /* Color del borde del botón al pasar el ratón */
+}   

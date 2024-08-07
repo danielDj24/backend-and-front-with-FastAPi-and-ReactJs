@@ -114,8 +114,16 @@ const SearchPage = () => {
     };
 
     useEffect(() => {
+        // Método para obtener el token almacenado
+        useAuthStore.getState().checkToken();
+        const storedToken = useAuthStore.getState().token;
+        setUserRole(storedToken ? 'admin' : null);
+    }, []);
+
+    useEffect(() => {
         checkToken();
         fetchFieldsSearch();
+        handleSearch();
     }, [checkToken, currentPage, pageSize]);
 
     const handleLogout = () => {
@@ -129,17 +137,13 @@ const SearchPage = () => {
     };
 
     const handlePageSizeChange = (size) => {
+        handleSearch();
         setPageSize(size);
         setCurrentPage(1);
-        handleSearch();
     };
 
     if (loading) {
         return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
     }
 
     return (
@@ -156,7 +160,7 @@ const SearchPage = () => {
                     <p>Buscar productos</p>
                 </div>
             </div>
-            <div className="background-container">
+            <div className="background-container-search">
                 <div className="search-elements">
                     <div className="search-info">
                         <h1>Filtros de Busqueda</h1>
@@ -230,27 +234,41 @@ const SearchPage = () => {
                             <option value={20}>20</option>
                         </select>
                     </div>
-                    <div className="product-list">
-                        {products.map((product) => (
-                            <div key={product.id} className="product-item mb-3">
-                                <div className="product-image-container">
-                                    <img src={`${resourcesInstance.defaults.baseURL}${product.center_picture}`} alt={`Product ${product.id}`} className="product-image" />
-                                    <img src={`${resourcesInstance.defaults.baseURL}${product.side_picture}`} alt={`Product ${product.id}`} className="product-image" />
-                                </div>
-                                <div className="product-details">
-                                    <p className="product-info"><strong>{product.name_product}</strong></p>
-                                    <p className="product-info">{product.frame_material}</p>
-                                    <p className="product-info">{product.color}</p>
-                                    <p className="product-info">{product.shape?.name_shape || 'N/A'}</p>
-                                    <p className="product-info">{product.brand?.name || 'N/A'}</p>
-                                    <p className="product-info">{product.discount?.discount_percentage || 'N/A'}%</p>
-                                    <p className="product-info">{product.size}</p>
-                                    <p className="product-info">{product.gender}</p>
-                                    <p className="product-info">{product.quantity}</p>
-                                    <p className="product-info">{product.price_product}</p>
-                                </div>
+                    <div className="product-list-search">
+                    {products.map((product) => (
+                    <div key={product.id} className="product-item-search mb-3" >
+                        <div className="product-image-container-search">
+                            <img
+                                src={`${resourcesInstance.defaults.baseURL}${product.center_picture}`}
+                                alt={`Product ${product.id}`}
+                                className="center-image"
+                            />
+                            <img
+                                src={`${resourcesInstance.defaults.baseURL}${product.side_picture}`}
+                                alt={`Product ${product.id}`}
+                                className="side-imagen"
+                            />
+                        </div>
+                        <div className="product-details-search">
+                            <div className="description-list">
+                                <h2 className="product-info-search">{product.brand?.name || 'N/A'}</h2>
+                                <h1 className="product-info-search"><strong>{product.name_product}</strong></h1>
+                                <p className="product-info-search">Color: {product.color}</p>
+                                <p className="product-info-search">Tamaño: {product.size}</p>
                             </div>
+                            <div className="products-buy-details">
+                                <h1 className="product-price"><strong>${product.price_product}</strong></h1>
+                                <h2 className="product-info-search">{product.quantity}</h2>
+                            </div>
+                        </div>
+                        <div className="shop-control-elements"> 
+                        <button className="btn btn-dark">
+                        <i className="fa-solid fa-shopping-cart"></i> Agregar al carrito
+                        </button>
+                        </div>
+                    </div>
                         ))}
+                        
                     </div>
                 </div>
             </div>

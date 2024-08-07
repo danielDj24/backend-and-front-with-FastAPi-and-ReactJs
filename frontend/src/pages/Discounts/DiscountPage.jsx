@@ -38,6 +38,14 @@ const SearchProductsByDiscount = () => {
     };
 
     useEffect(() => {
+        // Método para obtener el token almacenado
+        useAuthStore.getState().checkToken();
+        const storedToken = useAuthStore.getState().token;
+        setUserRole(storedToken ? 'admin' : null);
+    }, []);
+
+    
+    useEffect(() => {
         if (selectedDiscount) {
             fetchProducts();
         }
@@ -148,28 +156,41 @@ const SearchProductsByDiscount = () => {
                     </select>
                     </div>
                 </div>
-                <div className="product-list">
-                    {products && products.map((product) => (
-                        <div key={product.id} className="product-item mb-3">
-                            <div className="product-image-container">
-                                <img src={`${resourcesInstance.defaults.baseURL}${product.center_picture}`} alt={`Product ${product.id}`} className="product-image" />
-                                <img src={`${resourcesInstance.defaults.baseURL}${product.side_picture}`} alt={`Product ${product.id}`} className="product-image" />
+                <div className="product-list-discounts">
+                {products && products.map((product) => (
+                    <div key={product.id} className="product-item-discounts mb-3">
+                        <div className="product-image-container-discount">
+                            <img
+                                src={`${resourcesInstance.defaults.baseURL}${product.center_picture}`}
+                                alt={`Product ${product.id}`}
+                                className="center-image"
+                            />
+                            <img
+                                src={`${resourcesInstance.defaults.baseURL}${product.side_picture}`}
+                                alt={`Product ${product.id}`}
+                                className="side-imagen"
+                            />
+                        </div>
+                        <div className="product-details-discount">
+                            <div className="description-list">
+                                <h2 className="product-info-discount">{product.brand?.name || 'N/A'}</h2>
+                                <h1 className="product-info-discount"><strong>{product.name_product}</strong></h1>
+                                <p className="product-info-discount">Color: {product.color}</p>
+                                <p className="product-info-discount">Tamaño: {product.size}</p>
                             </div>
-                            <div className="product-details">
-                                <p className="product-info"><strong>{product.name_product}</strong></p>
-                                <p className="product-info">{product.frame_material}</p>
-                                <p className="product-info">{product.color}</p>
-                                <p className="product-info">{product.shape.name_shape}</p>
-                                <p className="product-info">{product.brand.name}</p>
-                                <p className="product-info">{product.discount.discount_percentage}%</p>
-                                <p className="product-info">{product.size}</p>
-                                <p className="product-info">{product.gender}</p>
-                                <p className="product-info">{product.quantity}</p>
-                                <p className="product-info">{product.price_product}</p>
+                            <div className="products-buy-details-discount">
+                                <h1 className="product-price"><strong>${product.price_product}</strong></h1>
+                                <h2 className="product-info-discount">{product.quantity}</h2>
                             </div>
                         </div>
-                    ))}
-                </div>
+                        <div className="shop-control-elements"> 
+                            <button className="btn btn-dark">
+                                <i className="fa-solid fa-shopping-cart"></i> Agregar al carrito
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
             </div>
             <FooterComponent 
                 handleOpenLoginModal={handleOpenLoginModal} 

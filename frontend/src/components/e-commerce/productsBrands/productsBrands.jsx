@@ -38,6 +38,13 @@ const ProductsByBrand = () => {
         useAuthStore.getState().clearToken();
         setUserRole(null);
     };
+    
+    useEffect(() => {
+        // Método para obtener el token almacenado
+        useAuthStore.getState().checkToken();
+        const storedToken = useAuthStore.getState().token;
+        setUserRole(storedToken ? 'admin' : null);
+    }, []);
 
     useEffect(() => {
         if (brandId) {

@@ -409,7 +409,7 @@ const CreateProduct = () => {
                             <p className="product-info">nombre: {product.name_product}</p>
                             <p className="product-info">material: {product.frame_material}</p>
                             <p className="product-info">color: {product.color}</p>
-                            {brands.map((b) => (<p className="product-info">marca: {b.name}</p>))}
+                            <p className="product-info">marca: {product.brand.name}</p>
                             <p className="product-info">medida: {product.size}</p>
                             <p className="product-info">cantidad: {product.quantity}</p>
                             <p className="product-info">precio: {product.price_product}</p>
