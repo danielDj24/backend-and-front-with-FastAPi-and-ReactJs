@@ -1,7 +1,9 @@
-from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, DateTime
 from config.database import Base
 from sqlalchemy.orm import relationship
 from models.brands import Brand
+from datetime import datetime 
+
 
 class Discount(Base):
     __tablename__ = 'discounts'
@@ -30,7 +32,13 @@ class Product(Base):
     frame_material = Column(String(500), index=True)
     color = Column(String(500), index=True)
     size = Column(String(500), index=True)
+    size_caliber = Column(String(500), index=True)
+    size_vertical = Column(String(500), index=True)
+    size_arm = Column(String(500), index=True)
     gender = Column(String(500), index=True)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+    quantity_col = Column(Integer, index=True)
+    quantity_usa = Column(Integer, index=True)
     quantity = Column(Integer, index=True)
     center_picture = Column(String(500), index=True)
     side_picture = Column(String(500), index=True)

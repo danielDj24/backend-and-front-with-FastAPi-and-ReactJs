@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from schemas.brands import BrandDataResponse
+from datetime import datetime
 
 class ShapeData(BaseModel):
     name_shape : Optional[str] = None
@@ -36,10 +37,15 @@ class ProductsData(BaseModel):
     frame_material : Optional[str] = None
     color :  Optional[str] = None
     size : Optional[str] = None
+    size_caliber : Optional[str] = None
+    size_vertical : Optional[str] = None
+    size_arm : Optional[str] = None 
     gender :  Optional[str] = None
+    quantity_col : Optional[int] = None
+    quantity_usa : Optional[int] = None
     quantity : Optional[int] = None
     price_product :  Optional[int] = None
-    
+    created_at : datetime
 
 
 class ProductsCreateData(ProductsData):

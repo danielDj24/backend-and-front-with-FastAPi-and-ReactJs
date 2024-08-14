@@ -1,5 +1,6 @@
 import os
 from typing import Optional
+from datetime import datetime 
 
 from fastapi_pagination import Page, paginate
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
@@ -58,7 +59,7 @@ def search_products(shape_id: Optional[int] = None, brand_id: Optional[int] = No
         raise HTTPException(status_code=403, detail="Not authorized to search products")
     query = db.query(Product).options(
         joinedload(Product.brand),
-        joinedload(Product.discount),
+        joinedload(Product.discount),   
         joinedload(Product.shape),
     )
     
@@ -218,6 +219,8 @@ def create_product(product_data : ProductsCreateData, db : session = Depends(Get
         if not shape:
             raise HTTPException(status_code=400, detail="shape ID not found")
     
+    total_quantity = (product_data.quantity_col or 0) + (product_data.quantity_usa or 0)
+    
     product = Product(
         brand_id = product_data.brand_id,
         discount_id = product_data.discount_id,
@@ -226,9 +229,13 @@ def create_product(product_data : ProductsCreateData, db : session = Depends(Get
         frame_material = product_data.frame_material,
         color = product_data.color,
         size = product_data.size,
+        size_caliber = product_data.size_caliber,
+        size_vertical = product_data.size_vertical,
+        size_arm = product_data.size_arm,
         gender = product_data.gender,
-        quantity = product_data.quantity,
-        price_product = product_data.price_product
+        quantity = total_quantity,
+        price_product = product_data.price_product,
+        created_at = datetime.utcnow()
     )
     db.add(product)
     db.commit()

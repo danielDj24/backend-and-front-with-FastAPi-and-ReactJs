@@ -11,6 +11,9 @@ const CreateProduct = () => {
     const [frameMaterial, setFrameMaterial] = useState('');
     const [color, setColor] = useState('');
     const [size, setSize] = useState('');
+    const [sizeCaliber, setSizeCaliber] = useState('');
+    const [sizeVertical, setSizeVertical] = useState('');
+    const [sizeArm, setSizeArm] = useState('');
     const [gender, setGender] = useState('');
     const [quantity, setQuantity] = useState('');
     const [priceProduct, setPriceProduct] = useState('');
@@ -126,6 +129,9 @@ const CreateProduct = () => {
                     frame_material: frameMaterial,
                     color: color,
                     size: size,
+                    size_caliber: sizeCaliber,
+                    size_vertical: sizeVertical,
+                    size_arm: sizeArm, 
                     gender: gender,
                     quantity: quantity,
                     price_product: priceProduct,
@@ -275,8 +281,20 @@ const CreateProduct = () => {
                     <input type="text" value={color} onChange={(e) => setColor(e.target.value)} className="form-control" />
                 </div>
                 <div className="form-group">
-                    <label>Medidas del Marco:</label>
+                    <label>Medida General del Marco:</label>
                     <input type="text" value={size} onChange={(e) => setSize(e.target.value)}  className="form-control"/>
+                </div>
+                <div className="form-group">
+                    <label>Calibre del Marco:</label>
+                    <input type="text" value={sizeCaliber} onChange={(e) => setSizeCaliber(e.target.value)}  className="form-control"/>
+                </div>
+                <div className="form-group">
+                    <label>Medida Vertical del Marco:</label>
+                    <input type="text" value={sizeVertical} onChange={(e) => setSizeVertical(e.target.value)}  className="form-control"/>
+                </div>
+                <div className="form-group">
+                    <label>Medida del brazo del Marco:</label>
+                    <input type="text" value={sizeArm} onChange={(e) => setSizeArm(e.target.value)}  className="form-control"/>
                 </div>
                 <div className="form-group">
                     <label>Tipo de producto:</label>
