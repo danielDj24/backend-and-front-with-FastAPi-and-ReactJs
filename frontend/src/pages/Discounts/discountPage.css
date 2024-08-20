@@ -125,3 +125,45 @@
     background-color: #495057; /* Color de fondo del botón al pasar el ratón */
     border-color: #495057; /* Color del borde del botón al pasar el ratón */
 }   
+
+.shop-control-elements {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    margin-top: 5px; 
+    margin-bottom: 5px;
+}
+
+.button-container {
+    margin-bottom: 5px; 
+}
+
+.quantity-selector-container {
+    display: flex;
+    flex-direction: row; 
+    margin-left:5%;
+    align-items: center;
+    gap: 15px; 
+    width: 100%; 
+}
+
+.quantity-selector-wrapper {
+    position: relative;
+    display: inline-block;
+}
+.quantity-input {
+    width: 45px;
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+.price-overlay {
+    display: flex;
+    flex-direction: column; 
+    text-align: center;
+    align-items: center;
+}
+.product-price-discount {
+    color:#707070;
+    
+}

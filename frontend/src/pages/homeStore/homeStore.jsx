@@ -80,7 +80,7 @@ import FilterPrices from "../../assets/resources-ecommerce/mujer-gafas-opticas-c
                     </div>
                 </div>
                 <div className="discount-element">
-                    <div onClick={() => handleNavigateDiscounts(2)}>
+                    <div onClick={() => handleNavigateDiscounts(3)}>
                         <img src={Discounts} alt="discount" />
                     </div>
                 </div>

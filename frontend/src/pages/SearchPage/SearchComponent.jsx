@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import useAuthStore from "../../components/store/userAuthToken";
 import { axiosInstanceAuth, resourcesInstance } from '../../components/functions/axiosConfig';
-import { ShowErrorAlter } from '../../components/functions/Alerts';
+import { ShowErrorAlter, ShowSuccesAlert } from '../../components/functions/Alerts';
 
 import MenuComponent from "../../components/network/Menu/MenuComponent";
 import FooterComponent from "../../components/network/Footer/footerComponent";
-
+import QuantitySelector from "../../components/functions/QuantitySelector";
+import { addProductToCart } from "../../components/functions/CartsUtils";
 import BannerPlus from "../../assets/bannersBurn/PLusssizeBanner.jpg";
 import "./searchPage.css"
 
@@ -20,12 +21,20 @@ const SearchPage = () => {
     const [totalPages, setTotalPages] = useState(0);
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [userRole, setUserRole] = useState(null);
+    const [totalPrices, setTotalPrices] = useState({});
+
+
 
     const [shapes, setShapes] = useState([]);
     const [brands, setBrands] = useState([]);
     const [frameMaterials, setFrameMaterials] = useState([]);
     const [colors, setColors] = useState([]);
     const [gender, setGender] = useState([]);
+    const [QuantityCart, setQuantityCart] = useState([]);
+
+    const handleAddProductCart = (productId, quantity) => {
+        addProductToCart(token, productId, quantity);
+    };
 
     const handleOpenLoginModal = () => setShowLoginModal(true);
 
@@ -94,6 +103,8 @@ const SearchPage = () => {
             ShowErrorAlter("Error", "No se encontró el token. Por favor, inicia sesión.");
         }
     };
+
+
     
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -141,7 +152,18 @@ const SearchPage = () => {
         setPageSize(size);
         setCurrentPage(1);
     };
+    
+    const handleQuantityChange = (productId, price, quantity) => {
+        setQuantityCart(quantity);  // Actualiza la cantidad
+        setTotalPrices(prevTotalPrices => ({
+            ...prevTotalPrices,
+            [productId]: price * quantity
+        }));
+    };
 
+    const formatPrice = (price) => {
+        return price.toLocaleString('es-CO', {  maximumFractionDigits: 2 });
+    };
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -257,19 +279,38 @@ const SearchPage = () => {
                                 <p className="product-info-search">Tamaño: {product.size}</p>
                             </div>
                             <div className="products-buy-details">
-                                <h1 className="product-price"><strong>${product.price_product}</strong></h1>
-                                <h2 className="product-info-search">{product.quantity}</h2>
+                                {product.discount?.discount_percentage > 0 ? (
+                                    <>
+                                        <h5 className="product-price-discount">
+                                            <s>${formatPrice(product.price_product)}</s> -{product.discount.discount_percentage}%
+                                        </h5>
+                                        <h1 className="product-price"><strong>${formatPrice(product.discounted_price)}</strong></h1>
+                                    </>
+                                ) : (
+                                    <h1 className="product-price"><strong>${formatPrice(product.price_product)}</strong></h1>
+                                )}
+                                <div className="quantity-selector-wrapper">
+                                    <QuantitySelector                            
+                                        initialQuantity={1}
+                                        maxQuantity={product.quantity} 
+                                        onQuantityChange={(newQuantity) => handleQuantityChange(product.id, product.discounted_price, newQuantity)}
+                                    />
+                                    <strong className="price-overlay">${formatPrice(totalPrices[product.id] || product.discounted_price)}</strong>
+                                </div>
                             </div>
                         </div>
-                        <div className="shop-control-elements"> 
-                        <button className="btn btn-dark">
-                        <i className="fa-solid fa-shopping-cart"></i> Agregar al carrito
-                        </button>
+                        <div className="shop-control-elements">
+                            
+                            <button
+                                className="btn btn-dark"
+                                onClick={() => handleAddProductCart(product.id, QuantityCart)} 
+                                >
+                                <i className="fa-solid fa-shopping-cart"></i> Agregar al carrito
+                            </button>
                         </div>
                     </div>
-                        ))}
-                        
-                    </div>
+                ))}
+            </div>
                 </div>
             </div>
             <FooterComponent

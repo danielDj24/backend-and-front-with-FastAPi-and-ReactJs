@@ -17,7 +17,6 @@ from schemas.products import ProductsCreateData, ProductsDataResponse, ProductsD
 from models.brands import Brand
 from sqlalchemy.orm import joinedload
 
-product_routes = APIRouter()
 
 """Buscador"""
 
@@ -86,10 +85,16 @@ def search_products(shape_id: Optional[int] = None, brand_id: Optional[int] = No
     
     products = query.all()
     
-    
     if not products:
         raise HTTPException(status_code=404, detail="No products found")
     
+    for product in products:
+        if product.discount:
+            discount_percentage = product.discount.discount_percentage
+            product.discounted_price = product.price_product * (1 - discount_percentage / 100)
+        else:
+            product.discounted_price = product.price_product
+
     return paginate(products)
 
 """rutas de los productos"""
@@ -106,9 +111,17 @@ def get_all_products(db: session = Depends(GetDB), token : str = Depends(oauth2_
         joinedload(Product.shape)
     )
     products = query.all()
+    
     if not products:
         raise HTTPException(status_code=404, detail="No products found")
     
+    for product in products:
+        if product.discount:
+            discount_percentage = product.discount.discount_percentage
+            product.discounted_price = product.price_product * (1 - discount_percentage / 100)
+        else:
+            product.discounted_price = product.price_product
+
     return paginate(products)
 
 #productos por id 
@@ -125,8 +138,20 @@ def products_by_id(product_id : int, db: session = Depends(GetDB), token : str =
     ).filter(Product.id == product_id)
     
     product = query.first()
+    
+    if product.discount:
+        discount_percentage = product.discount.discount_percentage
+        if discount_percentage > 0:
+            discounted_price = product.price_product - (product.price_product * discount_percentage / 100)
+            product.discounted_price = round(discounted_price, 2)
+        else:
+            product.discounted_price = product.price_product
+    else:
+        product.discounted_price = product.price_product
+    
     if not product:
         raise HTTPException(status_code=404, detail="product not found")
+    
     return product
 
 #productos por su forma
@@ -143,7 +168,13 @@ def get_products_by_shape(shape_id: int, db : session = Depends(GetDB), token : 
     ).filter(Product.shape_id == shape_id)
     
     products = query.all()
-    
+    for product in products:
+        if product.discount:
+            discount_percentage = product.discount.discount_percentage
+            product.discounted_price = product.price_product * (1 - discount_percentage / 100)
+        else:
+            product.discounted_price = product.price_product
+
     if not products:
         raise HTTPException(status_code=404, detail="No products found for the specified shape")
     
@@ -163,6 +194,13 @@ def get_products_by_discount(discount_id: int, db : session = Depends(GetDB), to
     ).filter(Product.discount_id == discount_id)
     
     products = query.all()
+    for product in products:
+        if product.discount:
+            discount_percentage = product.discount.discount_percentage
+            product.discounted_price = product.price_product * (1 - discount_percentage / 100)
+        else:
+            product.discounted_price = product.price_product
+
     if not products:
         raise HTTPException(status_code=404, detail="No products found for the specified discount")
     return paginate(products)
@@ -181,6 +219,13 @@ def get_products_by_discount(brand_id: int, db : session = Depends(GetDB), token
     ).filter(Product.brand_id == brand_id)
     
     products = query.all()
+    for product in products:
+        if product.discount:
+            discount_percentage = product.discount.discount_percentage
+            product.discounted_price = product.price_product * (1 - discount_percentage / 100)
+        else:
+            product.discounted_price = product.price_product
+
     if not products:
         raise HTTPException(status_code=404, detail="No products found for the specified brand")
     return paginate(products)
@@ -196,6 +241,14 @@ def get_products_by_gender( gender : str , db : session = Depends(GetDB), token 
         products = db.query(Product).filter(Product.gender == gender).all()
     else:
         products = db.query(Product).all()
+
+    for product in products:
+        if product.discount:
+            discount_percentage = product.discount.discount_percentage
+            product.discounted_price = product.price_product * (1 - discount_percentage / 100)
+        else:
+            product.discounted_price = product.price_product
+
     return paginate(products)
     
 @product_routes.post("/create/product", response_model=ProductsDataResponse)

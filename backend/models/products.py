@@ -47,6 +47,8 @@ class Product(Base):
     discount = relationship("Discount", back_populates="products")
     shape = relationship("Shape", back_populates="products")
 
+    cart_items = relationship("CartItem", back_populates="product")
+    
 Brand.products = relationship("Product", order_by=Product.id, back_populates="brand")
 Discount.products = relationship("Product", order_by=Product.id, back_populates="discount")
 Shape.products = relationship("Product", order_by=Product.id, back_populates="shape")

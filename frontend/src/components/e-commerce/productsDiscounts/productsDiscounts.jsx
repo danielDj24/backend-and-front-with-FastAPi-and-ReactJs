@@ -6,12 +6,16 @@ import { useParams } from 'react-router-dom';
 
 import MenuComponent from "../../network/Menu/MenuComponent";
 import FooterComponent from "../../network/Footer/footerComponent"
+import { addProductToCart } from "../../functions/CartsUtils";
+import QuantitySelector from "../../functions/QuantitySelector";
 
 import BannerPlus from "../../../assets/bannersBurn/PLusssizeBanner.jpg"
 import './productsDiscounts.css'
 
 const ProductsByDiscounts = () => {
     const {discountId} = useParams();
+    const [totalPrices, setTotalPrices] = useState({});
+    const [QuantityCart, setQuantityCart] = useState([]);
     const [products, setProducts] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -86,6 +90,22 @@ const ProductsByDiscounts = () => {
         setPageSize(size);
         setCurrentPage(1); 
     };
+    const handleAddProductCart = (productId, quantity) => {
+        addProductToCart(token, productId, quantity);
+    };
+    
+
+    const handleQuantityChange = (productId, price, quantity) => {
+        setQuantityCart(quantity);  // Actualiza la cantidad
+        setTotalPrices(prevTotalPrices => ({
+            ...prevTotalPrices,
+            [productId]: price * quantity
+        }));
+    };
+
+    const formatPrice = (price) => {
+        return price.toLocaleString('es-CO', {  maximumFractionDigits: 2 });
+    };
 
     if (loading) {
         return <div>Loading...</div>;
@@ -148,13 +168,32 @@ const ProductsByDiscounts = () => {
                                 <p className="product-info-discount">Color: {product.color}</p>
                                 <p className="product-info-discount">Tamaño: {product.size}</p>
                             </div>
-                            <div className="products-buy-details-discount">
-                                <h1 className="product-price"><strong>${product.price_product}</strong></h1>
-                                <h2 className="product-info-discount">{product.quantity}</h2>
+                            <div className="products-buy-details">
+                                {product.discount?.discount_percentage > 0 ? (
+                                    <>
+                                        <h5 className="product-price-discount">
+                                            <s>${formatPrice(product.price_product)}</s> -{product.discount.discount_percentage}%
+                                        </h5>
+                                        <h1 className="product-price"><strong>${formatPrice(product.discounted_price)}</strong></h1>
+                                    </>
+                                ) : (
+                                    <h1 className="product-price"><strong>${formatPrice(product.price_product)}</strong></h1>
+                                )}
+                                <div className="quantity-selector-wrapper">
+                                    <QuantitySelector                            
+                                        initialQuantity={1}
+                                        maxQuantity={product.quantity} 
+                                        onQuantityChange={(newQuantity) => handleQuantityChange(product.id, product.discounted_price, newQuantity)}
+                                    />
+                                    <strong className="price-overlay">${formatPrice(totalPrices[product.id] || product.discounted_price)}</strong>
+                                </div>
                             </div>
                         </div>
                         <div className="shop-control-elements"> 
-                            <button className="btn btn-dark">
+                            <button
+                                className="btn btn-dark"
+                                onClick={() => handleAddProductCart(product.id, QuantityCart)} 
+                                >
                                 <i className="fa-solid fa-shopping-cart"></i> Agregar al carrito
                             </button>
                         </div>

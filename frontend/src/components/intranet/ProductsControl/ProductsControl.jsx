@@ -15,6 +15,8 @@ const CreateProduct = () => {
     const [sizeVertical, setSizeVertical] = useState('');
     const [sizeArm, setSizeArm] = useState('');
     const [gender, setGender] = useState('');
+    const [quantityCol, setQuantityCol] = useState('');
+    const [quantityUsa, setQuantityUsa] = useState('');
     const [quantity, setQuantity] = useState('');
     const [priceProduct, setPriceProduct] = useState('');
     const [brand, setBrand] = useState('');
@@ -59,8 +61,8 @@ const CreateProduct = () => {
                         size: pageSize,
                     },
                 });
-                setProducts(response.data.items);
-                setTotalPages(response.data.total_pages);
+                setProducts(response.data.items || []);
+                setTotalPages(response.data.total_pages || 0);
             } catch (error) {
                 setError(error.response ? error.response.data.detail : "Error fetching products");
             } finally {
@@ -77,7 +79,7 @@ const CreateProduct = () => {
             const axiosAuth = axiosInstanceAuth(token);
             try {
                 const response = await axiosAuth.get("/uploaded/brands");
-                setBrands(response.data);
+                setBrands(response.data || []);
             } catch (error) {
                 setError(error.response ? error.response.data.detail : "Error fetching brands");
             } finally {
@@ -93,7 +95,7 @@ const CreateProduct = () => {
             const axiosAuth = axiosInstanceAuth(token);
             try {
                 const response = await axiosAuth.get("/product/shapes");
-                setShapes(response.data);
+                setShapes(response.data || []);
             } catch (error) {
                 setError(error.response ? error.response.data.detail : "Error fetching shapes");
             } finally {
@@ -133,8 +135,11 @@ const CreateProduct = () => {
                     size_vertical: sizeVertical,
                     size_arm: sizeArm, 
                     gender: gender,
-                    quantity: quantity,
+                    quantity_col:quantityCol,
+                    quantity_usa : quantityUsa,
+                    quantity: 0,
                     price_product: priceProduct,
+                    created_at: new Date().toISOString(),
                     shape_id: shape,
                     brand_id: brand,
                     discount_id: discount
@@ -152,6 +157,21 @@ const CreateProduct = () => {
         }
     };
 
+    useEffect(() => {
+        // Detecta cuando la ventana vuelve a estar en foco (cuando la ventana emergente se cierra)
+        const handleWindowFocus = () => {
+            // Vuelve a cargar las listas de shapes, brands, y discounts
+            fetchBrands();
+            fetchShapes();
+            fetchDiscounts();
+        };
+        window.addEventListener("focus", handleWindowFocus);
+        
+        return () => {
+            window.removeEventListener("focus", handleWindowFocus);
+        };
+    }, []);
+    
     const handleOpenModal = () => {
         setModalMessage("¿Estás seguro de crear este producto?");
         setShowModal(true);
@@ -263,6 +283,10 @@ const CreateProduct = () => {
         fetchProducts();
     };
 
+    const formatPrice = (price) => {
+        return price.toLocaleString('es-CO', {  maximumFractionDigits: 2 });
+    };
+
     return (
         <div className="container">
         <div className="background-container">
@@ -308,8 +332,12 @@ const CreateProduct = () => {
                     </select>
                 </div>
                 <div className="form-group">
-                    <label>Cantidad:</label>
-                    <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} className="form-control"/>
+                    <label>Cantidad en Colombia:</label>
+                    <input type="number" value={quantityCol} onChange={(e) => setQuantityCol(e.target.value)} className="form-control"/>
+                </div>
+                <div className="form-group">
+                    <label>Cantidad en Usa:</label>
+                    <input type="number" value={quantityUsa} onChange={(e) => setQuantityUsa(e.target.value)} className="form-control"/>
                 </div>
                 <div className="form-group">
                     <label>Precio:</label>
@@ -319,8 +347,8 @@ const CreateProduct = () => {
                     <label>Marca:</label>
                     <select  onChange={(e) => setBrand(e.target.value)} className="form-control">
                         <option value="">Seleccionar una Marca</option>
-                        {brands.map((b) => (
-                            <option key={b.id} value={b.id}>{b.name}</option>
+                        {brands && brands.length > 0 && brands.map((b) => (
+                        <option key={b.id} value={b.id}>{b.name}</option>
                         ))}
                     </select>
                     <button 
@@ -335,8 +363,8 @@ const CreateProduct = () => {
                     <label>forma del Marco:</label>
                     <select onChange={(e) => setShape(e.target.value)} className="form-control">
                         <option value="">Seleccionar una Forma</option>
-                        {shapes.map((s) => (
-                            <option key={s.id} value={s.id}>{s.name_shape}</option>
+                        {shapes && shapes.length > 0 && shapes.map((s) => (
+                        <option key={s.id} value={s.id}>{s.name_shape}</option>
                         ))}
                     </select>
                     <button 
@@ -351,7 +379,7 @@ const CreateProduct = () => {
                     <label>Procentaje de descuento:</label>
                     <select onChange={(e) => setDiscount(e.target.value)} className="form-control">
                         <option value="">Seleccionar un porcentaje de descuento</option>
-                        {discounts.map((d) => (
+                        {discounts && discounts.length > 0 && discounts.map((d) => (
                             <option key={d.id} value={d.id}>{d.discount_percentage}% - {d.description}</option>
                         ))}
                     </select>
@@ -427,10 +455,13 @@ const CreateProduct = () => {
                             <p className="product-info">nombre: {product.name_product}</p>
                             <p className="product-info">material: {product.frame_material}</p>
                             <p className="product-info">color: {product.color}</p>
-                            <p className="product-info">marca: {product.brand.name}</p>
+                            <p className="product-info">marca: {product.brand ? product.brand.name : 'N/A'}</p>
+                            <p className="product-info">publico destino: {product.gender ? product.gender : 'N/A'}</p>
+                            <p className="product-info">Decuento: {product.discount ? product.discount.discount_percentage : 'N/A'}%</p>
+
                             <p className="product-info">medida: {product.size}</p>
-                            <p className="product-info">cantidad: {product.quantity}</p>
-                            <p className="product-info">precio: {product.price_product}</p>
+                            <p className="product-info">cantidad Total: {product.quantity}</p>
+                            <p className="product-info">precio: ${formatPrice(product.discounted_price)}</p>
                         </div>
                         
                         <button className="delete-button mb-2" onClick={() => handleOpenDeleteModal(product.id)}>Eliminar</button>

@@ -18,7 +18,7 @@ brands_router = APIRouter()
 
 @brands_router.get("/uploaded/brands",response_model = List[BrandDataResponse])
 def get_brands(db: session = Depends(GetDB)):
-    brands = db.query(Brand).all()
+    brands = db.query(Brand).all()  
     if not brands:
         raise HTTPException(status_code=404, detail="No banners found")
     return  brands
