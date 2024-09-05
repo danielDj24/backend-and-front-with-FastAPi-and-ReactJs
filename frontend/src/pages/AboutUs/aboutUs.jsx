@@ -10,7 +10,7 @@ import useAuthStore from "../../components/store/userAuthToken";
 //estilos
 import BannerPlus from "../../assets/bannersBurn/PLusssizeBanner.jpg"
 import ExampleImg from "../../assets/imgsBurn/example.jpg"
-
+import Layout from "../../routes/LayoutControl/Layouts";
 import './aboutUs.css'
 
 const AboutUs = () => {
@@ -55,15 +55,16 @@ const AboutUs = () => {
             </div>
 
             <div className="about-us-elements">
+            <Layout/>
                 <div className="our-company-container">
                     <div className="title-company">
                         <h1>Nuestra compañia</h1>
                     </div>
                     <div className="content-our-company">
                         <div className="content-company-left">
-                            <h2>A lo largo de dos décadas, hemos desarrollado relaciones de confianza con más de 1000 clientes y 100 marcas en todo el mundo. </h2>
-                            <p>Comenzamos cada sociedad con comunicación transparente y una meta compartida para crecer juntos, lo que nos ha permitido fomentar relaciones con nuestros clientes a largo plazo y mantener un alto índice de retención de nuestras relaciones.</p>
-                            <p>Al entender el modelo de negocios único de cada marca y nuestra investigación profunda de antecedentes de nuestros clientes, podemos evitar colocación conflictiva de productos y distribuir solo a clientes que están dentro de los límites de las solicitudes de nuestros vendedores.</p>
+                            <h2>Con 14 años de experiencia, Frames se ha establecido como un referente en la distribución de monturas ópticas y de sol en Colombia.  </h2>
+                            <p>Desde nuestros inicios, hemos recorrido todo el país, llevando productos de alta calidad directamente a las ópticas locales. Nuestro compromiso con la excelencia nos ha permitido construir una sólida presencia en el mercado nacional</p>
+                            <p>A lo largo de estos años, hemos forjado relaciones de confianza con ópticas en las principales ciudades de Colombia. Cada visita ha fortalecido nuestra reputación como un socio confiable, dedicado a ofrecer soluciones personalizadas que ayuden a nuestros clientes a crecer y prosperar en el competitivo mercado óptico.</p>
                         </div>
                         <div className="content-company-right">
                             <img  src={ExampleImg} alt="exaple-img" /> 
@@ -72,13 +73,13 @@ const AboutUs = () => {
                 </div>
                 <div className="our-company-container">
                     <div className="title-company">
-                        <h1>Frames. es un distribuidor global impulsado a la venta en volumen de gafas de diseñador.</h1>
+                        <h1>Confianza en cada montura, calidad en cada detalle.</h1>
                     </div>
                     <div className="content-our-company">
                         <div className="content-company-left">
-                            <h2>A lo largo de dos décadas, hemos desarrollado relaciones de confianza con más de 1000 clientes y 100 marcas en todo el mundo. </h2>
-                            <p>Comenzamos cada sociedad con comunicación transparente y una meta compartida para crecer juntos, lo que nos ha permitido fomentar relaciones con nuestros clientes a largo plazo y mantener un alto índice de retención de nuestras relaciones.</p>
-                            <p>Al entender el modelo de negocios único de cada marca y nuestra investigación profunda de antecedentes de nuestros clientes, podemos evitar colocación conflictiva de productos y distribuir solo a clientes que están dentro de los límites de las solicitudes de nuestros vendedores.</p>
+                            <h2>Además, hemos expandido nuestras operaciones más allá de las fronteras, creando alianzas estratégicas con empresas en Estados Unidos. </h2>
+                            <p>Estas colaboraciones nos han permitido incorporar nuevas tendencias y tecnologías a nuestro catálogo, beneficiando a nuestros clientes con una oferta más diversa y avanzada.</p>
+                            <p>Nuestro objetivo es convertirnos en una de las principales distribuidoras de gafas para ópticas en Colombia. Con una trayectoria que respalda nuestra credibilidad y una visión enfocada en el crecimiento, estamos comprometidos a seguir liderando el mercado óptico del país.</p>
                         </div>
                         <div className="content-company-right">
                             <img  src={ExampleImg} alt="exaple-img" /> 

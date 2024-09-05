@@ -1,0 +1,293 @@
+
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.background-container-detail-shop {
+    width: 100%;
+    height: 90%;
+    background: #F1F1F1;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 22px;
+    opacity: 1;
+    padding: 70px; 
+    margin-top: 15px;
+}
+
+.fullscreen-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.801); /* Fondo negro completo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.fullscreen-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.fullscreen-image {
+    max-width: 80vw;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 45px;
+    border: none;
+    border-radius: 50px;
+    background: rgba(0, 0, 0, 0.596);
+    color: white; 
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px;
+    background: none; 
+}
+
+.arrow-button {
+    position: absolute;
+    font-size: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    border-radius: 100%;
+    background: rgba(0, 0, 0, 0.596);
+    color: white;
+    cursor: pointer;
+    z-index: 1000;
+    padding: 10px;
+}
+
+.arrow-left {
+    align-items: center;
+    left: 100px;
+}
+
+.arrow-right {
+    align-items: center;
+    right: 100px;
+}
+
+.arrow-button:focus {
+    outline: none;
+}
+
+.detail-title-product {
+    text-align: center;
+    font: normal normal bold 40px/47px Helvetica;
+    letter-spacing: 0px;
+    color: #707070;
+    opacity: 1;
+    margin-bottom: 20px; 
+    cursor: pointer;
+}
+
+.product-item-detail {
+    display: flex;
+    align-items: flex-start;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    gap:5px;
+
+}
+
+.detail-img-product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.product-image-container-detail {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+
+.product-image-container-detail img {
+    width: 110px; 
+    height: auto;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+    margin:5px;
+
+}
+
+.center-image-detail {
+    width: 100%; 
+    height: auto;
+    object-fit: cover;
+    border: 1px solid #e0e0e0;
+    padding: 5px;
+    align-items: center;
+
+}
+
+.image-inspect-detail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+
+.space-related-items {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.related-products {
+    margin-top: 5px; 
+}
+.related-products-section {
+    margin-top: 5px;
+}
+
+.related-products-list {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.related-product-item {
+    width: 100px;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.related-product-item:hover {
+    transform: scale(1.05);
+}
+
+.related-product-image {
+    width: 100%;
+    height: auto;
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.related-product-item p {
+    margin: 0;
+    font-size: 12px;
+}
+
+
+.product-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    padding: 5px;
+
+
+}
+
+.title-detail-product {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-left: 6px;
+}
+
+.title-detail-product h1 {
+    font: normal normal normal 80px/79px Roboto;
+}
+
+.title-detail-product h2 {
+    margin-left: 20px;
+    font: normal normal bold 20px/31px Bell MT;
+}
+
+.shop-detail-product {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-left: 10px;
+
+}
+
+.products-buy-details {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.product-price-discount {
+    font-size: 18px; 
+    
+}
+
+.product-price {
+    font-size: 24px; 
+}
+
+.shop-quantity-product {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+
+}
+
+.quantity-selector-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buttom-shop-detail {
+    display: flex;
+    justify-content: center; 
+}
+
+.info-product {
+    display: grid; /* Usa grid para la disposición de los elementos */
+    grid-template-columns: repeat(2, 1fr); /* 3 columnas de igual ancho */
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    padding: 10px; /* Espacio interior para separar del borde */
+}
+
+.content-info-product {
+    display: contents; /* Permite que los elementos hijos del grid se comporten como elementos directos */
+}
+
+.product-info {
+    margin: 0; /* Asegúrate de que no haya márgenes adicionales */
+    padding: 5px 0; /* Espacio entre los elementos */
+}
+
+.info-product h5 {
+    grid-column: span 2; 
+    padding: 5px 0; /* Espacio interior para separar del borde */
+    font-weight: bold; /* Estilo opcional para resaltar el encabezado */
+
+}
+
+.product-info {
+    border: 1px solid #e0e0e0;
+
+}

@@ -4,7 +4,7 @@ import { axiosInstanceAuth, resourcesInstance, axiosInstance, axiosInstanceFiles
 
 import { ShowErrorAlter, ShowSuccesAlert } from '../../functions/Alerts';
 import { ConfirmationModal } from "../../functions/CustomModal";
-
+import Layout from "../../../routes/LayoutControl/Layouts";
 import "./BrandControl.css"
 
 const UploadBrands = () => {
@@ -130,6 +130,8 @@ const UploadBrands = () => {
     return(
     <div className="container">
         <div className="background-container-brands">
+        <Layout/>
+
             <h2 className = "brands-title">Control de Marcas</h2>
             {error && <p className="text-danger">{error}</p>}
             <div className="mb-3">

@@ -3,7 +3,7 @@ import useAuthStore from "../../store/userAuthToken";
 import { axiosInstanceAuth, axiosInstanceFiles, resourcesInstance } from '../../functions/axiosConfig';
 import { ShowErrorAlter, ShowSuccesAlert } from '../../functions/Alerts';
 import { ConfirmationModal } from "../../functions/CustomModal";
-
+import Layout from "../../../routes/LayoutControl/Layouts";
 import "./productsControl.css"
 
 const CreateProduct = () => {
@@ -290,6 +290,7 @@ const CreateProduct = () => {
     return (
         <div className="container">
         <div className="background-container">
+        <Layout/>
             <h2 className = "titles-control">Crear Productos</h2>
             <form onSubmit={(e) => {e.preventDefault(); handleOpenModal();}}>
                 <div className="form-group">

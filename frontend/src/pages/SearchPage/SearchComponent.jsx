@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import useAuthStore from "../../components/store/userAuthToken";
 import { axiosInstanceAuth, resourcesInstance } from '../../components/functions/axiosConfig';
 import { ShowErrorAlter, ShowSuccesAlert } from '../../components/functions/Alerts';
-
+import Layout from "../../routes/LayoutControl/Layouts";
 import MenuComponent from "../../components/network/Menu/MenuComponent";
 import FooterComponent from "../../components/network/Footer/footerComponent";
 import QuantitySelector from "../../components/functions/QuantitySelector";
 import { addProductToCart } from "../../components/functions/CartsUtils";
 import BannerPlus from "../../assets/bannersBurn/PLusssizeBanner.jpg";
 import "./searchPage.css"
+import { useNavigate } from 'react-router-dom'; 
 
 const SearchPage = () => {
     const [products, setProducts] = useState([]);
@@ -22,8 +23,9 @@ const SearchPage = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [userRole, setUserRole] = useState(null);
     const [totalPrices, setTotalPrices] = useState({});
-
-
+    const navigate = useNavigate();
+    const [isFullScreen, setIsFullScreen] = useState(false); 
+    const [fullScreenProductId, setFullScreenProductId] = useState(null);
 
     const [shapes, setShapes] = useState([]);
     const [brands, setBrands] = useState([]);
@@ -164,6 +166,46 @@ const SearchPage = () => {
     const formatPrice = (price) => {
         return price.toLocaleString('es-CO', {  maximumFractionDigits: 2 });
     };
+
+    const handleProductClick = (productId) => {
+        navigate(`/e-commerce/products/detail/${productId}`);
+    };
+
+    
+    const handleImageClick = (productId) => {
+        setFullScreenProductId(productId);
+        setIsFullScreen(true);
+    };
+
+    const handleFullScreenClose = () => {
+        setIsFullScreen(false);
+        setFullScreenProductId(null);
+    };
+
+    const getImagesForProduct = (product) => {
+        return [
+            `${resourcesInstance.defaults.baseURL}${product.center_picture}`,
+            `${resourcesInstance.defaults.baseURL}${product.side_picture}`,
+        ];
+    };
+    
+
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const prevImage = () => {
+        const images = getImagesForProduct(products.find(product => product.id === fullScreenProductId));
+        const newIndex = currentImageIndex === 0 ? images.length - 1 : currentImageIndex - 1;
+        setCurrentImageIndex(newIndex);
+    };
+    
+    const nextImage = () => {
+        const images = getImagesForProduct(products.find(product => product.id === fullScreenProductId));
+        const newIndex = currentImageIndex === images.length - 1 ? 0 : currentImageIndex + 1;
+        setCurrentImageIndex(newIndex);
+    };
+    
+
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -176,6 +218,37 @@ const SearchPage = () => {
                 handleLogout={() => useAuthStore.getState().clearToken()}
                 isECommerce={true}
             />
+            {isFullScreen && fullScreenProductId !== null && (
+                <div className="fullscreen-modal">
+                    <div className="fullscreen-overlay" onClick={handleFullScreenClose}></div>
+                    <div className="fullscreen-content">
+                        <button className="close-button" onClick={handleFullScreenClose}>
+                            <span>&times;</span>
+                        </button>
+
+                        <button className="arrow-button arrow-left" onClick={prevImage}>
+                            <span>&larr;</span>
+                        </button>
+
+                        <button className="arrow-button arrow-right" onClick={nextImage}>
+                            <span>&rarr;</span>
+                        </button>
+
+                        {products
+                            .filter((product) => product.id === fullScreenProductId)
+                            .map((product) => (
+                                <div key={product.id}>
+                                    <img
+                                        src={getImagesForProduct(product)[currentImageIndex]}
+                                        alt="Full Screen"
+                                        className="fullscreen-image"
+                                    />
+                                </div>
+                            ))}
+                    </div>
+                </div>
+            )}
+
             <div className="banner-blog">
                 <div>
                     <img src={BannerPlus} alt="banner blog" />
@@ -183,7 +256,10 @@ const SearchPage = () => {
                 </div>
             </div>
             <div className="background-container-search">
+
                 <div className="search-elements">
+                <Layout/>
+
                     <div className="search-info">
                         <h1>Filtros de Busqueda</h1>
                         <p>Realice busquedas avanzadas segun sus necesidades</p>
@@ -264,11 +340,15 @@ const SearchPage = () => {
                                 src={`${resourcesInstance.defaults.baseURL}${product.center_picture}`}
                                 alt={`Product ${product.id}`}
                                 className="center-image"
+                                onClick={() => handleImageClick(product.id)}
+
                             />
                             <img
                                 src={`${resourcesInstance.defaults.baseURL}${product.side_picture}`}
                                 alt={`Product ${product.id}`}
                                 className="side-imagen"
+                                onClick={() => handleImageClick(product.id)}
+
                             />
                         </div>
                         <div className="product-details-search">
@@ -277,6 +357,8 @@ const SearchPage = () => {
                                 <h1 className="product-info-search"><strong>{product.name_product}</strong></h1>
                                 <p className="product-info-search">Color: {product.color}</p>
                                 <p className="product-info-search">Tamaño: {product.size}</p>
+                                <button className="btn btn-dark" onClick={() => handleProductClick(product.id)} 
+                                    >más detalles</button>
                             </div>
                             <div className="products-buy-details">
                                 {product.discount?.discount_percentage > 0 ? (
@@ -305,7 +387,7 @@ const SearchPage = () => {
                                 className="btn btn-dark"
                                 onClick={() => handleAddProductCart(product.id, QuantityCart)} 
                                 >
-                                <i className="fa-solid fa-shopping-cart"></i> Agregar al carrito
+                                Agregar al carrito
                             </button>
                         </div>
                     </div>

@@ -3,7 +3,7 @@ import { axiosInstanceAuth, activateUser, deleteUser } from "../../functions/axi
 import useAuthStore from "../../store/userAuthToken";
 import { ShowErrorAlter, ShowSuccesAlert } from '../../functions/Alerts';
 import { ConfirmationModal } from "../../functions/CustomModal";
-
+import Layout from "../../../routes/LayoutControl/Layouts";
 import "./usersList.css"
 
 
@@ -99,6 +99,8 @@ const UsersList = () => {
             <div className="background-user-container">
 
                 <h1 className="text-center my-4">Lista de usuarios</h1>
+                <Layout/>
+
                 <div className="mb-3">
                     <div className="d-flex mb-2">
                         <select className="form-select me-2" onChange={(e) => setActiveFilter(e.target.value)}>

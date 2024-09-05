@@ -1,7 +1,7 @@
 import React, {useEffect,useState} from "react";
 import useAuthStore from "../../store/userAuthToken";
 import { axiosInstanceAuth, resourcesInstance, axiosInstance, axiosInstanceFiles } from '../../functions/axiosConfig';
-
+import Layout from "../../../routes/LayoutControl/Layouts";
 import { ShowErrorAlter, ShowSuccesAlert } from '../../functions/Alerts';
 import { ConfirmationModal } from "../../functions/CustomModal";
 
@@ -232,6 +232,7 @@ const ConfigSite = () => {
     return (
         <div className="container">
                 <div className="background-container">
+                <Layout/>
             <h2 className="config-title">Configuraciones del WebSite</h2>
                 {error && <div className="error">{error}</div>}
                 <form className="config-form">

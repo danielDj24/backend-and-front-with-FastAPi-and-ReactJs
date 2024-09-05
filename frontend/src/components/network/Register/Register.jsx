@@ -146,7 +146,7 @@ const Register = ({ onRegisterSuccess }) => {
                     />
                 </div >
                 <button className="btn btn-secondary mt-3" type="submit">
-                        Siguiente <i className="fa fa-arrow-right"></i>
+                        Siguiente 
                 </button>
             </form>
             )}
@@ -208,10 +208,10 @@ const Register = ({ onRegisterSuccess }) => {
                     </div>
                     <div className="button-group">
                     <button className="btn btn-secondary mt-3" onClick={() => { setShowFirstForm(true); setShowSecondForm(false); }}>
-                            <i className="fa fa-arrow-left"></i> Atrás
+                            Volver
                         </button>
                         <button className="btn btn-success mt-3" type="submit">
-                            <i className="fa fa-paper-plane"></i>Enviar
+                            Enviar
                         </button>
                     </div>
                 </form>

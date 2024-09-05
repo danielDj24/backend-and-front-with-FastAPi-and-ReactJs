@@ -1,0 +1,20 @@
+/* General layout styles */
+.layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f8f9fa; /* Color de fondo suave */
+    font-family: Arial, sans-serif; /* Fuente moderna */
+    color: #333; /* Color del texto */
+    margin: 0; /* Elimina márgenes externos */
+    padding: 0; /* Elimina relleno externo */
+}
+
+.breadcrumb-item a {
+    color: #333; /* Cambia el color de los enlaces a un color deseado */
+    text-decoration: none; /* Elimina el subrayado */
+}
+
+.breadcrumb-item a:hover {
+    text-decoration: underline; /* Agrega subrayado al pasar el ratón, si lo deseas */
+}

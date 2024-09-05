@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import useAuthStore from "../../store/userAuthToken";
-import { axiosInstanceAuth, axiosInstanceFiles, resourcesInstance } from '../../functions/axiosConfig';
+import { axiosInstanceAuth } from '../../functions/axiosConfig';
 import { ShowErrorAlter, ShowSuccesAlert } from '../../functions/Alerts';
 import { ConfirmationModal } from "../../functions/CustomModal";
-
+import Layout from "../../../routes/LayoutControl/Layouts";
 import './discountControl.css'
 
 const CreateDiscount = () => {
@@ -111,6 +111,8 @@ const CreateDiscount = () => {
     return (
         <div className="container">
             <div className="background-container-discounts">
+            <Layout/>
+
                 <h2 className = "discount-title">control de los porcentajes de descuento</h2>
                 <form onSubmit={(e) => {e.preventDefault(); handleOpenModal();}}>
                 <div className="form-group">

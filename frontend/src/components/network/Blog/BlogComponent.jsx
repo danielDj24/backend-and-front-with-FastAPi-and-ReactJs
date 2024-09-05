@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { axiosInstance, resourcesInstance } from "../../functions/axiosConfig";
 import { Route, Routes, useParams } from "react-router-dom";
 import "./Blogcomponent.css";
+import Layout from "../../../routes/LayoutControl/Layouts";
 
 const DetailViewComponent = () => {
     const { noticeId } = useParams();
@@ -37,6 +38,7 @@ const DetailViewComponent = () => {
                 className="banner-detail-notice-img"
             />
         </div>
+        <Layout/>
         <div className="view-notice-content-detail">
             <div className="notice-info-top">
                 <p>{new Date(notice.date).toLocaleDateString()}</p>

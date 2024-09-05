@@ -58,32 +58,32 @@ const Home = () => {
         {
             title: "Confiabilidad",
             content: {
-            h3: "A lo largo de dos décadas, hemos desarrollado relaciones de confianza con más de 1000 clientes y 100 marcas en todo el mundo.",
-            p: "Comenzamos cada sociedad con comunicación transparente y una meta compartida para crecer juntos, lo que nos ha permitido fomentar relaciones con nuestros clientes a largo plazo y mantener un alto índice de retención de nuestras relaciones. Al entender el modelo de negocios único de cada marca y nuestra investigación profunda de antecedentes de nuestros clientes, podemos evitar colocación conflictiva de productos y distribuir solo a clientes que están dentro de los límites de las solicitudes de nuestros vendedores.",
+            h3: "En FramesGo, hemos cultivado relaciones basadas en la confianza con ópticas en Colombia y Latinoamérica por más de 14 años, destacando calidad y compromiso.",
+            p: "En cada relación, comenzamos con una comunicación abierta y la meta compartida de prosperar juntos. Cada montura es cuidadosamente seleccionada para cumplir con los más altos estándares de calidad, asegurando estilo, durabilidad y rendimiento. Más allá de los productos, sabemos que la confianza es clave en las relaciones comerciales, por lo que nos esforzamos por ser un socio confiable. Desde la selección inicial hasta la entrega, nuestro compromiso es ofrecer un servicio excepcional que contribuya al éxito continuo de nuestros clientes.",
             img: confiabilidad
             }
         },
         {
             title: "Variedad",
             content: {
-            h3: "A lo largo de dos décadas, hemos desarrollado relaciones de confianza con más de 1000 clientes y 100 marcas en todo el mundo.",
-            p: "Comenzamos cada sociedad con comunicación transparente y una meta compartida para crecer juntos, lo que nos ha permitido fomentar relaciones con nuestros clientes a largo plazo y mantener un alto índice de retención de nuestras relaciones. Al entender el modelo de negocios único de cada marca y nuestra investigación profunda de antecedentes de nuestros clientes, podemos evitar colocación conflictiva de productos y distribuir solo a clientes que están dentro de los límites de las solicitudes de nuestros vendedores.",
+            h3: "En FramesGo, ofrecemos un catálogo amplio de monturas ópticas y de sol, con diseños clásicos y modernos, con el fin de satisfacer las diversas necesidades del mercado.",
+            p: "Cada montura es cuidadosamente seleccionada para adaptarse a todos los estilos y preferencias de los clientes de nuestros socios. Nuestro catálogo incluye desde las últimas tendencias en moda hasta modelos clásicos, lo que asegura que siempre haya una opción perfecta. Además, actualizamos continuamente nuestra oferta para mantenernos al día con las demandas del mercado y las tendencias globales.",
             img: LentesSol
             }
         },
         {
             title: "Flexibilidad",
             content: {
-            h3: "A lo largo de dos décadas, hemos desarrollado relaciones de confianza con más de 1000 clientes y 100 marcas en todo el mundo.",
-            p: "Comenzamos cada sociedad con comunicación transparente y una meta compartida para crecer juntos, lo que nos ha permitido fomentar relaciones con nuestros clientes a largo plazo y mantener un alto índice de retención de nuestras relaciones. Al entender el modelo de negocios único de cada marca y nuestra investigación profunda de antecedentes de nuestros clientes, podemos evitar colocación conflictiva de productos y distribuir solo a clientes que están dentro de los límites de las solicitudes de nuestros vendedores.",
+            h3: "En FramesGo, ofrecemos una plataforma de e-commerce intuitiva y eficiente, diseñada para satisfacer las necesidades del mercado y facilitar tus compras.",
+            p: "Nuestra tienda en línea está pensada para ofrecer una experiencia de compra ágil y sin complicaciones. Con ella, puedes acceder a nuestro catálogo completo, gestionar pedidos fácilmente y realizar compras desde cualquier lugar, en cualquier momento. Además, contamos con herramientas integradas que te permiten hacer seguimiento de tus pedidos y disfrutar de opciones de pago flexibles. El soporte técnico continuo garantiza que siempre tengas la asistencia que necesitas.",
             img: MujerLentes
             }
         },
         {
             title: "Acompañamiento",
             content: {
-            h3: "A lo largo de dos décadas, hemos desarrollado relaciones de confianza con más de 1000 clientes y 100 marcas en todo el mundo.",
-            p: "Comenzamos cada sociedad con comunicación transparente y una meta compartida para crecer juntos, lo que nos ha permitido fomentar relaciones con nuestros clientes a largo plazo y mantener un alto índice de retención de nuestras relaciones. Al entender el modelo de negocios único de cada marca y nuestra investigación profunda de antecedentes de nuestros clientes, podemos evitar colocación conflictiva de productos y distribuir solo a clientes que están dentro de los límites de las solicitudes de nuestros vendedores.",
+            h3: "En FramesGo, no solo vendemos gafas, sino que construimos relaciones sólidas, ofreciendo asesoramiento personalizado y apoyo en cada etapa de tu compra.",
+            p: "Entendemos que cada socio tiene necesidades únicas y estamos aquí para acompañarte en cada paso. Te ayudamos a seleccionar los productos adecuados para tu mercado y aseguramos que cada pedido llegue a tiempo y en perfectas condiciones. En FramesGo, nos dedicamos a proporcionar un servicio excepcional que va más allá de una simple transacción. Creemos que tu éxito es nuestro éxito, y estamos aquí para ser un aliado constante en el crecimiento de tu negocio.",
             img: LentesOpticos
             }
         }
@@ -105,8 +105,7 @@ const Home = () => {
                 <Banners positionFilter={1} />
                 <div className="components-elements-home">
                     <div className="information-container">
-                        <h1><strong>Frames. es un distribuidor global impulsado a la venta en volumen de gafas de diseñador.</strong></h1>
-                        <h3>Con una cartera diversa de más de 100 marcas que van desde colecciones de alta gama hasta líneas de moda actuales, NYWD Inc. es un socio confiable para la distribución mundial de anteojos.</h3>
+                        <h1><strong>FramesGo es su aliado confiable en Colombia, ofreciendo una amplia selección de gafas de diseñador con un enfoque en la calidad, moda y valor.</strong></h1>
                         <div className="container-images-variety">
                             <div>
                                 <img src={HombreLentes} alt="Hombre con lentes" />
@@ -125,7 +124,7 @@ const Home = () => {
                                 <p>Lentes Ópticos</p>
                             </div>
                         </div>
-                        <h3>Frames. es un distribuidor global impulsado a la venta en volumen de gafas de diseñador.</h3>
+                        <h3>Con 14 años de experiencia, FramesGo lidera la distribución de monturas ópticas y de sol en Colombia, brindando a sus socios un servicio sin igual y productos de vanguardia.</h3>
                     </div>
                     <div className="pluss-size-container">
                         <div>

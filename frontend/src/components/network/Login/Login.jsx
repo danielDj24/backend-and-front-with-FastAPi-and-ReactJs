@@ -61,7 +61,7 @@ const Login = ({ onLoginSuccess }) => {
                     />
                 </div >
                 <button className="btn btn-success mt-3" type="submit">
-                    <i className="fa fa-paper-plane"></i> Enviar
+                    Ingresar
                 </button>
             </form>
         </div>

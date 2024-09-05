@@ -93,11 +93,11 @@ const FooterComponent = ({handleOpenLoginModal, userRole, handleLogout}) => {
                     <h3>Acceder</h3>
                     {!userRole ? (
                         <button className="btn btn-dark" onClick={handleOpenLoginModal}>
-                            <i className="fa-solid fa-sign-in-alt"></i> Ingresar
+                            Ingresar
                         </button>
                     ) : (
                         <button className="btn btn-dark" onClick={handleLogout}>
-                            <i className="fa-solid fa-sign-out-alt"></i> Cerrar sesión
+                            Cerrar sesión
                         </button>
                     )}
                 </div>

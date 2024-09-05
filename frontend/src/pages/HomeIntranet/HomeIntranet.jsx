@@ -1,11 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 //estilos
 import './homeIntranet.css'
 import BannerPlus from "../../assets/bannersBurn/PLusssizeBanner.jpg"
 import ExampleImg from "../../assets/imgsBurn/intranetexample.jpg"
-
+import Layout from "../../routes/LayoutControl/Layouts";
 const Intranet = () => {
     return (
         <div className="intranet-container">
@@ -16,6 +15,7 @@ const Intranet = () => {
                 </div>
             </div>
             <div className="intranet-elements-container">
+            <Layout/>
                 <div className="container-intranet-control">
                     <div className="buttom-intranet-control">
                         <div className="image-container">

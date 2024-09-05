@@ -2,13 +2,13 @@ import React,{useEffect,useState} from "react";
 import useAuthStore from "../../store/userAuthToken";
 import { axiosInstanceAuth, resourcesInstance } from '../../functions/axiosConfig';
 import { ShowErrorAlter } from '../../functions/Alerts';
-import { useParams } from 'react-router-dom'; 
+import { useParams,useNavigate } from 'react-router-dom'; 
 
 import { addProductToCart } from "../../functions/CartsUtils";
 import QuantitySelector from "../../functions/QuantitySelector";
 import MenuComponent from "../../network/Menu/MenuComponent";
 import FooterComponent from "../../network/Footer/footerComponent"
-
+import Layout from "../../../routes/LayoutControl/Layouts";
 import './productsBrands.css'
 import BannerPlus from "../../../assets/bannersBurn/PLusssizeBanner.jpg"
 
@@ -23,7 +23,9 @@ const ProductsByBrand = () => {
     const [pageSize, setPageSize] = useState(10); 
     const [totalPages, setTotalPages] = useState(0);
     const {token, checkToken } = useAuthStore();
-
+    const navigate = useNavigate();
+    const [isFullScreen, setIsFullScreen] = useState(false); 
+    const [fullScreenProductId, setFullScreenProductId] = useState(null);
     
     const [ setShowLoginModal] = useState(false);
 
@@ -109,6 +111,43 @@ const ProductsByBrand = () => {
         return price.toLocaleString('es-CO', {  maximumFractionDigits: 2 });
     };
 
+    const handleProductClick = (productId) => {
+        navigate(`/e-commerce/products/detail/${productId}`);
+    };
+
+    const handleImageClick = (productId) => {
+        setFullScreenProductId(productId);
+        setIsFullScreen(true);
+    };
+
+    const handleFullScreenClose = () => {
+        setIsFullScreen(false);
+        setFullScreenProductId(null);
+    };
+
+    const getImagesForProduct = (product) => {
+        return [
+            `${resourcesInstance.defaults.baseURL}${product.center_picture}`,
+            `${resourcesInstance.defaults.baseURL}${product.side_picture}`,
+        ];
+    };
+    
+
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const prevImage = () => {
+        const images = getImagesForProduct(products.find(product => product.id === fullScreenProductId));
+        const newIndex = currentImageIndex === 0 ? images.length - 1 : currentImageIndex - 1;
+        setCurrentImageIndex(newIndex);
+    };
+    
+    const nextImage = () => {
+        const images = getImagesForProduct(products.find(product => product.id === fullScreenProductId));
+        const newIndex = currentImageIndex === images.length - 1 ? 0 : currentImageIndex + 1;
+        setCurrentImageIndex(newIndex);
+    };
+    
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -124,6 +163,36 @@ const ProductsByBrand = () => {
                 handleLogout={handleLogout}
                 isECommerce={true}
             />
+            {isFullScreen && fullScreenProductId !== null && (
+                <div className="fullscreen-modal">
+                    <div className="fullscreen-overlay" onClick={handleFullScreenClose}></div>
+                    <div className="fullscreen-content">
+                        <button className="close-button" onClick={handleFullScreenClose}>
+                            <span>&times;</span>
+                        </button>
+
+                        <button className="arrow-button arrow-left" onClick={prevImage}>
+                            <span>&larr;</span>
+                        </button>
+
+                        <button className="arrow-button arrow-right" onClick={nextImage}>
+                            <span>&rarr;</span>
+                        </button>
+
+                        {products
+                            .filter((product) => product.id === fullScreenProductId)
+                            .map((product) => (
+                                <div key={product.id}>
+                                    <img
+                                        src={getImagesForProduct(product)[currentImageIndex]}
+                                        alt="Full Screen"
+                                        className="fullscreen-image"
+                                    />
+                                </div>
+                            ))}
+                    </div>
+                </div>
+            )}
         <div className="banner-blog">
                         <div>
                         <img src={BannerPlus} alt="banner blog" />
@@ -131,6 +200,7 @@ const ProductsByBrand = () => {
                         </div>
                     </div>
                 <div className="background-container">
+                <Layout/>
                     <div className="pagination-controls">
                         <button className="btn btn-light" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
                             Anterior
@@ -155,11 +225,13 @@ const ProductsByBrand = () => {
                                 src={`${resourcesInstance.defaults.baseURL}${product.center_picture}`}
                                 alt={`Product ${product.id}`}
                                 className="center-image"
+                                onClick={() => handleImageClick(product.id)}
                             />
                             <img
                                 src={`${resourcesInstance.defaults.baseURL}${product.side_picture}`}
                                 alt={`Product ${product.id}`}
                                 className="side-imagen"
+                                onClick={() => handleImageClick(product.id)}
                             />
                         </div>
                         <div className="product-details-brand">
@@ -168,6 +240,8 @@ const ProductsByBrand = () => {
                                 <h1 className="product-info-brand"><strong>{product.name_product}</strong></h1>
                                 <p className="product-info-brand">Color: {product.color}</p>
                                 <p className="product-info-brand">Tamaño: {product.size}</p>
+                                <button className="btn btn-dark" onClick={() => handleProductClick(product.id)} 
+                                    >más detalles</button>
                             </div>
                             <div className="products-buy-details">
                             {product.discount?.discount_percentage > 0 ? (
@@ -195,7 +269,7 @@ const ProductsByBrand = () => {
                             className="btn btn-dark"
                             onClick={() => handleAddProductCart(product.id, QuantityCart)} 
                             >
-                            <i className="fa-solid fa-shopping-cart"></i> Agregar al carrito
+                            Agregar al carrito
                         </button>
                         </div>
                     </div>

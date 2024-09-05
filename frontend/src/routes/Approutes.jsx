@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-//componentes network
 
+//componentes network
 import Register from '../components/network/Register/Register'
 import Login from "../components/network/Login/Login";
 import Blogcomponent from "../components/network/Blog/BlogComponent";
@@ -19,11 +19,13 @@ import CreateProduct from "../components/intranet/ProductsControl/ProductsContro
 import CreateShape from "../components/intranet/ShapeControl/shapeControl";
 import CreateDiscount from "../components/intranet/DiscountsControl/discountControl";
 //importacion de las paginas principales del sitio
+
 import Home from "../pages/Home/Home";
 import Blog from "../pages/Blog/Blog"
 import AboutUs from "../pages/AboutUs/aboutUs";
 import WhatUs from "../pages/WhatUS/whatUs";
 import Intranet from "../pages/HomeIntranet/HomeIntranet";
+import DetailProduct from "../pages/Detail/Detailproduct";
 
 //importacion paginas del e-commerce 
 import HomeEcomerce from "../pages/homeStore/homeStore";
@@ -32,6 +34,7 @@ import SearchProductsByDiscount from "../pages/Discounts/DiscountPage";
 import ProductsByType from "../components/e-commerce/productsType/productsComponent";
 import ProductsByDiscounts from "../components/e-commerce/productsDiscounts/productsDiscounts";
 import ProductsByBrand from "../components/e-commerce/productsBrands/productsBrands";
+import CartShop from "../pages/Cart/Cart";
 //proteccion de rutas 
 import ProtectedRoute from "../components/store/ProtectedRoute";
 import UpdateTitleAndFavIcon from "../components/functions/updateTitlendFavIcon";
@@ -44,8 +47,7 @@ const AppRoutes = () => {
         <UpdateTitleAndFavIcon/>
             <Routes>
                 {/* rutas del website */}
-
-                <Route path="/*" element = {<Home/>} />
+                <Route path="/*" element = {<Home/>}   />
                 <Route path="/sobre-nosotros" element={< AboutUs/>}/>
                 <Route path="/por-que-nosotros" element={< WhatUs/>}/>
                 <Route path="/blog/*" element={<Blog view="blog" />} />
@@ -120,6 +122,15 @@ const AppRoutes = () => {
                     path="/e-commerce/products/brands/:brandId"
                     element={<ProtectedRoute roles={['admin', 'client']} element={ProductsByBrand} />} 
                 />
+                <Route 
+                    path="/e-commerce/products/detail/:productId"
+                    element={<ProtectedRoute roles={['admin', 'client']} element={DetailProduct} />}
+                />
+                <Route 
+                    path="/e-commerce/cart/:userId"
+                    element={<ProtectedRoute roles={['admin', 'client']} element={CartShop} />}
+                />
+                
             </Routes>
         </BrowserRouter>
     );

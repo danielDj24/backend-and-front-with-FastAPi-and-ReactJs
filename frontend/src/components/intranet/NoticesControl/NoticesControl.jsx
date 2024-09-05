@@ -5,7 +5,7 @@ import ReactQuill from "react-quill";
 
 import { ShowErrorAlter, ShowSuccesAlert } from '../../functions/Alerts';
 import { ConfirmationModal } from "../../functions/CustomModal";
-
+import Layout from "../../../routes/LayoutControl/Layouts";
 // Estilos 
 import "./NoticesControl.css";
 import 'react-quill/dist/quill.snow.css';
@@ -150,6 +150,7 @@ const UploadNotices = () => {
     return (
         <div className="container">
             <div className="background-container-notices">
+            <Layout/>
                 <h2 className="notices-control-title">Control de Noticias</h2>
                 {error && <p className="text-danger">{error}</p>}
                 <div className="notices-form">

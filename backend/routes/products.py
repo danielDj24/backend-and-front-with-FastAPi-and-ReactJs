@@ -1,5 +1,5 @@
 import os
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime 
 
 from fastapi_pagination import Page, paginate
@@ -124,6 +124,39 @@ def get_all_products(db: session = Depends(GetDB), token : str = Depends(oauth2_
 
     return paginate(products)
 
+#productos por nombre
+@product_routes.get("/products/name/{product_name}", response_model=List[ProductsDataResponse])
+def products_by_name(product_name: str, db: session = Depends(GetDB), token: str = Depends(oauth2_scheme)):
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+    
+    if user.role not in ["admin", "client"]:
+        raise HTTPException(status_code=403, detail="Not authorized to access products")
+    
+    query = db.query(Product).options(
+        joinedload(Product.brand),
+        joinedload(Product.discount),
+        joinedload(Product.shape)
+    ).filter(Product.name_product == product_name)
+    
+    products = query.all()
+    
+    if not products:
+        raise HTTPException(status_code=404, detail="Product not found")
+    
+    for product in products:
+        if product.discount:
+            discount_percentage = product.discount.discount_percentage
+            if discount_percentage > 0:
+                discounted_price = product.price_product - (product.price_product * discount_percentage / 100)
+                product.discounted_price = round(discounted_price, 2)
+            else:
+                product.discounted_price = product.price_product
+        else:
+            product.discounted_price = product.price_product
+    
+    return products
+
 #productos por id 
 @product_routes.get("/products/existing/{product_id}", response_model = ProductsDataResponse)
 def products_by_id(product_id : int, db: session = Depends(GetDB), token : str = Depends(oauth2_scheme)):
@@ -135,7 +168,7 @@ def products_by_id(product_id : int, db: session = Depends(GetDB), token : str =
         joinedload(Product.brand),
         joinedload(Product.discount),
         joinedload(Product.shape)
-    ).filter(Product.id == product_id)
+    ).filter(Product.id == product_id)      
     
     product = query.first()
     

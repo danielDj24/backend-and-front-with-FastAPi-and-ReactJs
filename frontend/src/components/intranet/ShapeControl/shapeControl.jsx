@@ -3,6 +3,7 @@ import useAuthStore from "../../store/userAuthToken";
 import { axiosInstanceAuth, axiosInstanceFiles, resourcesInstance } from '../../functions/axiosConfig';
 import { ShowErrorAlter, ShowSuccesAlert } from '../../functions/Alerts';
 import { ConfirmationModal } from "../../functions/CustomModal";
+import Layout from "../../../routes/LayoutControl/Layouts";
 import './ShapeControl.css'
 
 const CreateShape = () => {
@@ -133,6 +134,7 @@ const CreateShape = () => {
     return (
         <div className="container"> 
                 <div className="background-container-shapes">
+                <Layout/>
                     <h2 className = "shapes-title">control de las formas de los Productos</h2>
                     <form onSubmit={(e) => {e.preventDefault(); handleOpenModal();}}>
                         <div className="form-group">

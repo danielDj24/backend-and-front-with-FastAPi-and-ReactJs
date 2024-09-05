@@ -34,6 +34,7 @@
 }
 
 .menu-item {
+    margin-top: 10px;
     margin-right: 35px; 
     color: var(--secondary-color); 
     text-decoration: none; 

@@ -6,7 +6,7 @@ import Login from "../../components/network/Login/Login";
 import Register from "../../components/network/Register/Register";
 import useAuthStore from "../../components/store/userAuthToken";
 import Blogcomponent from "../../components/network/Blog/BlogComponent";
-
+import Layout from "../../routes/LayoutControl/Layouts";
 import "./Blog.css"
 import BannerPlus from "../../assets/bannersBurn/PLusssizeBanner.jpg"
 
@@ -53,6 +53,7 @@ const Blog = () => {
                         </div>
                     </div>
             <div className="components-elements-blog">
+            <Layout/>
                     <Blogcomponent view="blog" />
             </div>
             

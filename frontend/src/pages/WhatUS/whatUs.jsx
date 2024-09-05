@@ -5,7 +5,7 @@ import {CustomModal} from "../../components/functions/CustomModal";
 import Login from "../../components/network/Login/Login";
 import Register from "../../components/network/Register/Register";
 import useAuthStore from "../../components/store/userAuthToken";
-
+import Layout from "../../routes/LayoutControl/Layouts";
 
 //estilos
 import './whatUs.css'
@@ -50,19 +50,20 @@ const WhatUs = () => {
             <div className="banner-what-us">
                 <div>
                 <img src={BannerPlus} alt="banner WhatUS" />
-                    <p>¿Por que elegir frames como tu distribuidora?</p>
+                    <p>¿Por que elegir FramesGo como tu distribuidora?</p>
                 </div>
             </div>
             <div className="what-us-elements">
+            <Layout/>
                 <div className="what-us-content-container">
                     <div className="title-whatus">
-                        <h1>Frames. es un distribuidor global impulsado a la venta en volumen de gafas de diseñador.</h1>
+                        <h1>Tu socio confiable en moda óptica, siempre a la vanguardia.</h1>
                     </div>
                     <div className="content-what-us">
                         <div className="content-what-us-left">
-                            <h2>A lo largo de dos décadas, hemos desarrollado relaciones de confianza con más de 1000 clientes y 100 marcas en todo el mundo. </h2>
-                            <p>Comenzamos cada sociedad con comunicación transparente y una meta compartida para crecer juntos, lo que nos ha permitido fomentar relaciones con nuestros clientes a largo plazo y mantener un alto índice de retención de nuestras relaciones.</p>
-                            <p>Al entender el modelo de negocios único de cada marca y nuestra investigación profunda de antecedentes de nuestros clientes, podemos evitar colocación conflictiva de productos y distribuir solo a clientes que están dentro de los límites de las solicitudes de nuestros vendedores.</p>
+                            <h2>Elegir a FramesGo como su distribuidor significa optar por más de una década de experiencia en el mercado óptico.  </h2>
+                            <p>Con 14 años de trayectoria, conocemos las necesidades y desafíos que enfrentan las ópticas en Colombia. Nos dedicamos a ofrecer productos que no solo cumplen con los más altos estándares de calidad, sino que también están en sintonía con las últimas tendencias de moda y tecnología. En FramesGo, la confianza es fundamental.</p>
+                            <p>Hemos construido relaciones duraderas con ópticas en todo el país, basadas en la transparencia y el compromiso mutuo. Nos aseguramos de que cada pedido se maneje con la máxima atención al detalle, desde la selección de los productos hasta la entrega final, garantizando que nuestros clientes siempre reciban lo mejor.</p>
                         </div>
                         <div className="content-what-us-right">
                             <img  src={ExampleImg} alt="exaple-img" /> 
@@ -71,9 +72,9 @@ const WhatUs = () => {
                             <img  src={ExampleImg} alt="exaple-img" /> 
                         </div>
                         <div className="content-what-us-left">
-                            <h2>A lo largo de dos décadas, hemos desarrollado relaciones de confianza con más de 1000 clientes y 100 marcas en todo el mundo. </h2>
-                            <p>Comenzamos cada sociedad con comunicación transparente y una meta compartida para crecer juntos, lo que nos ha permitido fomentar relaciones con nuestros clientes a largo plazo y mantener un alto índice de retención de nuestras relaciones.</p>
-                            <p>Al entender el modelo de negocios único de cada marca y nuestra investigación profunda de antecedentes de nuestros clientes, podemos evitar colocación conflictiva de productos y distribuir solo a clientes que están dentro de los límites de las solicitudes de nuestros vendedores.</p>
+                            <h2>Nuestra oferta es diversa y está en constante evolución, lo que nos permite adaptarnos rápidamente a las cambiantes demandas del mercado.</h2>
+                            <p>Trabajamos con proveedores de renombre y colaboramos con empresas internacionales para asegurar que nuestros clientes tengan acceso a las monturas más innovadoras y de alta calidad disponibles. Finalmente, en FramesGo creemos en el acompañamiento continuo.</p>
+                            <p>No solo somos un proveedor, sino un socio que está ahí en cada paso del camino, ofreciendo asesoramiento personalizado, soporte y soluciones adaptadas a las necesidades de cada óptica. Con FramesGo, usted tiene la tranquilidad de contar con un aliado confiable que se preocupa por el éxito de su negocio.</p>
                         </div>
                         
                     </div>

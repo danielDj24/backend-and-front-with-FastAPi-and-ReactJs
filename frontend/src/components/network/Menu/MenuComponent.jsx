@@ -3,6 +3,7 @@ import { axiosInstance, resourcesInstance,axiosInstanceAuth } from "../../functi
 import getRoleFromToken from "../../functions/DecodeToken";
 import useAuthStore from "../../store/userAuthToken";
 import { useNavigate } from "react-router-dom";
+import getUserIdFromToken from "../../functions/UserByToken";
 // estilos
 import "./menuStyles.css";
 
@@ -69,6 +70,11 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
     const handleNavigateToBrand = (brandId) => {
         navigate(`/e-commerce/products/brands/${brandId}`);
     };
+     // Nueva función para redirigir al carrito
+    const handleCartClick = () => {
+        const userId = getUserIdFromToken(token);  
+        navigate(`/e-commerce/cart/${userId}`);
+    };
 
     return (
         <div className="Menu">
@@ -106,15 +112,15 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
                     <a href="/e-commerce/products/search" className="menu-item">Buscador</a>
                     <a href="/e-commerce/contactanos" className="menu-item">Contáctanos</a>
                     <button className="btn btn-dark" onClick={handleLogout}>
-                        <i className="fa-solid fa-sign-out-alt"></i> Cerrar sesión
+                        Cerrar sesión
                     </button>
-                    <button className="btn btn-dark">
-                        <i className="fa-solid fa-shopping-cart"></i> Comprar
+                    <button className="btn btn-dark" onClick={handleCartClick}>
+                        Carrito 
                     </button>
                     {roleFromToken === 'admin' && (
                         <div className="admin-container">
                             <button className="btn btn-dark" onClick={() => window.open('/intranet/', '__blank')}>
-                                <i className="fa-solid fa-user-shield"></i> Intranet
+                                configuraciones web
                             </button>
                         </div>
                     )}
@@ -128,11 +134,11 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
                     <div className="login-container">
                         {!storedToken ? (
                             <button className="btn btn-dark" onClick={handleOpenLoginModal}>
-                                <i className="fa-solid fa-sign-in-alt"></i> Ingresar
+                                Ingresar
                             </button>
                         ) : (
                             <button className="btn btn-dark" onClick={handleLogout}>
-                                <i className="fa-solid fa-sign-out-alt"></i> Cerrar sesión
+                                Cerrar sesión
                             </button>
                         )}
                     </div>

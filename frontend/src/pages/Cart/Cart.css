@@ -1,0 +1,93 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.background-container-cart {
+    width: 100%;
+    height: auto; /* Cambiar a auto para ajustar el tamaño basado en el contenido */
+    background: #F1F1F1;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 22px;
+    padding: 20px; 
+    margin-top: 25px;
+    display: flex; /* Para una disposición en columnas */
+    flex-direction: column; /* Organizar en columnas para el contenedor de la lista de productos y el resumen del carrito */
+}
+
+.cart-item {
+    
+    border: 1px solid #ddd; 
+    border-radius: 8px; /* Bordes redondeados */
+    margin: 10px 0; /* Márgenes superior e inferior */
+    display: flex; /* Para organizar los elementos en línea */
+    align-items: center; /* Alineación vertical central */
+    background-color: #f9f9f9; /* Fondo claro */
+    padding: 10px; /* Espaciado interno para separación */
+}
+
+.cart-item-detail {
+    display: flex;
+    flex: 1; 
+    align-items: center; 
+    margin-right: 15px; /* Espacio entre el nombre y la información adicional */
+}
+
+.cart-item-img {
+    margin-right: 10px; 
+}
+
+.center-image-cart {
+    width: 100px; /* Ajusta el tamaño de la imagen para mayor visibilidad */
+    height: auto; 
+    border: 1px solid #e0e0e0;
+
+    border-radius: 4px; 
+}
+
+.cart-item-name h1 {
+    font-size: 18px; /* Tamaño de fuente ajustado para el nombre del producto */
+    margin: 0;
+}
+
+.cart-item-info {
+    display: flex; /* Organizar la cantidad y el precio en una columna */
+    flex-direction: column; /* Dirección de columna */
+    align-items: flex-start; /* Alineación a la derecha */
+}
+
+.cart-item-info p {
+    margin: 2px 0; /* Espacio reducido entre cada línea de información */
+    font-size: 14px; /* Tamaño de fuente para la información adicional */
+}
+
+/* Añadir un contenedor para mejorar la disposición */
+.cart-items {
+    display: flex;
+    flex-direction: column; /* Organizar en columna dentro del contenedor principal */
+    gap: 10px; /* Espacio entre cada elemento del carrito */
+}
+
+.cart-item-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 20%;
+}
+
+.quantity-input {
+    width: 60px;
+    margin-right: 10px;
+}
+
+.btn {
+    margin-top: 10px;
+}
+
+.buttoms-control{
+    display: flex;
+    align-items: flex-start;
+    gap: 25px;
+}
