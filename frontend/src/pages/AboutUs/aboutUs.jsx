@@ -8,7 +8,7 @@ import useAuthStore from "../../components/store/userAuthToken";
 
 
 //estilos
-import BannerPlus from "../../assets/bannersBurn/PLusssizeBanner.jpg"
+import BannerPlus from "../../assets/bannersBurn/framesgo-frames-video-gafas.jpg"
 import ExampleImg from "../../assets/imgsBurn/example.jpg"
 import Layout from "../../routes/LayoutControl/Layouts";
 import './aboutUs.css'

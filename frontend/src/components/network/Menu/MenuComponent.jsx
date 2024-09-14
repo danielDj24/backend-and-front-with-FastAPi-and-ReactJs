@@ -89,7 +89,7 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
                         </div>
                         {submenuOpen && (
                             <div className="submenu" style={{ backgroundColor: primaryColor }}>
-                                <a href="/e-commerce/tienda" className="submenu-item">Tienda</a>
+                                <a href="/e-commerce/products" className="submenu-item">Tienda</a>
                                 <a onClick={() => handleNavigateBrands('Hombre')} className="submenu-item">Hombre </a>
                                 <a onClick={() => handleNavigateBrands('Mujer')} className="submenu-item">Mujer</a>
                                 <a onClick={() => handleNavigateBrands('Lentes de sol')} className="submenu-item">Lentes de Sol</a>

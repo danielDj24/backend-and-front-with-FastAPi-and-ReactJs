@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { axiosInstance, resourcesInstance } from "../../functions/axiosConfig";
 import { Route, Routes, useParams } from "react-router-dom";
-import "./Blogcomponent.css";
+
+import { CustomModal } from "../../functions/CustomModal";
 import Layout from "../../../routes/LayoutControl/Layouts";
+import useAuthStore from "../../store/userAuthToken";
+import MenuComponent from "../Menu/MenuComponent";
+import FooterComponent from "../Footer/footerComponent";
+import Login from "../Login/Login";
+import Register from "../Register/Register";
+import "./Blogcomponent.css";
+
 
 const DetailViewComponent = () => {
     const { noticeId } = useParams();
     const [notice, setNotice] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [userRole, setUserRole] = useState(null);
+    const [activeForm, setActiveForm] = useState('login');
+    const [showLoginModal, setShowLoginModal] = useState(false);
 
     const fetchNotice = async () => {
         try {
@@ -21,6 +32,27 @@ const DetailViewComponent = () => {
         }
     };
 
+    const handleOpenLoginModal = () => setShowLoginModal(true);
+    const handleCloseLoginModal = () => setShowLoginModal(false);
+
+    useEffect(() => {
+        // Método para obtener el token almacenado
+        useAuthStore.getState().checkToken();
+        const storedToken = useAuthStore.getState().token;
+        setUserRole(storedToken ? 'admin' : null);
+    }, []);
+
+        
+    const handleLoginSuccess = (role) => {
+        setUserRole(role); 
+        setShowLoginModal(false);            
+    };
+
+    const handleLogout = () => {
+        useAuthStore.getState().clearToken();
+        setUserRole(null);
+    };
+
     useEffect(() => {
         fetchNotice();
     }, [noticeId]);
@@ -31,6 +63,12 @@ const DetailViewComponent = () => {
 
     return (
         <div className="detailed-view">
+            <MenuComponent
+                handleOpenLoginModal={handleOpenLoginModal}
+                userRole={userRole}
+                handleLogout={() => useAuthStore.getState().clearToken()}
+                isECommerce={false}
+            />
         <div className="banner-detail-container">
             <img
                 src={`${resourcesInstance.defaults.baseURL}${notice.img_notice}`}
@@ -38,15 +76,38 @@ const DetailViewComponent = () => {
                 className="banner-detail-notice-img"
             />
         </div>
-        <Layout/>
         <div className="view-notice-content-detail">
+            <Layout/>
             <div className="notice-info-top">
                 <p>{new Date(notice.date).toLocaleDateString()}</p>
                 <p className="notice-categorie">{notice.categorie}</p>
             </div>
             <h1>{notice.title}</h1>
             <div dangerouslySetInnerHTML={{ __html: notice.notice_content }} />
-            </div>
+        </div>
+            <CustomModal show={showLoginModal} handleClose={handleCloseLoginModal} title="Iniciar sesión">
+                <div className="form-toggle"> 
+                    <p
+                        className={`form-toggle-item ${activeForm === 'login' ? 'active': ''}`}
+                        onClick={() => setActiveForm('login')}
+                    >
+                        Iniciar sesión
+                    </p>
+                    <p
+                        className={`form-toggle-item ${activeForm === 'register' ? 'active':''}`}
+                        onClick={() => setActiveForm('register')}
+                    >
+                        Registrarse
+                    </p>
+                </div>
+                {activeForm === 'login' ? <Login onLoginSuccess={handleLoginSuccess} /> : <Register onRegisterSuccess={handleCloseLoginModal} />}
+            </CustomModal>
+
+                <FooterComponent 
+            handleOpenLoginModal={handleOpenLoginModal} 
+            userRole={userRole}
+            handleLogout={handleLogout}
+            />
     </div>
     );
 };

@@ -17,11 +17,7 @@ load_dotenv()
 email_routes = APIRouter()
 
 @email_routes.post("/contact")
-async def submit_contact_form(form : EmailSchema, db : session = Depends(GetDB), token : str = Depends(oauth2_scheme)):
-    decoded_token = decode_token(token)
-    user = GetUserID(db, decoded_token["id"])
-    if user.role not in ["admin", "client"]:
-        raise HTTPException(status_code=403, detail="Not authorized to send emails")
+async def submit_contact_form(form : EmailSchema, db : session = Depends(GetDB), ):
     try:
         # Preparar el contenido del correo
         subject = form.subject

@@ -11,7 +11,7 @@ import useAuthStore from "../../components/store/userAuthToken";
 // import BrandsComponent from "../../components/network/Brands/brandsComponent" 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
-
+import VideoModal from "../../components/functions/VideoModal";
 //estilos
 import "./Home.css"
 
@@ -20,14 +20,15 @@ import HombreLentes from "../../assets/resources-home/hombre_con_lentes.jpg";
 import MujerLentes from "../../assets/resources-home/mujer-gafas.jpg";
 import LentesSol from "../../assets/resources-home/lentes-sol.jpg";
 import LentesOpticos from "../../assets/resources-home/lentes-opticos.jpg";
-import BannerPlus from "../../assets/bannersBurn/PLusssizeBanner.jpg"
+import BannerPlus from "../../assets/bannersBurn/framesgo-gafas-colombia-B2B.jpg"
 import confiabilidad from "../../assets/resources-home/lentes-opticos.jpg"
-import videoThumbnail from "../../assets/bannersBurn/PLusssizeBanner.jpg";
+import videoThumbnail from "../../assets/bannersBurn/framesgo-frames-video-gafas.jpg";
 
 const Home = () => {
     // Constantes para controlar el login y el registro en el modal de usuarios
     const [activeForm, setActiveForm] = useState('login');
     const [showLoginModal, setShowLoginModal] = useState(false);
+    const [showVideoModal, setShowVideoModal] = useState(false);
 
     // Control de rutas para el login admin
     const [userRole, setUserRole] = useState(null);
@@ -89,11 +90,13 @@ const Home = () => {
         }
     ]
 
-        const handlePlayVideo = () => {
-            const videoUrl = "https://www.youtube.com/embed/dQw4w9WgXcQ";
-            window.open(videoUrl, '_self');
-        };
-    
+    const handlePlayVideo = () => {
+        setShowVideoModal(true);
+    };
+
+    const handleCloseVideoModal = () => {
+        setShowVideoModal(false);
+    };
     
     return (
         <div className="home-container">
@@ -159,8 +162,8 @@ const Home = () => {
                         </div>
                     </div>{/*  elemento carousel */}
                     
-                    <div className="video-section">
-                        <div className="video-container">
+                    <div className="video-section-banner">
+                        <div className="video-container-banner">
                             <img
                                 src={videoThumbnail}
                                 alt="Video Thumbnail"
@@ -170,8 +173,14 @@ const Home = () => {
                             <button className="play-button" onClick={handlePlayVideo}>
                                 <FontAwesomeIcon icon={faPlay} />
                             </button>
+                        
                         </div>
                     </div>
+                    <VideoModal
+                            show={showVideoModal}
+                            handleClose={handleCloseVideoModal}
+                            videoUrl="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                        />
                                     
                     <div className="blog-component-home">
                         <div className="content-blog-home">

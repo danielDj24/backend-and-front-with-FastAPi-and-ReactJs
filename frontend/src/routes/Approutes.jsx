@@ -26,9 +26,11 @@ import AboutUs from "../pages/AboutUs/aboutUs";
 import WhatUs from "../pages/WhatUS/whatUs";
 import Intranet from "../pages/HomeIntranet/HomeIntranet";
 import DetailProduct from "../pages/Detail/Detailproduct";
+import ProductsByPrice from "../pages/EconomicProducts/ProductsbyPrice";
 
 //importacion paginas del e-commerce 
 import HomeEcomerce from "../pages/homeStore/homeStore";
+import Shop from "../pages/Shop/Shop";
 import SearchPage from "../pages/SearchPage/SearchComponent";
 import SearchProductsByDiscount from "../pages/Discounts/DiscountPage";
 import ProductsByType from "../components/e-commerce/productsType/productsComponent";
@@ -102,6 +104,12 @@ const AppRoutes = () => {
                 path = "/e-commerce"
                 element= {<ProtectedRoute roles={['admin', 'client']} element={HomeEcomerce} />}
                 />
+
+                <Route
+                path = "/e-commerce/products"
+                element= {<ProtectedRoute roles={['admin', 'client']} element={Shop} />}
+                />
+
                 <Route
                     path="/e-commerce/products/search"
                     element={<ProtectedRoute roles={['admin', 'client']} element={SearchPage} />} 
@@ -129,6 +137,10 @@ const AppRoutes = () => {
                 <Route 
                     path="/e-commerce/cart/:userId"
                     element={<ProtectedRoute roles={['admin', 'client']} element={CartShop} />}
+                />
+                <Route 
+                    path="/e-commerce/products/price"
+                    element={<ProtectedRoute roles={['admin', 'client']} element={ProductsByPrice} />}
                 />
                 
             </Routes>

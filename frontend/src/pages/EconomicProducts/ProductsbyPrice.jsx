@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
 import useAuthStore from "../../components/store/userAuthToken";
 import { axiosInstanceAuth, resourcesInstance } from '../../components/functions/axiosConfig';
-import { ShowErrorAlter } from '../../components/functions/Alerts';
-import { useParams,useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 
 import MenuComponent from "../../components/network/Menu/MenuComponent";
 import FooterComponent from "../../components/network/Footer/footerComponent";
 import QuantitySelector from "../../components/functions/QuantitySelector";
 import { addProductToCart } from "../../components/functions/CartsUtils";
 import Layout from "../../routes/LayoutControl/Layouts";
-import './discountPage.css';
+import './productByPrice.css'
 
-const SearchProductsByDiscount = () => {
-    const { discountId } = useParams(); 
-    const [discounts, setDiscounts] = useState([]);
-    const [selectedDiscount, setSelectedDiscount] = useState(discountId || "");
-    const [products, setProducts] = useState(null);
+const ProductsByPrice = () => {
+    const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -24,24 +20,19 @@ const SearchProductsByDiscount = () => {
     const {token, checkToken } = useAuthStore();
     const [totalPrices, setTotalPrices] = useState({});
     const [QuantityCart, setQuantityCart] = useState([]);
-
-    const [setShowLoginModal] = useState(false);
-    const [userRole, setUserRole] = useState(null);
     const [isFullScreen, setIsFullScreen] = useState(false); 
     const [fullScreenProductId, setFullScreenProductId] = useState(null);
+    
     const navigate = useNavigate();
+    const [setShowLoginModal] = useState(false);
+    const [userRole, setUserRole] = useState(null);
+
+
+    const handleAddProductCart = (productId, quantity) => {
+        addProductToCart(token, productId, quantity);
+    };
 
     const handleOpenLoginModal = () => setShowLoginModal(true);
-
-    useEffect(() => {
-        fetchDiscounts();
-        checkToken();
-    }, [checkToken, currentPage, pageSize]);
-
-    const handleLogout = () => {
-        useAuthStore.getState().clearToken();
-        setUserRole(null);
-    };
 
     useEffect(() => {
         // Método para obtener el token almacenado
@@ -50,71 +41,51 @@ const SearchProductsByDiscount = () => {
         setUserRole(storedToken ? 'admin' : null);
     }, []);
 
-    
-    useEffect(() => {
-        if (selectedDiscount) {
-            fetchProducts();
-        }
-    }, [selectedDiscount, currentPage, pageSize]);
-
-    const fetchDiscounts = async () => {
+    const fetchProductsByPrice = async () => {
         if (token) {
             const axiosAuth = axiosInstanceAuth(token);
+            setLoading(true);
             try {
-                const response = await axiosAuth.get("/products/discount/all");
-                setDiscounts(response.data);
-            } catch (error) {
-                setError(error.response ? error.response.data.detail : "Error fetching discounts");
-            } finally {
-                setLoading(false);
-            }
-        } else {
-            ShowErrorAlter("Error", "No se encontró el token. Por favor, inicia sesión.");
-        }
-    };
-
-    const fetchProducts = async () => {
-        setLoading(true);
-        if (token) {
-            const axiosAuth = axiosInstanceAuth(token);
-            try {
-                const response = await axiosAuth.get(`/products/discount/${selectedDiscount}`, {
-                    params: {
+                const response = await axiosAuth.get("/products/price", {
+                    params : {
                         page: currentPage,
-                        size: pageSize,
-                    },
+                        size: pageSize
+                    }
                 });
-                setProducts(response.data.items);
-                setTotalPages(response.data.total_pages);
-            } catch (error) {
+                setProducts(response.data.items || []);
+                setTotalPages(response.data.total_pages || 0);
+            } catch (error){
                 setError(error.response ? error.response.data.detail : "Error fetching products");
             } finally {
                 setLoading(false);
             }
-        } else {
-            ShowErrorAlter("Error", "No se encontró el token. Por favor, inicia sesión.");
         }
     };
 
+    
+    useEffect(() => {
+        checkToken();
+        fetchProductsByPrice();
+    }, [checkToken, currentPage, pageSize]);
+
+
+
+    const handleLogout = () => {
+        useAuthStore.getState().clearToken();
+        setUserRole(null);
+    };
+
     const handlePageChange = (page) => {
+        fetchProductsByPrice();
         setCurrentPage(page);
     };
 
     const handlePageSizeChange = (size) => {
+        fetchProductsByPrice();
         setPageSize(size);
-        setCurrentPage(1); 
-    };
-
-    const handleDiscountChange = (e) => {
-        setSelectedDiscount(e.target.value);
-        setCurrentPage(1); 
-    };
-
-    const handleAddProductCart = (productId, quantity) => {
-        addProductToCart(token, productId, quantity);
+        setCurrentPage(1);
     };
     
-
     const handleQuantityChange = (productId, price, quantity) => {
         setQuantityCart(quantity);  // Actualiza la cantidad
         setTotalPrices(prevTotalPrices => ({
@@ -164,23 +135,19 @@ const SearchProductsByDiscount = () => {
     };
     
 
+
     if (loading) {
         return <div>Loading...</div>;
     }
 
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
-
     return (
-        <div className="product-container">
+        <div className="prices-container">
             <MenuComponent
                 handleOpenLoginModal={handleOpenLoginModal}
                 userRole={userRole}
                 handleLogout={() => useAuthStore.getState().clearToken()}
                 isECommerce={true}
             />
-            
             {isFullScreen && fullScreenProductId !== null && (
                 <div className="fullscreen-modal">
                     <div className="fullscreen-overlay" onClick={handleFullScreenClose}></div>
@@ -188,15 +155,12 @@ const SearchProductsByDiscount = () => {
                         <button className="close-button" onClick={handleFullScreenClose}>
                             <span>&times;</span>
                         </button>
-
                         <button className="arrow-button arrow-left" onClick={prevImage}>
                             <span>&larr;</span>
                         </button>
-
                         <button className="arrow-button arrow-right" onClick={nextImage}>
                             <span>&rarr;</span>
                         </button>
-
                         {products
                             .filter((product) => product.id === fullScreenProductId)
                             .map((product) => (
@@ -212,7 +176,8 @@ const SearchProductsByDiscount = () => {
                 </div>
             )}
 
-            <div className="background-container">
+            
+            <div className="background-container-pgprice">
                 <Layout/>
                 <div className="pagination-controls">
                     <button className="btn btn-light" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
@@ -230,57 +195,46 @@ const SearchProductsByDiscount = () => {
                         <option value={20}>20</option>
                     </select>
                 </div>
-                <div className="discount-selector">
-                    <div className="form-group">
-                    <label htmlFor="discount-select">Selecciona un descuento:</label>
-                    <select id="discount-select" value={selectedDiscount} onChange={handleDiscountChange} className="form-control">
-                        <option value="">Por favor selecciona un porcentaje de descuento</option>
-                        {discounts.map((discount) => (
-                            <option key={discount.id} value={discount.id}>
-                                {discount.discount_percentage}% de descuento
-                            </option>
-                        ))}
-                    </select>
-                    </div>
-                </div>
-                <div className="product-list-discounts">
-                {products && products.map((product) => (
-                    <div key={product.id} className="product-item-discounts mb-3">
-                        <div className="product-image-container-discount">
+
+                <div className="product-list-pgprice">
+                    {products.map((product) => (
+                    <div key={product.id} className="product-item-pgprice mb-3" >
+                        <div className="product-image-container-pgprice">
                             <img
                                 src={`${resourcesInstance.defaults.baseURL}${product.center_picture}`}
                                 alt={`Product ${product.id}`}
                                 className="center-image"
                                 onClick={() => handleImageClick(product.id)}
-                                />
+
+                            />
                             <img
                                 src={`${resourcesInstance.defaults.baseURL}${product.side_picture}`}
                                 alt={`Product ${product.id}`}
                                 className="side-imagen"
-                                    onClick={() => handleImageClick(product.id)}
-                                />
+                                onClick={() => handleImageClick(product.id)}
+
+                            />
                         </div>
-                        <div className="product-details-discount">
+                        <div className="product-details-pgprice">
                             <div className="description-list">
-                                <h2 className="product-info-discount">{product.brand?.name || 'N/A'}</h2>
-                                <h1 className="product-info-discount"><strong>{product.name_product}</strong></h1>
-                                <p className="product-info-discount">Color: {product.color}</p>
-                                <p className="product-info-discount">Tamaño: {product.size}</p>
+                                <h2 className="product-info-pgprice">{product.brand?.name || 'N/A'}</h2>
+                                <h1 className="product-info-pgprice"><strong>{product.name_product}</strong></h1>
+                                <p className="product-info-pgprice">Color: {product.color}</p>
+                                <p className="product-info-pgprice">Tamaño: {product.size}</p>
                                 <button className="btn btn-dark" onClick={() => handleProductClick(product.id)} 
                                     >más detalles</button>
                             </div>
-                            
                             <div className="products-buy-details">
-                            {product.discount?.discount_percentage > 0 ? (
-                                <>
-                                    <h5 className="product-price-discount">
-                                        <s>${formatPrice(product.price_product)}</s> -{product.discount.discount_percentage}%
-                                    </h5>
-                                    <h1 className="product-price"><strong>${formatPrice(product.discounted_price)}</strong></h1>
-                                </>
-                            ) : (
-                                <h1 className="product-price"><strong>${formatPrice(product.price_product)}</strong></h1>
-                            )}
+                                {product.discount?.discount_percentage > 0 ? (
+                                    <>
+                                        <h5 className="product-price-discount">
+                                            <s>${formatPrice(product.price_product)}</s> -{product.discount.discount_percentage}%
+                                        </h5>
+                                        <h1 className="product-price"><strong>${formatPrice(product.discounted_price)}</strong></h1>
+                                    </>
+                                ) : (
+                                    <h1 className="product-price"><strong>${formatPrice(product.price_product)}</strong></h1>
+                                )}
                                 <div className="quantity-selector-wrapper">
                                     <QuantitySelector                            
                                         initialQuantity={1}
@@ -291,20 +245,22 @@ const SearchProductsByDiscount = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="shop-control-elements"> 
-                        <button
-                            className="btn btn-dark"
-                            onClick={() => handleAddProductCart(product.id, QuantityCart)} 
-                            >
-                            Agregar al carrito
-                        </button>
+                        <div className="shop-control-elements">
+                            
+                            <button
+                                className="btn btn-dark"
+                                onClick={() => handleAddProductCart(product.id, QuantityCart)} 
+                                >
+                                Agregar al carrito
+                            </button>
                         </div>
                     </div>
                 ))}
+                </div>
             </div>
-            </div>
-            <FooterComponent 
-                handleOpenLoginModal={handleOpenLoginModal} 
+
+            <FooterComponent
+                handleOpenLoginModal={handleOpenLoginModal}
                 userRole={userRole}
                 handleLogout={handleLogout}
             />
@@ -312,4 +268,4 @@ const SearchProductsByDiscount = () => {
     );
 };
 
-export default SearchProductsByDiscount;
+export default ProductsByPrice;

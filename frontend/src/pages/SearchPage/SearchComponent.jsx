@@ -7,9 +7,8 @@ import MenuComponent from "../../components/network/Menu/MenuComponent";
 import FooterComponent from "../../components/network/Footer/footerComponent";
 import QuantitySelector from "../../components/functions/QuantitySelector";
 import { addProductToCart } from "../../components/functions/CartsUtils";
-import BannerPlus from "../../assets/bannersBurn/PLusssizeBanner.jpg";
-import "./searchPage.css"
 import { useNavigate } from 'react-router-dom'; 
+import "./searchPage.css"
 
 const SearchPage = () => {
     const [products, setProducts] = useState([]);
@@ -101,8 +100,6 @@ const SearchPage = () => {
             } finally {
                 setLoading(false);
             }
-        } else {
-            ShowErrorAlter("Error", "No se encontró el token. Por favor, inicia sesión.");
         }
     };
 
@@ -249,12 +246,6 @@ const SearchPage = () => {
                 </div>
             )}
 
-            <div className="banner-blog">
-                <div>
-                    <img src={BannerPlus} alt="banner blog" />
-                    <p>Buscar productos</p>
-                </div>
-            </div>
             <div className="background-container-search">
 
                 <div className="search-elements">

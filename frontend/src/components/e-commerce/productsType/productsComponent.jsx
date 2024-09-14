@@ -10,8 +10,8 @@ import QuantitySelector from "../../functions/QuantitySelector";
 import { addProductToCart } from "../../functions/CartsUtils";
 
 import './productsComponent.css'
-import BannerPlus from "../../../assets/bannersBurn/PLusssizeBanner.jpg"
 import Layout from "../../../routes/LayoutControl/Layouts";
+
 const ProductsByType = () =>{
     const { gender } = useParams();
     const [totalPrices, setTotalPrices] = useState({});
@@ -188,12 +188,6 @@ const ProductsByType = () =>{
                 </div>
             )}
 
-            <div className="banner-blog">
-                <div>
-                    <img src={BannerPlus} alt="banner blog" />
-                    <p> {gender} </p>
-                </div>
-            </div>
             <div className="background-container">
                 <Layout/>
                 <div className="pagination-controls">
@@ -267,7 +261,7 @@ const ProductsByType = () =>{
                                 className="btn btn-dark"
                                 onClick={() => handleAddProductCart(product.id, QuantityCart)} 
                                 >
-                                <i className="fa-solid fa-shopping-cart"></i> Agregar al carrito
+                                Agregar al carrito
                             </button>
                         </div>
                     </div>

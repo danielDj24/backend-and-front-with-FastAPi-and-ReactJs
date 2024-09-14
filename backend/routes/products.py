@@ -124,6 +124,32 @@ def get_all_products(db: session = Depends(GetDB), token : str = Depends(oauth2_
 
     return paginate(products)
 
+#productos por precio (de menor a mayor)
+@product_routes.get("/products/price", response_model=Page[ProductsDataResponse])
+def get_products_by_price(db : session = Depends(GetDB), token : str=Depends(oauth2_scheme)):
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+    
+    if user.role not in ["admin", "client"]:
+        raise HTTPException(status_code=403, detail="Not authorized to access products")
+        
+    query = db.query(Product).options(
+        joinedload(Product.brand),
+        joinedload(Product.discount),
+        joinedload(Product.shape)
+    ).order_by(Product.price_product.asc())
+    
+    products = query.all()
+    
+    for product in products :
+        if product.discount :
+            discount_percentage = product.discount.discount_percentage
+            product.discounted_price = product.price_product * (1 - discount_percentage / 100)
+        else:
+            product.discounted_price = product.price_product
+    
+    return paginate(products)
+
 #productos por nombre
 @product_routes.get("/products/name/{product_name}", response_model=List[ProductsDataResponse])
 def products_by_name(product_name: str, db: session = Depends(GetDB), token: str = Depends(oauth2_scheme)):

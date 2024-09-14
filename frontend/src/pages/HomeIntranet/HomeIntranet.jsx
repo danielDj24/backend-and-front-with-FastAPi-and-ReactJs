@@ -1,13 +1,55 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
 
 //estilos
 import './homeIntranet.css'
-import BannerPlus from "../../assets/bannersBurn/PLusssizeBanner.jpg"
+import BannerPlus from "../../assets/bannersBurn/framesgo-frames-video-gafas.jpg"
 import ExampleImg from "../../assets/imgsBurn/intranetexample.jpg"
 import Layout from "../../routes/LayoutControl/Layouts";
+
+
+import {CustomModal} from "../../components/functions/CustomModal";
+import Login from "../../components/network/Login/Login";
+import Register from "../../components/network/Register/Register";
+import MenuComponent from "../../components/network/Menu/MenuComponent";
+import useAuthStore from "../../components/store/userAuthToken";
+
 const Intranet = () => {
+    const [activeForm, setActiveForm] = useState('login');
+    const [showLoginModal, setShowLoginModal] = useState(false);
+
+    // Control de rutas para el login admin
+    const [userRole, setUserRole] = useState(null);
+
+    const handleOpenLoginModal = () => setShowLoginModal(true);
+    const handleCloseLoginModal = () => setShowLoginModal(false);
+
+    useEffect(() => {
+        // Método para obtener el token almacenado
+        useAuthStore.getState().checkToken();
+        const storedToken = useAuthStore.getState().token;
+        setUserRole(storedToken ? 'admin' : null);
+    }, []);
+
+    const handleLoginSuccess = (role) => {
+        setUserRole(role); 
+        setShowLoginModal(false);            
+    };
+
+    const handleLogout = () => {
+        useAuthStore.getState().clearToken();
+        setUserRole(null);
+    };
+
     return (
         <div className="intranet-container">
+            <MenuComponent
+                handleOpenLoginModal={handleOpenLoginModal}
+                userRole={userRole}
+                handleLogout={handleLogout}
+                isECommerce={true}
+
+            />
+
             <div className="banner-intranet">
                 <div>
                     <img src={BannerPlus} alt="banner intranet" />
@@ -83,6 +125,24 @@ const Intranet = () => {
                     </div>
                 </div>
             </div>
+            <CustomModal show={showLoginModal} handleClose={handleCloseLoginModal} title="Iniciar sesión">
+                <div className="form-toggle"> 
+                    <p
+                        className={`form-toggle-item ${activeForm === 'login' ? 'active': ''}`}
+                        onClick={() => setActiveForm('login')}
+                    >
+                        Iniciar sesión
+                    </p>
+                    <p
+                        className={`form-toggle-item ${activeForm === 'register' ? 'active':''}`}
+                        onClick={() => setActiveForm('register')}
+                    >
+                        Registrarse
+                    </p>
+                </div>
+                {activeForm === 'login' ? <Login onLoginSuccess={handleLoginSuccess} /> : <Register onRegisterSuccess={handleCloseLoginModal} />}
+            </CustomModal>
+
         </div>
     );
 };

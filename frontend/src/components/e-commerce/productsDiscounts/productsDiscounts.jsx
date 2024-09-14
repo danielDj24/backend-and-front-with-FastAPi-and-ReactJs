@@ -9,7 +9,6 @@ import FooterComponent from "../../network/Footer/footerComponent"
 import { addProductToCart } from "../../functions/CartsUtils";
 import QuantitySelector from "../../functions/QuantitySelector";
 import Layout from "../../../routes/LayoutControl/Layouts";
-import BannerPlus from "../../../assets/bannersBurn/PLusssizeBanner.jpg"
 import './productsDiscounts.css'
 
 const ProductsByDiscounts = () => {
@@ -190,12 +189,6 @@ const ProductsByDiscounts = () => {
                 </div>
             )}
 
-            <div className="banner-blog">
-                <div>
-                    <img src={BannerPlus} alt="banner blog" />
-                    <p> Descuentos especiales</p>
-                </div>
-            </div>
             <div className="background-container">
             <Layout/>
                 <div className="pagination-controls">

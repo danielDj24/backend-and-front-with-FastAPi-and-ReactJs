@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useAuthStore from "../../store/userAuthToken";
 import { axiosInstanceAuth, resourcesInstance, axiosInstance, axiosInstanceFiles } from '../../functions/axiosConfig';
-import ReactQuill from "react-quill";
-
+import { ReactQuill } from "react-quill";
 import { ShowErrorAlter, ShowSuccesAlert } from '../../functions/Alerts';
 import { ConfirmationModal } from "../../functions/CustomModal";
 import Layout from "../../../routes/LayoutControl/Layouts";

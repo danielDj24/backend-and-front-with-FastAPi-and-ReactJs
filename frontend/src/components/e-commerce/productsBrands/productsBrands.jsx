@@ -10,7 +10,6 @@ import MenuComponent from "../../network/Menu/MenuComponent";
 import FooterComponent from "../../network/Footer/footerComponent"
 import Layout from "../../../routes/LayoutControl/Layouts";
 import './productsBrands.css'
-import BannerPlus from "../../../assets/bannersBurn/PLusssizeBanner.jpg"
 
 const ProductsByBrand = () => {
     const {brandId} = useParams();
@@ -193,12 +192,7 @@ const ProductsByBrand = () => {
                     </div>
                 </div>
             )}
-        <div className="banner-blog">
-                        <div>
-                        <img src={BannerPlus} alt="banner blog" />
-                            <p>Productos</p>
-                        </div>
-                    </div>
+
                 <div className="background-container">
                 <Layout/>
                     <div className="pagination-controls">

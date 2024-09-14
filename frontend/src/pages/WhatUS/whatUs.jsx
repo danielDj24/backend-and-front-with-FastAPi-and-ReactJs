@@ -10,7 +10,7 @@ import Layout from "../../routes/LayoutControl/Layouts";
 //estilos
 import './whatUs.css'
 
-import BannerPlus from "../../assets/bannersBurn/PLusssizeBanner.jpg"
+import BannerPlus from "../../assets/bannersBurn/framesgo-frames-video-gafas.jpg"
 import ExampleImg from "../../assets/imgsBurn/example.jpg"
 
 const WhatUs = () => {

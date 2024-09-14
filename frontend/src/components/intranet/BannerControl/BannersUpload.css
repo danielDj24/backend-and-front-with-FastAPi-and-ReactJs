@@ -30,18 +30,22 @@
     background-color: white;
 }
 
+.banner-item p {
+    word-wrap: break-word; /* Permite que las palabras largas se rompan y ajusten */
+    overflow-wrap: break-word; /* Asegura que el texto se ajuste dentro del contenedor */
+}
+
 .banner-image {
     width: 100%;
     border-radius: 10px;
     opacity: 1;
     margin-bottom: 10px;
 }
-
 .button-container {
     display: flex;
-    width: 50%;
-    justify-content: center;
+    justify-content: center; /* Centra el botón horizontalmente */
     margin-top: 10px;
+    width: 100%; /* Asegura que el contenedor use todo el ancho disponible */
 }
 
 .delete-button-banners {
