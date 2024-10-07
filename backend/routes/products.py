@@ -16,7 +16,7 @@ from models.products import Product, Discount, Shape
 from schemas.products import ProductsCreateData, ProductsDataResponse, ProductsDataDeleteResponse
 from models.brands import Brand
 from sqlalchemy.orm import joinedload
-
+from models.cart import CartItem,Cart
 
 """Buscador"""
 
@@ -62,6 +62,16 @@ def search_products(shape_id: Optional[int] = None, brand_id: Optional[int] = No
         joinedload(Product.shape),
     )
     
+    # Obtener la cantidad reservada por el usuario específico para cada producto
+    reserved_quantities = db.query(CartItem.product_id, func.sum(CartItem.quantity).label("reserved_quantity")) \
+        .join(Cart) \
+        .filter(Cart.user_id == user.id) \
+        .group_by(CartItem.product_id) \
+        .all()
+
+    # Convertir a diccionario para acceso rápido
+    reserved_quantity_dict = {item.product_id: item.reserved_quantity for item in reserved_quantities}
+
     if shape_id is not None:
         query = query.filter(Product.shape_id == shape_id)
     
@@ -94,6 +104,8 @@ def search_products(shape_id: Optional[int] = None, brand_id: Optional[int] = No
             product.discounted_price = product.price_product * (1 - discount_percentage / 100)
         else:
             product.discounted_price = product.price_product
+    # Asignar la cantidad reservada específicamente por este usuario
+        product.reserved_quantity = reserved_quantity_dict.get(product.id, 0)
 
     return paginate(products)
 
@@ -112,6 +124,16 @@ def get_all_products(db: session = Depends(GetDB), token : str = Depends(oauth2_
     )
     products = query.all()
     
+    # Obtener la cantidad reservada por el usuario específico para cada producto
+    reserved_quantities = db.query(CartItem.product_id, func.sum(CartItem.quantity).label("reserved_quantity")) \
+        .join(Cart) \
+        .filter(Cart.user_id == user.id) \
+        .group_by(CartItem.product_id) \
+        .all()
+
+    # Convertir a diccionario para acceso rápido
+    reserved_quantity_dict = {item.product_id: item.reserved_quantity for item in reserved_quantities}
+
     if not products:
         raise HTTPException(status_code=404, detail="No products found")
     
@@ -121,6 +143,8 @@ def get_all_products(db: session = Depends(GetDB), token : str = Depends(oauth2_
             product.discounted_price = product.price_product * (1 - discount_percentage / 100)
         else:
             product.discounted_price = product.price_product
+        # Asignar la cantidad reservada específicamente por este usuario
+        product.reserved_quantity = reserved_quantity_dict.get(product.id, 0)
 
     return paginate(products)
 
@@ -140,14 +164,25 @@ def get_products_by_price(db : session = Depends(GetDB), token : str=Depends(oau
     ).order_by(Product.price_product.asc())
     
     products = query.all()
-    
+    # Obtener la cantidad reservada por el usuario específico para cada producto
+    reserved_quantities = db.query(CartItem.product_id, func.sum(CartItem.quantity).label("reserved_quantity")) \
+        .join(Cart) \
+        .filter(Cart.user_id == user.id) \
+        .group_by(CartItem.product_id) \
+        .all()
+
+    # Convertir a diccionario para acceso rápido
+    reserved_quantity_dict = {item.product_id: item.reserved_quantity for item in reserved_quantities}
+
     for product in products :
         if product.discount :
             discount_percentage = product.discount.discount_percentage
             product.discounted_price = product.price_product * (1 - discount_percentage / 100)
         else:
             product.discounted_price = product.price_product
-    
+        # Asignar la cantidad reservada específicamente por este usuario
+        product.reserved_quantity = reserved_quantity_dict.get(product.id, 0)
+
     return paginate(products)
 
 #productos por nombre
@@ -180,7 +215,7 @@ def products_by_name(product_name: str, db: session = Depends(GetDB), token: str
                 product.discounted_price = product.price_product
         else:
             product.discounted_price = product.price_product
-    
+            
     return products
 
 #productos por id 
@@ -197,7 +232,16 @@ def products_by_id(product_id : int, db: session = Depends(GetDB), token : str =
     ).filter(Product.id == product_id)      
     
     product = query.first()
-    
+    # Obtener la cantidad reservada por el usuario específico para cada producto
+    reserved_quantities = db.query(CartItem.product_id, func.sum(CartItem.quantity).label("reserved_quantity")) \
+        .join(Cart) \
+        .filter(Cart.user_id == user.id) \
+        .group_by(CartItem.product_id) \
+        .all()
+
+    # Convertir a diccionario para acceso rápido
+    reserved_quantity_dict = {item.product_id: item.reserved_quantity for item in reserved_quantities}
+
     if product.discount:
         discount_percentage = product.discount.discount_percentage
         if discount_percentage > 0:
@@ -207,7 +251,9 @@ def products_by_id(product_id : int, db: session = Depends(GetDB), token : str =
             product.discounted_price = product.price_product
     else:
         product.discounted_price = product.price_product
-    
+    # Asignar la cantidad reservada específicamente por este usuario
+        product.reserved_quantity = reserved_quantity_dict.get(product.id, 0)
+
     if not product:
         raise HTTPException(status_code=404, detail="product not found")
     
@@ -227,12 +273,24 @@ def get_products_by_shape(shape_id: int, db : session = Depends(GetDB), token : 
     ).filter(Product.shape_id == shape_id)
     
     products = query.all()
+    # Obtener la cantidad reservada por el usuario específico para cada producto
+    reserved_quantities = db.query(CartItem.product_id, func.sum(CartItem.quantity).label("reserved_quantity")) \
+        .join(Cart) \
+        .filter(Cart.user_id == user.id) \
+        .group_by(CartItem.product_id) \
+        .all()
+
+    # Convertir a diccionario para acceso rápido
+    reserved_quantity_dict = {item.product_id: item.reserved_quantity for item in reserved_quantities}
+
     for product in products:
         if product.discount:
             discount_percentage = product.discount.discount_percentage
             product.discounted_price = product.price_product * (1 - discount_percentage / 100)
         else:
             product.discounted_price = product.price_product
+        # Asignar la cantidad reservada específicamente por este usuario
+        product.reserved_quantity = reserved_quantity_dict.get(product.id, 0)
 
     if not products:
         raise HTTPException(status_code=404, detail="No products found for the specified shape")
@@ -253,12 +311,24 @@ def get_products_by_discount(discount_id: int, db : session = Depends(GetDB), to
     ).filter(Product.discount_id == discount_id)
     
     products = query.all()
+    # Obtener la cantidad reservada por el usuario específico para cada producto
+    reserved_quantities = db.query(CartItem.product_id, func.sum(CartItem.quantity).label("reserved_quantity")) \
+        .join(Cart) \
+        .filter(Cart.user_id == user.id) \
+        .group_by(CartItem.product_id) \
+        .all()
+
+    # Convertir a diccionario para acceso rápido
+    reserved_quantity_dict = {item.product_id: item.reserved_quantity for item in reserved_quantities}
+
     for product in products:
         if product.discount:
             discount_percentage = product.discount.discount_percentage
             product.discounted_price = product.price_product * (1 - discount_percentage / 100)
         else:
             product.discounted_price = product.price_product
+        # Asignar la cantidad reservada específicamente por este usuario
+        product.reserved_quantity = reserved_quantity_dict.get(product.id, 0)
 
     if not products:
         raise HTTPException(status_code=404, detail="No products found for the specified discount")
@@ -266,11 +336,14 @@ def get_products_by_discount(discount_id: int, db : session = Depends(GetDB), to
 
 #productos por marca
 @product_routes.get("/products/brand/{brand_id}", response_model=Page[ProductsDataResponse])
-def get_products_by_discount(brand_id: int, db : session = Depends(GetDB), token : str = Depends(oauth2_scheme)):
+def get_products_by_brand(brand_id: int, db: session = Depends(GetDB), token: str = Depends(oauth2_scheme)):
     decoded_token = decode_token(token)
     user = GetUserID(db, decoded_token["id"])
+    
     if user.role not in ["admin", "client"]:
         raise HTTPException(status_code=403, detail="Not authorized to access products")
+    
+    # Consulta para obtener los productos de la marca especificada
     query = db.query(Product).options(
         joinedload(Product.brand),
         joinedload(Product.discount),
@@ -278,17 +351,34 @@ def get_products_by_discount(brand_id: int, db : session = Depends(GetDB), token
     ).filter(Product.brand_id == brand_id)
     
     products = query.all()
+    
+    # Obtener la cantidad reservada por el usuario específico para cada producto
+    reserved_quantities = db.query(CartItem.product_id, func.sum(CartItem.quantity).label("reserved_quantity")) \
+        .join(Cart) \
+        .filter(Cart.user_id == user.id) \
+        .group_by(CartItem.product_id) \
+        .all()
+
+    # Convertir a diccionario para acceso rápido
+    reserved_quantity_dict = {item.product_id: item.reserved_quantity for item in reserved_quantities}
+
+    # Procesar cada producto
     for product in products:
         if product.discount:
             discount_percentage = product.discount.discount_percentage
             product.discounted_price = product.price_product * (1 - discount_percentage / 100)
         else:
             product.discounted_price = product.price_product
+        
+        # Asignar la cantidad reservada específicamente por este usuario
+        product.reserved_quantity = reserved_quantity_dict.get(product.id, 0)
 
     if not products:
         raise HTTPException(status_code=404, detail="No products found for the specified brand")
-    return paginate(products)
     
+    return paginate(products)
+
+
 #productos por publico de destino
 @product_routes.get("/products/gender/{gender}", response_model=Page[ProductsDataResponse])
 def get_products_by_gender( gender : str , db : session = Depends(GetDB), token : str = Depends(oauth2_scheme)):
@@ -301,12 +391,23 @@ def get_products_by_gender( gender : str , db : session = Depends(GetDB), token 
     else:
         products = db.query(Product).all()
 
+    reserved_quantities = db.query(CartItem.product_id, func.sum(CartItem.quantity).label("reserved_quantity")) \
+        .join(Cart) \
+        .filter(Cart.user_id == user.id) \
+        .group_by(CartItem.product_id) \
+        .all()
+        
+    reserved_quantity_dict = {item.product_id: item.reserved_quantity for item in reserved_quantities}
+
     for product in products:
         if product.discount:
             discount_percentage = product.discount.discount_percentage
             product.discounted_price = product.price_product * (1 - discount_percentage / 100)
         else:
             product.discounted_price = product.price_product
+
+    # Asignar la cantidad reservada específicamente por este usuario
+        product.reserved_quantity = reserved_quantity_dict.get(product.id, 0)
 
     return paginate(products)
     

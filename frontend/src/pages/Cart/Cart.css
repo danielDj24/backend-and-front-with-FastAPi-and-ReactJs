@@ -25,7 +25,7 @@ html, body {
     display: flex; /* Para organizar los elementos en línea */
     align-items: center; /* Alineación vertical central */
     background-color: #f9f9f9; /* Fondo claro */
-    padding: 10px; /* Espaciado interno para separación */
+    padding: 20px; /* Espaciado interno para separación */
 }
 
 .cart-item-detail {
@@ -40,11 +40,10 @@ html, body {
 }
 
 .center-image-cart {
-    width: 100px; /* Ajusta el tamaño de la imagen para mayor visibilidad */
+    width: 200px; /* Ajusta el tamaño de la imagen para mayor visibilidad */
     height: auto; 
     border: 1px solid #e0e0e0;
-
-    border-radius: 4px; 
+    border-radius: 5px; 
 }
 
 .cart-item-name h1 {

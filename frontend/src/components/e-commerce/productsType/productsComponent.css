@@ -190,12 +190,12 @@
     display: flex;
     flex-direction: column; 
     align-items: center; 
-    margin-top: 5px; 
-    margin-bottom: 5px;
+    margin-top: 2px; 
+    margin-bottom: 2px;
 }
 
 .button-container {
-    margin-bottom: 5px; 
+    margin-bottom: 2px; 
 }
 
 .quantity-selector-container {
@@ -227,4 +227,10 @@
 .product-price-discount {
     color:#707070;
     
+}
+
+.shop-control-elements p {  
+    color:#414040;
+    margin: 0; 
+
 }

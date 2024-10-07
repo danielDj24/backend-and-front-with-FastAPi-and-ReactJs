@@ -176,6 +176,7 @@ const CartShop = () => {
                                     <div className="cart-item-info">
                                         <h1>{item.product.name_product}</h1>
                                         <div className="cart-item-pricing">
+                                            <p>Color: {item.product.color}</p>
                                             <p>Cantidad: {item.quantity}</p>
                                             <p>Precio Total: ${formatPrice(item.total_price)}</p>
                                         </div>

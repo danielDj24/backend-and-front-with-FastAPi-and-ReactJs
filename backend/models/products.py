@@ -40,6 +40,7 @@ class Product(Base):
     quantity_col = Column(Integer, index=True)
     quantity_usa = Column(Integer, index=True)
     quantity = Column(Integer, index=True)
+    reserved_quantity = Column(Integer, default=0)
     center_picture = Column(String(500), index=True)
     side_picture = Column(String(500), index=True)
     

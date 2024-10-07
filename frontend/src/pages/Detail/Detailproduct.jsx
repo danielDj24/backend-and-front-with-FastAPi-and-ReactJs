@@ -244,6 +244,7 @@ const DetailProduct = () => {
                                 <strong className="price-overlay">${formatPrice(totalPrices[product.id] || product.discounted_price)}</strong>
                             </div>
                             <div className="buttom-shop-detail">
+                                
                                 <button
                                     className="btn btn-dark" style={{ marginLeft: '17px', marginBottom: '10px' }}
                                     onClick={() => handleAddProductCart(product.id, QuantityCart)} 
@@ -278,7 +279,7 @@ const DetailProduct = () => {
                         <p className="product-info">publico destino: {product.gender ? product.gender : 'N/A'}</p>
                         <p className="product-info">forma: {shapeName}</p>
                         <p className="product-info">medida: {product.size}</p>
-                        <p className="product-info">calibre: {product.size_caliber}</p>
+                        <p className="product-info">Puente: {product.size_caliber}</p>
                         <p className="product-info">vertical: {product.size_vertical}</p>
                         <p className="product-info">brazo: {product.size_arm}</p>
                     </div>

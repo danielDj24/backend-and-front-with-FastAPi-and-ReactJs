@@ -246,7 +246,9 @@ const ProductsByPrice = () => {
                             </div>
                         </div>
                         <div className="shop-control-elements">
-                            
+                        {product.reserved_quantity > 0 && (
+                                <p>Cantidad en el carrito: {product.reserved_quantity}</p>
+                            )}
                             <button
                                 className="btn btn-dark"
                                 onClick={() => handleAddProductCart(product.id, QuantityCart)} 

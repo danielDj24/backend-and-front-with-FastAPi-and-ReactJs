@@ -61,6 +61,7 @@ class ProductsDataResponse(ProductsData):
     center_picture: Optional[str] = None
     side_picture: Optional[str] = None
     discounted_price: Optional[float] = None
+    reserved_quantity :Optional[int] = 0
 
     class Config:
         from_attributes  = True
