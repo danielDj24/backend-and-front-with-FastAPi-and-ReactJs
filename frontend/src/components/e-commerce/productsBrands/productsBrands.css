@@ -227,3 +227,63 @@
     color:#707070;
     
 }
+
+/* Estilos para pantallas pequeñas (smartphones y dispositivos pequeños) */
+@media (max-width: 768px) {
+    .background-container {
+        padding: 10px; /* Reduce el padding en contenedores más pequeños */
+    }
+
+    .product-list-brands {
+        padding: 10px; /* Ajusta el padding de la lista de productos */
+    }
+
+    .product-item-brands {
+        flex-direction: column; /* Cambia la dirección a columna */
+        align-items: flex-start; /* Alinea a la izquierda */
+    }
+
+    .product-image-container-brand {
+        width: 100%; /* Hace que la imagen ocupe todo el ancho */
+        height: auto; /* Ajusta la altura automáticamente */
+        margin-bottom: 10px; /* Espaciado inferior */
+    }
+
+    .center-image,
+    .side-imagen {
+        width: 100%; /* Imágenes ocupan el ancho completo */
+        height: auto; /* Ajusta la altura automáticamente */
+    }
+
+    .product-details-brand {
+        flex-direction: column; /* Coloca los detalles en columna */
+        align-items: flex-start; /* Alinea a la izquierda */
+        margin: 10px 0; /* Espaciado vertical */
+    }
+
+    .quantity-selector-container {
+        margin-right: 20px;
+        flex-direction: row; /* Alinea los selectores en columna */
+        align-items: center; /* Alinea a la izquierda */
+        width: 100%; /* Usa el 100% del ancho */
+    }
+
+    .description-list {
+        padding-right: 0; /* Elimina padding derecho */
+        margin-bottom: 15px; /* Espacio inferior */
+    }
+
+    .product-price {
+        font-size: 40px; /* Tamaño de fuente ajustado */
+    }
+
+    .shop-control-elements {
+        flex-direction: column; /* Coloca los controles en columna */
+        width: 100%; /* Usa el 100% del ancho */
+    }
+
+    .pagination-controls {
+        flex-direction: column; /* Pone los controles en columna */
+        gap: 5px; /* Espacio entre controles */
+    }
+}

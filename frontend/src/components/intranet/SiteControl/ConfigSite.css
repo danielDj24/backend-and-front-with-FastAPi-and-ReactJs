@@ -87,3 +87,63 @@
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
+/* Media Queries */
+@media (max-width: 1200px) {
+    .config-title {
+        font-size: 32px; /* Ajustar el tamaño de fuente */
+    }
+
+    .config-item {
+        margin-right: 30px; /* Reducir el margen derecho */
+    }
+}
+
+@media (max-width: 992px) {
+    .config-title {
+        font-size: 28px; /* Ajustar el tamaño de fuente */
+    }
+
+    .config-item {
+        margin-right: 20px; /* Reducir el margen derecho */
+    }
+
+    .container-resources {
+        margin-right: 10px; /* Ajustar margen de contenedor */
+    }
+}
+
+@media (max-width: 768px) {
+    .config-title {
+        font-size: 24px; /* Tamaño de fuente más pequeño */
+    }
+
+    .config-item {
+        margin-right: 15px; /* Ajustar margen derecho */
+        height: auto; /* Permitir que la altura se ajuste automáticamente */
+    }
+
+    .container-resources {
+        margin-bottom: 10px; /* Añadir margen inferior para separación */
+    }
+}
+
+@media (max-width: 576px) {
+    
+    .config-title {
+        font-size: 20px; /* Tamaño de fuente más pequeño */
+    }
+
+    .form-group-config label {
+        font-size: 14px; /* Tamaño de fuente más pequeño para etiquetas */
+    }
+
+    .form-control-config {
+        padding: 8px; /* Reducir padding de los campos */
+    }
+
+    .delete-button-config {
+        height: 35px; /* Reducir altura del botón */
+        font-size: 14px; /* Tamaño de fuente más pequeño */
+    }
+}

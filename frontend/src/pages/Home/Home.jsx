@@ -8,7 +8,6 @@ import {CustomModal} from "../../components/functions/CustomModal";
 import Login from "../../components/network/Login/Login";
 import Register from "../../components/network/Register/Register";
 import useAuthStore from "../../components/store/userAuthToken";
-// import BrandsComponent from "../../components/network/Brands/brandsComponent" 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import VideoModal from "../../components/functions/VideoModal";

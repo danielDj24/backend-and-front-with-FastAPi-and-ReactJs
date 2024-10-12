@@ -59,3 +59,22 @@
     font-size: 16px;
 }
 
+@media (max-width: 576px) {
+    
+    .user-title {
+        font-size: 20px; /* Tamaño de fuente más pequeño */
+    }
+
+    .user-details .user-summary {
+        padding: 4px; /* Ajustar padding */
+    }
+
+    .user-details-table th,
+    .user-details-table td {
+        padding: 4px; /* Reducir padding en las celdas */
+    }
+
+    .modal-body {
+        padding: 10px; /* Añadir padding para la modal */
+    }
+}

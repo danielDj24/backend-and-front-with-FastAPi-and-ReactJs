@@ -16,7 +16,7 @@ const UploadBanner = () => {
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
     const [error, setError] = useState(null);
-    const [banners, setBanners] = useState(null);
+    const [banners, setBanners] = useState([]);
     const [loading, setLoading] = useState(true);
     const [bannerIdToDelete, setBannerIdToDelete] = useState(null);
 

@@ -61,3 +61,32 @@
     justify-content: center;
     margin-top: 10px;
 }
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    .notices-control-title {
+        font-size: 32px; /* Reducir tamaño de fuente para pantallas más pequeñas */
+    }
+
+    .custom-quill-editor {
+        height: 250px; /* Ajustar la altura del editor en pantallas pequeñas */
+    }
+
+    .delete-button-notice {
+        height: 35px; /* Ajustar la altura del botón en pantallas pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    .notices-control-title {
+        font-size: 24px; /* Reducir aún más el tamaño de la fuente */
+    }
+
+    .custom-quill-editor {
+        height: 200px; /* Ajustar la altura del editor para pantallas muy pequeñas */
+    }
+
+    .delete-button-notice {
+        height: 30px; /* Ajustar la altura del botón en pantallas muy pequeñas */
+    }
+}

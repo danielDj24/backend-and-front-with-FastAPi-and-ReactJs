@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import useAuthStore from "../../store/userAuthToken";
 import { axiosInstanceAuth, resourcesInstance, axiosInstance, axiosInstanceFiles } from '../../functions/axiosConfig';
-import { ReactQuill } from "react-quill";
 import { ShowErrorAlter, ShowSuccesAlert } from '../../functions/Alerts';
 import { ConfirmationModal } from "../../functions/CustomModal";
 import Layout from "../../../routes/LayoutControl/Layouts";
+import ReactQuill from "react-quill/lib";
+
 // Estilos 
 import "./NoticesControl.css";
-import 'react-quill/dist/quill.snow.css';
+import "react-quill/dist/quill.snow.css"
 
 const UploadNotices = () => {
     const { token, checkToken } = useAuthStore();

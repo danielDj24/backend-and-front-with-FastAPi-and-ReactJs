@@ -127,3 +127,42 @@ html, body {
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 10px; 
 }
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    .about-us-elements {
+        margin: 0 20px; /* Reducir márgenes en dispositivos más pequeños */
+    }
+
+    .content-our-company {
+        width: 100%; /* Ocupa todo el ancho en dispositivos pequeños */
+    }
+
+    .content-company-left {
+        flex: 1 1 100%; /* Las secciones ocupan el 100% del ancho */
+        padding-right: 0; /* Quitar padding derecho */
+        margin-bottom: 20px; /* Espacio entre secciones */
+    }
+
+    .banner-about-us p {
+        font-size: 2em; /* Ajustar tamaño de fuente para dispositivos más pequeños */
+    }
+}
+
+@media (max-width: 480px) {
+    .banner-about-us p {
+        font-size: 1.5em; /* Ajustar aún más en pantallas pequeñas */
+    }
+
+    .title-company {
+        margin: 15px; /* Reducir márgenes en pantallas pequeñas */
+    }
+
+    .content-company-left h2 {
+        font-size: 1.5em; /* Ajustar título para pantallas pequeñas */
+    }
+
+    .content-company-left p {
+        font-size: 1em; /* Ajustar tamaño del texto para pantallas pequeñas */
+    }
+}

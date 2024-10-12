@@ -234,7 +234,7 @@ const Shop = () => {
                                 )}
                                 <div className="quantity-selector-wrapper">
                                     <QuantitySelector                            
-                                        initialQuantity={1}
+                                        initialQuantity={0}
                                         maxQuantity={product.quantity} 
                                         onQuantityChange={(newQuantity) => handleQuantityChange(product.id, product.discounted_price, newQuantity)}
                                     />

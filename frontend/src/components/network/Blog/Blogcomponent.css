@@ -104,3 +104,55 @@
     margin-bottom: 20px;
     font-size: 1.2em;
 }
+
+/* Media Queries */
+@media (max-width: 1200px) {
+    .notice-block {
+        width: 45%; /* Ajustar el ancho de los bloques */
+    }
+
+    .view-notice-content-detail h1,
+    .view-notice-content-detail p {
+        font-size: 1.1em; /* Reducir el tamaño de fuente en pantallas más pequeñas */
+    }
+}
+
+@media (max-width: 992px) {
+    .notice-block {
+        width: 100%; /* Hacer los bloques de ancho completo */
+        margin: 5px 0; /* Ajustar el margen */
+    }
+
+    .view-notice-content-detail {
+        margin: 0 20px; /* Reducir el margen lateral */
+    }
+
+    .notice-date,
+    .notice-categorie {
+        font-size: 1em; /* Ajustar tamaño de fuente */
+    }
+}
+
+@media (max-width: 768px) {
+    .blog-block-view {
+        padding: 15px; /* Reducir padding */
+    }
+
+    .read-more-button {
+        padding: 8px 16px; /* Ajustar padding de botones */
+    }
+}
+
+@media (max-width: 576px) {
+    .view-notice-content-detail {
+        padding: 15px; /* Reducir padding */
+    }
+
+    .view-notice-content-detail h1 {
+        font-size: 1.5em; /* Ajustar tamaño de fuente */
+    }
+
+    .view-notice-content-detail p {
+        font-size: 1em; /* Ajustar tamaño de fuente */
+    }
+}

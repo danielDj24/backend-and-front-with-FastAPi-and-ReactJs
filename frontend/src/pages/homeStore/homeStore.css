@@ -156,3 +156,41 @@ html, body {
     transform: scale(1.05); 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
+
+
+/* responsive */
+@media (max-width: 768px) {
+    .container-images-e-commerce {
+        flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
+        align-items: center; /* Centrar elementos */
+    }
+    
+    .container-images-e-commerce div {
+        width: 100%; /* Hacer los elementos ocupar el 100% del ancho */
+    }
+
+    .filter-elements {
+        flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
+        align-items: center; /* Centrar elementos */
+    }
+
+    .filter-elements div {
+        width: 100%; /* Hacer los elementos ocupar el 100% del ancho */
+    }
+
+    .home-ecommerce {
+        margin: 0; /* Eliminar margen en pantallas pequeñas */
+        padding: 0 10px; /* Añadir un poco de padding */
+    }
+    
+    .ecommerce-elements-home {
+        margin: 0 20px; /* Reducir márgenes en pantallas pequeñas */
+    }
+}
+
+.discount-element img,
+.container-images-e-commerce img,
+.filter-elements img {
+    width: 100%; /* Asegurar que ocupen todo el ancho disponible */
+    height: auto; /* Mantener la relación de aspecto */
+}

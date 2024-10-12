@@ -319,3 +319,54 @@ html, body {
 }
 
 
+/* Responsive styles */
+@media (max-width: 768px) {
+    .container-images-variety {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .content {
+        flex-direction: column;
+    }
+
+    .content-left,
+    .content-right {
+        flex: 1 1 100%; /* Cambiar a ancho completo */
+        padding-right: 0;
+        margin-bottom: 20px; /* Espaciado entre elementos */
+    }
+
+    .titles-home {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .title {
+        padding: 10px 5px; /* Ajustar padding para dispositivos pequeños */
+    }
+
+    .play-button {
+        width: 80px; /* Hacer el botón un poco más pequeño */
+        height: 80px;
+        font-size: 14px; /* Reducir el tamaño de la fuente */
+    }
+}
+
+@media (max-width: 480px) {
+    .information-container {
+        font-size: 30px; /* Ajustar tamaño de fuente */
+    }
+
+    .components-elements-home {
+        margin: 0 15px; /* Reducir márgenes laterales */
+    }
+
+    .pluss-size-container p {
+        font-size: 1.5em; /* Ajustar tamaño de fuente en el texto */
+    }
+
+    .video-container iframe {
+        height: 200px; /* Ajustar altura del video en pantallas pequeñas */
+    }
+}

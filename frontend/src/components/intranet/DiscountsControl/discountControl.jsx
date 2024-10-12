@@ -13,7 +13,7 @@ const CreateDiscount = () => {
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
     
-    const [discounts, setDiscounts] = useState('')
+    const [discounts, setDiscounts] = useState([])
     const [discountPercentaje, setPercentajeDiscount] = useState('');
     const [description, setDescription] = useState('');
     const [discountIdDelete,setDiscountIdDelete] = useState(null);

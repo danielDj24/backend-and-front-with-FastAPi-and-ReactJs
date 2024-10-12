@@ -291,3 +291,134 @@ body, html {
     border: 1px solid #e0e0e0;
 
 }
+
+
+@media (max-width: 768px) {
+    .background-container-detail-shop {
+        padding: 20px; /* Reducir el padding en pantallas pequeñas */
+        margin-top: 10px;
+    }
+
+    .fullscreen-content {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .fullscreen-image {
+        max-width: 90vw; /* Aumentar el ancho máximo para aprovechar mejor el espacio */
+        max-height: 90vh;
+    }
+
+    .product-item-detail {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product-image-container-detail img {
+        width: 80px; /* Ajustar tamaño de imagen para pantallas pequeñas */
+    }
+
+    .center-image-detail {
+        width: 100%; /* Ajustar imagen central a pantalla completa */
+    }
+
+    .related-products-list {
+        flex-direction: column; /* Colocar los productos relacionados en columna */
+        gap: 5px;
+    }
+
+    .related-product-item {
+        width: 100%; /* Cada producto ocupa el 100% del ancho disponible */
+    }
+
+    .info-product {
+        grid-template-columns: 1fr; /* Cambiar a una sola columna en pantallas pequeñas */
+    }
+
+    .title-detail-product h1 {
+        font-size: 40px; /* Reducir el tamaño de la fuente del título */
+    }
+
+    .title-detail-product h2 {
+        font-size: 18px;
+        margin-left: 10px;
+    }
+
+    .shop-detail-product {
+        flex-direction: column; /* Cambiar la disposición a columna */
+        margin-left: 0;
+    }
+
+    .products-buy-details {
+        margin-bottom: 10px;
+    }
+
+    .shop-quantity-product {
+        margin-left: 0;
+    }
+
+    .quantity-selector-wrapper {
+        width: 100%;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .buttom-shop-detail {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .product-price {
+        font-size: 20px;
+    }
+
+    .product-price-discount {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .background-container-detail-shop {
+        padding: 40px;
+        margin-top: 10px;
+    }
+
+    .product-item-detail {
+        flex-direction: row; /* Mantener en fila, pero ajustar el ancho */
+        justify-content: space-around;
+    }
+
+    .product-image-container-detail img {
+        width: 90px;
+    }
+
+    .related-products-list {
+        flex-direction: row; /* Mantener los productos en fila */
+        gap: 10px;
+    }
+
+    .related-product-item {
+        width: 150px; /* Ajustar el tamaño de los productos relacionados */
+    }
+
+    .title-detail-product h1 {
+        font-size: 60px;
+    }
+
+    .shop-detail-product {
+        flex-direction: row;
+    }
+
+    .quantity-selector-wrapper {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    .product-price {
+        font-size: 22px;
+    }
+
+    .product-price-discount {
+        font-size: 18px;
+    }
+}

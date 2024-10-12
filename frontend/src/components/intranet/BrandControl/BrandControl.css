@@ -56,3 +56,28 @@
     justify-content: center;
     margin-top: 10px;
 }
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    .brands-title {
+        font-size: 32px; /* Reducir tamaño de fuente para pantallas más pequeñas */
+    }
+
+    .brand-item {
+        width: 90%; /* Asegurarse de que cada item ocupe el 90% en pantallas pequeñas */
+    }
+        
+    .delete-button-brand {
+        width: 90%; /* Ajustar el botón para que ocupe el 90% en pantallas pequeñas */
+    }
+    }
+
+    @media (max-width: 480px) {
+    .brands-title {
+        font-size: 24px; /* Reducir aún más el tamaño de la fuente */
+    }
+
+    .delete-button-brand {
+        height: 35px; /* Ajustar la altura del botón en pantallas pequeñas */
+    }
+}

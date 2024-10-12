@@ -31,3 +31,51 @@
     border-radius: 5px; /* Borde redondeado del botón */
     text-decoration: none; /* Quita subrayado del enlace */
 }
+
+/* Media Queries */
+@media (max-width: 1200px) {
+    .banners-img-get {
+        max-height: 500px; /* Reduce la altura máxima de los banners en pantallas más pequeñas */
+    }
+
+    .button-container-get .btn {
+        padding: 8px 16px; /* Ajusta el padding del botón */
+    }
+}
+
+@media (max-width: 992px) {
+    .banners-img-get {
+        max-height: 400px; /* Reduce la altura máxima de los banners aún más */
+    }
+
+    .button-container-get {
+        bottom: 15px; /* Ajusta la posición del botón */
+    }
+}
+
+@media (max-width: 768px) {
+    .banners-img-get {
+        max-height: 300px; /* Altura máxima para dispositivos móviles */
+    }
+
+    .button-container-get {
+        bottom: 20px; /* Ajusta la posición del botón */
+    }
+
+    .button-container-get .btn {
+        padding: 6px 12px; /* Reduce el padding del botón */
+        font-size: 0.9em; /* Reduce el tamaño de la fuente del botón */
+    }
+}
+
+@media (max-width: 576px) {
+    .button-container-get {
+        left: 50%; /* Centra el botón en pantallas pequeñas */
+        transform: translateX(-50%);
+    }
+
+    .button-container-get .btn {
+        padding: 5px 10px; /* Ajusta aún más el padding del botón */
+        font-size: 0.8em; /* Reduce el tamaño de la fuente del botón */
+    }
+}

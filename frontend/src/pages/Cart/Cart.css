@@ -90,3 +90,25 @@ html, body {
     align-items: flex-start;
     gap: 25px;
 }
+
+/* Media Queries para mejorar la responsividad */
+@media (max-width: 768px) {
+    .cart-item {
+        flex-direction: column; /* Organiza los elementos en columna en pantallas pequeñas */
+        align-items: flex-start; /* Alineación a la izquierda */
+    }
+
+    .cart-item-actions {
+        width: 100%; /* Ancho completo para las acciones en pantallas pequeñas */
+        align-items: flex-start; /* Alineación a la izquierda */
+    }
+
+    .center-image-cart {
+        width: 100%; /* Ajusta la imagen al ancho completo en pantallas pequeñas */
+        max-width: 150px; /* Limita el ancho máximo de la imagen */
+    }
+
+    .btn {
+        width: 100%; /* Botones de ancho completo en pantallas pequeñas */
+    }
+}

@@ -111,3 +111,42 @@
 .submenu-item:hover {
     color: white; 
 }
+
+/* Estilos para el menú hamburguesa */
+.hamburger {
+    display: none; /* Ocultar por defecto en pantallas grandes */
+    cursor: pointer;
+    font-size: 2em; /* Tamaño del icono del menú hamburguesa */
+    color: var(--secondary-color); 
+
+}
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: block; /* Mostrar el menú hamburguesa en pantallas pequeñas */
+        color: var(--secondary-color); 
+    }
+
+    .menu-items {
+        display: none; /* Ocultar menú por defecto en pantallas pequeñas */
+        flex-direction: column; /* Cambiar a columna para menú hamburguesa */
+        position: absolute; /* Posicionarlo correctamente */
+        top: 100%; /* Bajo el logo */
+        left: 0;
+        width: 100%; /* Ocupar el ancho completo */
+        z-index: 1000; /* Asegurar que esté por encima */
+        background-color: var(--primaryColor); 
+
+    }
+
+    .menu-items.open {
+        display: flex; /* Mostrar menú hamburguesa cuando está abierto */
+        background-color: var(--primaryColor); 
+
+    }
+
+    .menu-item {
+        margin: 10px 0; /* Espaciado en vertical */
+        
+    }
+}
