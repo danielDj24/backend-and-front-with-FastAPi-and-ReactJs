@@ -13,13 +13,16 @@
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
     "html2canvas": "^1.4.1",
+    "i18next": "^23.15.2",
     "js-cookie": "^3.0.5",
     "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.3",
     "jwt-decode": "^4.0.0",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.3.1",
     "react-helmet": "^6.1.0",
+    "react-i18next": "^15.0.3",
     "react-multi-carousel": "^2.8.5",
     "react-quill": "^2.0.0",
     "react-responsive-carousel": "^3.2.23",
@@ -55,6 +58,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "i18next-scanner": "^4.5.0"
   }
 }

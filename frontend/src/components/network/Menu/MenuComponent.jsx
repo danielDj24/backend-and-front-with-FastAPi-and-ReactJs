@@ -4,10 +4,13 @@ import getRoleFromToken from "../../functions/DecodeToken";
 import useAuthStore from "../../store/userAuthToken";
 import { useNavigate } from "react-router-dom";
 import getUserIdFromToken from "../../functions/UserByToken";
+import { useTranslation } from "react-i18next";
+
 // estilos
 import "./menuStyles.css";
 
 const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommerce }) => {
+    const { t, i18n } = useTranslation();
     const [logo, setLogo] = useState('');
     const [primaryColor, setPrimaryColor] = useState('');
     const [secondaryColor, setSecondaryColor] = useState('');
@@ -17,10 +20,9 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
     const [submenuBrandsOpen, setSubmenuBrandsOpen] = useState(false);
     const navigate = useNavigate();
     const [brands, setBrands] = useState([]);
-    const { token, checkToken } = useAuthStore();
-    const [error, setError] = useState('');
+    const { token } = useAuthStore();
     const [loading, setLoading] = useState(true);
-    const [hamburgerOpen, setHamburgerOpen] = useState(false); // nuevo estado para el menú hamburguesa
+    const [hamburgerOpen, setHamburgerOpen] = useState(false); 
 
     useEffect(() => {
         fetchBrands();
@@ -44,7 +46,7 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
                 const response = await axiosAuth.get("/uploaded/brands");
                 setBrands(response.data);
             } catch (error) {
-                setError(error.response ? error.response.data.detail : "Error fetching brands");
+                console.error(error.response ? error.response.data.detail : "Error fetching brands");
             } finally {
                 setLoading(false);
             }
@@ -80,9 +82,13 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
         navigate(`/e-commerce/cart/${userId}`);
     };
 
-    // Nueva función para alternar el menú hamburguesa
     const toggleHamburgerMenu = () => {
         setHamburgerOpen(prevState => !prevState);
+    };
+
+    const handleLanguageChange = (event) => {
+        const newLanguage = event.target.value;
+        i18n.changeLanguage(newLanguage);
     };
 
     return (
@@ -100,24 +106,24 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
                     <i className={`fa-solid ${hamburgerOpen ? 'fa-times' : 'fa-bars'}`}></i>
                 </div>
 
-                <div className={`menu-items ${hamburgerOpen ? 'open' : ''}`}>
+                <div className={`menu-items ${hamburgerOpen ? 'open' : ''}`} style={{ backgroundColor: primaryColor }}>
                     {(roleFromToken === 'admin' || roleFromToken === 'client') && isECommerce ? (
                         <>
                             <div className="menu-item" onClick={toggleSubmenu}>
-                                Monturas
+                                {t("monturas")}
                                 <i className={`fa-solid ${submenuOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
                             </div>
                             {submenuOpen && (
                                 <div className="submenu" style={{ backgroundColor: primaryColor }}>
-                                    <a href="/e-commerce/products" className="submenu-item">Tienda</a>
-                                    <a onClick={() => handleNavigateBrands('Hombre')} className="submenu-item">Hombre</a>
-                                    <a onClick={() => handleNavigateBrands('Mujer')} className="submenu-item">Mujer</a>
-                                    <a onClick={() => handleNavigateBrands('Lentes de sol')} className="submenu-item">Lentes de Sol</a>
-                                    <a onClick={() => handleNavigateBrands('Optico')} className="submenu-item">Ópticos</a>
+                                    <a href="/e-commerce/products" className="submenu-item">{t("tienda")}</a>
+                                    <a onClick={() => handleNavigateBrands('Hombre')} className="submenu-item">{t("hombre")}</a>
+                                    <a onClick={() => handleNavigateBrands('Mujer')} className="submenu-item">{t("mujer")}</a>
+                                    <a onClick={() => handleNavigateBrands('Lentes de sol')} className="submenu-item">{t("lentes_de_sol")}</a>
+                                    <a onClick={() => handleNavigateBrands('Optico')} className="submenu-item">{t("opticos")}</a>
                                 </div>
                             )}
                             <div className="menu-item" onClick={toggleBrandsSubmenu}>
-                                Marcas
+                                {t("marcas")}
                                 <i className={`fa-solid ${submenuBrandsOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
                             </div>
                             {submenuBrandsOpen && (
@@ -129,35 +135,51 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
                                     ))}
                                 </div>
                             )}
-                            <a href="/e-commerce/products/search" className="menu-item">Buscador</a>
-                            <a href="/e-commerce/contactanos" className="menu-item">Contáctanos</a>
-                            <button className="btn btn-dark" onClick={handleLogout}>
-                                Cerrar sesión
-                            </button>
-                            <button className="btn btn-dark" onClick={handleCartClick}>
-                                Carrito 
-                            </button>
+
+                            <a href="/e-commerce/products/search" className="menu-item">{t("buscador")}</a>
+                            <a href="/e-commerce/contactanos" className="menu-item">{t("contactanos")}</a>
+                            <div className="language-toggle">
+                                <select value={i18n.language} onChange={handleLanguageChange}>
+                                    <option value="es">Español</option>
+                                    <option value="en">Inglés</option>
+                                </select>
+                            </div>
+                            <div className="current-buttons-control">
+                                <button className="btn btn-dark" onClick={handleLogout}>
+                                    {t("cerrar_sesion")}
+                                </button>
+                                
+                                <button className="btn btn-dark" onClick={handleCartClick}>
+                                    {t("carrito")}
+                                </button>
+                            </div>
                             {roleFromToken === 'admin' && (
                                 <div className="admin-container">
                                     <button className="btn btn-dark" onClick={() => window.open('/intranet/', '__blank')}>
-                                        configuraciones web
+                                        {t("configuraciones_web")}
                                     </button>
                                 </div>
                             )}
                         </>
                     ) : (
                         <>
-                            <a href="/sobre-nosotros" className="menu-item">Sobre nosotros</a>
-                            <a href="/por-que-nosotros" className="menu-item">Por qué nosotros</a>
-                            <a href="/blog" className="menu-item">Blog</a>
+                            <a href="/sobre-nosotros" className="menu-item">{t("sobre_nosotros")}</a>
+                            <a href="/por-que-nosotros" className="menu-item">{t("por_que_nosotros")}</a>
+                            <a href="/blog" className="menu-item">{t("blog")}</a>
+                            <div className="language-toggle">
+                                <select value={i18n.language} onChange={handleLanguageChange}>
+                                    <option value="es">Español</option>
+                                    <option value="en">Inglés</option>
+                                </select>
+                            </div>
                             <div className="login-container">
                                 {!storedToken ? (
                                     <button className="btn btn-dark" onClick={handleOpenLoginModal}>
-                                        Ingresar
+                                        {t("ingresar")}
                                     </button>
                                 ) : (
                                     <button className="btn btn-dark" onClick={handleLogout}>
-                                        Cerrar sesión
+                                        {t("cerrar_sesion")}
                                     </button>
                                 )}
                             </div>

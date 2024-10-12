@@ -2,14 +2,14 @@ import axios from 'axios';
 
 
 const axiosInstance = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api',
+    baseURL: process.env.REACT_APP_API_BASE_URL,
     headers: {
         'Content-Type': 'application/json'
     }
 });
 
 const axiosInstanceFiles = (token) => axios.create({
-    baseURL: 'http://127.0.0.1:8000/api',
+    baseURL: process.env.REACT_APP_API_BASE_URL,
     headers: {
         'Content-Type': 'multipart/form-data',
         'Authorization':`Bearer ${token}`
@@ -17,7 +17,7 @@ const axiosInstanceFiles = (token) => axios.create({
 });
 
 const axiosInstanceFilesRegister = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api',
+    baseURL: process.env.REACT_APP_API_BASE_URL,
     headers: {
         'Content-Type': 'multipart/form-data',
 
@@ -26,7 +26,7 @@ const axiosInstanceFilesRegister = axios.create({
 
 
 const axiosInstanceAuth = (token) => axios.create({
-    baseURL:"http://127.0.0.1:8000/api",
+    baseURL:process.env.REACT_APP_API_BASE_URL,
     headers:{
         'Content-Type':'application/json',
         'Authorization':`Bearer ${token}`
@@ -34,14 +34,14 @@ const axiosInstanceAuth = (token) => axios.create({
 });
 
 const axiosInstanceLogin = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api',
+    baseURL:process.env.REACT_APP_API_BASE_URL,
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
     }
 });
 
 const resourcesInstance = axios.create({
-    baseURL: 'http://127.0.0.1:8000/', 
+    baseURL: process.env.REACT_APP_RESOURCES_URL, 
     timeout: 10000, 
     headers: {
     'Content-Type': 'application/json',

@@ -3,7 +3,6 @@ from os import getenv
 from jose import jwt
 from typing import Annotated
 from fastapi import Depends, HTTPException
-
 from fastapi.security import OAuth2PasswordBearer
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl = '/api/token')
@@ -20,7 +19,12 @@ def encode_token(payload:dict)-> str:
     token = jwt.encode({"exp": expiration, **payload}, getenv("SECRET_KEYS"), algorithm="HS256")
     return token
 
+"""logout"""
+blacklist = set()  # Aquí almacenaremos los tokens revocados
+
 def decode_token(token : Annotated[str, Depends(oauth2_scheme)]) -> str:
+    if token in blacklist:
+        raise HTTPException(status_code=401, detail="Token has been revoked")
     try:
         decoded_token = jwt.decode(token, getenv("SECRET_KEYS"), algorithms=["HS256"])
         return decoded_token
@@ -28,3 +32,5 @@ def decode_token(token : Annotated[str, Depends(oauth2_scheme)]) -> str:
         raise HTTPException(status_code=401, detail="Token expired")
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid token")
+    
+

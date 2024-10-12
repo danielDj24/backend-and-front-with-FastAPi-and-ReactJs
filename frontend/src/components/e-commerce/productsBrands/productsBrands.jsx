@@ -3,7 +3,7 @@ import useAuthStore from "../../store/userAuthToken";
 import { axiosInstanceAuth, resourcesInstance } from '../../functions/axiosConfig';
 import { ShowErrorAlter } from '../../functions/Alerts';
 import { useParams,useNavigate } from 'react-router-dom'; 
-
+import DownloadPdfButton from "../../functions/DownloadPdfButton";
 import { addProductToCart } from "../../functions/CartsUtils";
 import QuantitySelector from "../../functions/QuantitySelector";
 import MenuComponent from "../../network/Menu/MenuComponent";
@@ -39,9 +39,23 @@ const ProductsByBrand = () => {
     }, [checkToken]);
         
 
-    const handleLogout = () => {
-        useAuthStore.getState().clearToken();
-        setUserRole(null);
+    const handleLogout = async () => {
+        const token = useAuthStore.getState().token;  // Obtener el token almacenado en el frontend
+        try {
+            // Consumir la ruta del backend para invalidar el token
+            const response = await axiosInstanceAuth(token).post('/logout');
+            
+            if (response.status === 200) {
+                // Si la respuesta es exitosa, eliminar el token del frontend
+                useAuthStore.getState().clearToken();
+                setUserRole(null);  // Reiniciar el rol del usuario
+                navigate('/');  // Redirigir al usuario a la página de inicio
+            } else {
+                ShowErrorAlter("Error al cerrar sesión en el backend");
+            }
+        } catch (error) {
+            ShowErrorAlter("Error al cerrar sesión", error);
+        }
     };
     
     useEffect(() => {
@@ -271,6 +285,9 @@ const ProductsByBrand = () => {
                         </div>
                     </div>
                 ))}
+                <div className="generate-pdf-button">
+                    <DownloadPdfButton products={products} /> 
+                </div>
             </div>
         </div>
         <FooterComponent 

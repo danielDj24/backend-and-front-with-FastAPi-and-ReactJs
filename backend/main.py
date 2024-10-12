@@ -21,6 +21,8 @@ from fastapi.staticfiles import StaticFiles
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+app = FastAPI(title="Client e-commerce")
+
 
 """mount para los recursos a utilizar """
 app.mount("/resources", StaticFiles(directory="resources"), name="resources")
@@ -46,7 +48,7 @@ origin = ['*']
 
 """Middlewares para la conexion con el front"""
 app.add_middleware(
-    CORSMiddleware, allow_origins = origin, 
+    CORSMiddleware, allow_origins = origin,
     allow_methods = ['*'], 
     allow_headers= ['*'],
     allow_credentials = True )

@@ -1,7 +1,8 @@
 :root {
     --secondary-color: #blue; 
-    --primaryColor:#white;
+    --primaryColor: #white;
 }
+
 .menu-container {
     display: flex;
     align-items: center;
@@ -112,19 +113,30 @@
     color: white; 
 }
 
-/* Estilos para el menú hamburguesa */
-.hamburger {
-    display: none; /* Ocultar por defecto en pantallas grandes */
-    cursor: pointer;
-    font-size: 2em; /* Tamaño del icono del menú hamburguesa */
+.language-toggle {
+    margin-top: 10px;
+    margin-right: 35px; 
     color: var(--secondary-color); 
-
+    text-decoration: none; 
+    transition: color 0.3s; 
+    cursor: pointer;
+    padding: 0 5px;
 }
+
+.language-toggle select {
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 2px;
+}
+
 
 @media (max-width: 768px) {
     .hamburger {
         display: block; /* Mostrar el menú hamburguesa en pantallas pequeñas */
         color: var(--secondary-color); 
+
     }
 
     .menu-items {
@@ -132,21 +144,72 @@
         flex-direction: column; /* Cambiar a columna para menú hamburguesa */
         position: absolute; /* Posicionarlo correctamente */
         top: 100%; /* Bajo el logo */
-        left: 0;
-        width: 100%; /* Ocupar el ancho completo */
+        left: 50%; /* Centrar el menú */
+        transform: translateX(-50%); /* Ajustar el centrado */
+        width: 100%; 
         z-index: 1000; /* Asegurar que esté por encima */
-        background-color: var(--primaryColor); 
-
+        background-color: var(--primaryColor); /* Asegurarse de que tenga un color de fondo por defecto */
+        padding: 5px 10px;  /* Espaciado interno */
+        transition: opacity 0.3s ease; /* Suavizar la transición */
+        align-items: center;
     }
 
+    .login-container {
+        display: flex;
+        flex-direction: center;
+        align-items: center;
+        margin-left: 10px;
+    }
+
+    .current-buttons-control {
+        width: 48%;
+        align-items: center;
+    }
     .menu-items.open {
         display: flex; /* Mostrar menú hamburguesa cuando está abierto */
-        background-color: var(--primaryColor); 
-
+        justify-content: center;
+        align-items: center;
+        opacity: 1; /* Hacerlo visible */
+        background-color: var(--primaryColor); /* Asegurarse de que tenga el color de fondo correcto */
     }
 
     .menu-item {
-        margin: 10px 0; /* Espaciado en vertical */
-        
+        margin: 15px 0; /* Espaciado en vertical */
+        text-align: center; /* Alinear el texto al centro */
+        align-items: center;
+        width: auto; /* No ocupar todo el ancho */
+    }
+
+    .submenu {
+        display: flex;
+        flex-direction: column; /* Alinear los submenús verticalmente */
+        justify-content: center;
+        align-items: center;
+        width: 100%; /* Ajustar el ancho del submenú */
+    
+    }
+
+    .submenu-item {
+        width: auto; /* No ocupar todo el ancho */
+        padding: 10px 20px; /* Espaciado interno */
+        text-align: center; /* Alinear el texto del submenú */
+    }
+
+    .language-toggle {
+        display: flex;
+        justify-content: center; /* Centrar el selector */
+        margin-right: 10px;
+        width: 100%;
+    }
+
+    .language-toggle select {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        text-align: center; 
     }
 }
+
+
+
+

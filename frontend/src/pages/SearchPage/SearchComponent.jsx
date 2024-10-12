@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import useAuthStore from "../../components/store/userAuthToken";
 import { axiosInstanceAuth, resourcesInstance } from '../../components/functions/axiosConfig';
 import { ShowErrorAlter, ShowSuccesAlert } from '../../components/functions/Alerts';
+import DownloadPdfButton from "../../components/functions/DownloadPdfButton";
+
 import Layout from "../../routes/LayoutControl/Layouts";
 import MenuComponent from "../../components/network/Menu/MenuComponent";
 import FooterComponent from "../../components/network/Footer/footerComponent";
@@ -136,9 +138,23 @@ const SearchPage = () => {
         handleSearch();
     }, [checkToken, currentPage, pageSize]);
 
-    const handleLogout = () => {
-        useAuthStore.getState().clearToken();
-        setUserRole(null);
+    const handleLogout = async () => {
+        const token = useAuthStore.getState().token;  // Obtener el token almacenado en el frontend
+        try {
+            // Consumir la ruta del backend para invalidar el token
+            const response = await axiosInstanceAuth(token).post('/logout');
+            
+            if (response.status === 200) {
+                // Si la respuesta es exitosa, eliminar el token del frontend
+                useAuthStore.getState().clearToken();
+                setUserRole(null);  // Reiniciar el rol del usuario
+                navigate('/');  // Redirigir al usuario a la página de inicio
+            } else {
+                ShowErrorAlter("Error al cerrar sesión en el backend");
+            }
+        } catch (error) {
+            ShowErrorAlter("Error al cerrar sesión", error);
+        }
     };
 
     const handlePageChange = (page) => {
@@ -385,7 +401,11 @@ const SearchPage = () => {
                         </div>
                     </div>
                 ))}
+                <div className="generate-pdf-button">
+                    <DownloadPdfButton products={products} /> 
+                </div>
             </div>
+                
                 </div>
             </div>
             <FooterComponent

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useAuthStore from "../../components/store/userAuthToken";
 import { axiosInstanceAuth, resourcesInstance } from '../../components/functions/axiosConfig';
 import {useNavigate } from 'react-router-dom';
+import DownloadPdfButton from "../../components/functions/DownloadPdfButton";
 
 import MenuComponent from "../../components/network/Menu/MenuComponent";
 import FooterComponent from "../../components/network/Footer/footerComponent";
@@ -258,6 +259,9 @@ const ProductsByPrice = () => {
                         </div>
                     </div>
                 ))}
+                    <div className="generate-pdf-button">
+                        <DownloadPdfButton products={products} /> 
+                    </div>
                 </div>
             </div>
 

@@ -1,6 +1,6 @@
 import React from "react";
 import AppRoutes from "./routes/Approutes";
-
+import i18n from "./i18n";
 
 const App = () => {
   return (

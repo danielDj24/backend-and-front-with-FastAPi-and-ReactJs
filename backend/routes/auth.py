@@ -9,7 +9,7 @@ from services.dbconnection import GetDB
 from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
-from utils.functions_jwt import encode_token, decode_token
+from utils.functions_jwt import encode_token, decode_token, blacklist
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/token")
@@ -61,4 +61,9 @@ def active_user(user_id :int,token: str = Depends(oauth2_scheme), db : session =
     user = activate_user(db, user_id)
     return {"detail": "User activated successfully", "user": user}
 
+
+@auth_routes.post("/logout")
+def logout(token: Annotated[str, Depends(oauth2_scheme)]):
+    blacklist.add(token)  # Agregar el token a la lista negra
+    return {"detail": "Successfully logged out"}
 
