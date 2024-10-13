@@ -14,5 +14,115 @@
     "por_que_nosotros": "Why Us",
     "blog": "Blog",
     "ingresar": "Log In",
-    "marcas":"Brands"
+    "marcas":"Brands",
+    "Confiabilidad": "Reliability",
+    "Variedad": "Variety",
+    "Flexibilidad": "Flexibility",
+    "Acompañamiento": "Support",
+    "FramesGo es su aliado confiable en Colombia, ofreciendo una amplia selección de gafas de diseñador.": "FramesGo is your trusted ally in Colombia, offering a wide selection of designer glasses.",
+    "Marcos para Hombre": "Men's Frames",
+    "Marcos para Mujer": "Women's Frames",
+    "Lentes de sol": "Sunglasses",
+    "Lentes Ópticos": "Optical Lenses",
+    "Con 14 años de experiencia, FramesGo lidera la distribución de monturas ópticas y de sol en Colombia.": "With 14 years of experience, FramesGo leads the distribution of optical and sunglasses frames in Colombia.",
+    "Todo el inventario en nuestra plataforma B2B está disponible para envío inmediato.": "All inventory on our B2B platform is available for immediate shipping.",
+    "Nuestra experiencia": "Our Experience",
+    "En FramesGo, hemos cultivado relaciones basadas en la confianza con ópticas en Colombia y Latinoamérica por más de 14 años.": "At FramesGo, we have built trust-based relationships with optical stores in Colombia and Latin America for over 14 years.",
+    "En cada relación, comenzamos con una comunicación abierta y la meta compartida de prosperar juntos. Cada montura es cuidadosamente seleccionada para cumplir con los más altos estándares.": "In every relationship, we start with open communication and a shared goal of thriving together. Each frame is carefully selected to meet the highest standards.",
+    "En FramesGo, ofrecemos un catálogo amplio de monturas ópticas y de sol.": "At FramesGo, we offer a wide catalog of optical and sunglasses frames.",
+    "Cada montura es cuidadosamente seleccionada para adaptarse a todos los estilos y preferencias. Actualizamos continuamente nuestra oferta para mantenernos al día.": "Each frame is carefully selected to suit all styles and preferences. We continuously update our offerings to stay current.",
+    "Ofrecemos una plataforma de e-commerce intuitiva y eficiente.": "We offer an intuitive and efficient e-commerce platform.",
+    "Nuestra tienda en línea está pensada para ofrecer una experiencia de compra ágil y sin complicaciones.": "Our online store is designed to provide a smooth and hassle-free shopping experience.",
+    "No solo vendemos gafas, sino que construimos relaciones sólidas.": "We don't just sell glasses, we build strong relationships.",
+    "Te ayudamos a seleccionar los productos adecuados para tu mercado y aseguramos que cada pedido llegue a tiempo.": "We help you choose the right products for your market and ensure that every order arrives on time.",
+    "Noticias": "News",
+    "Iniciar sesión": "Log In",
+    "Registrarse": "Register",
+    "cargando": "Loading...",
+    "error": "Error",
+    "ver_mas": "See more",
+    "addressTitle": "Address",
+    "contactUsTitle": "Contact Us",
+    "accessTitle": "Access",
+    "loginButton": "Log In",
+    "logoutButton": "Log Out",
+    "socialMediaTitle": "Social Media",
+    "copyrightText": "Copyright",
+    "allRightsReserved": "All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "developedBy": "Developed by",
+    "designsBy": "Designs by",
+    "usernameOrEmail": "Username or Email:",
+    "password": "Password:",
+    "username": "Username:",
+    "email": "Email:",
+    "confirmPassword": "Confirm Password:",
+    "next": "Next",
+    "contactNumber": "Contact Number:",
+    "address": "Address:",
+    "company": "Company:",
+    "companyNIT": "Company NIT:",
+    "uploadPDF": "Upload PDF:",
+    "back": "Back",
+    "send": "Send",
+    "aboutUs": {
+        "banner": {
+            "description": "More than two decades in the distribution of frames for lenses."
+        },
+        "company": {
+            "title": "Our Company",
+            "content": [
+            "With 14 years of experience, Frames has established itself as a benchmark in the distribution of optical and sunglasses frames in Colombia.",
+            "Since our inception, we have traveled the country, delivering high-quality products directly to local opticians. Our commitment to excellence has allowed us to build a solid presence in the national market.",
+            "Over the years, we have forged trust-based relationships with opticians in the main cities of Colombia. Each visit has strengthened our reputation as a reliable partner, dedicated to offering personalized solutions that help our clients grow and thrive in the competitive optical market."
+            ],
+            "quality": {
+            "title": "Trust in every frame, quality in every detail.",
+            "content": [
+                "Additionally, we have expanded our operations beyond borders, creating strategic alliances with companies in the United States.",
+                "These collaborations have allowed us to incorporate new trends and technologies into our catalog, benefiting our clients with a more diverse and advanced offering.",
+                "Our goal is to become one of the leading distributors of glasses for opticians in Colombia. With a track record that backs our credibility and a vision focused on growth, we are committed to continuing to lead the country's optical market."
+            ]
+            }
+        }
+    },
+    "ecommerce": {
+        "hombre": {
+            "alt": "Man with Glasses",
+            "label": "Man"
+        },
+        "mujer": {
+            "alt": "Woman with Glasses",
+            "label": "Woman"
+        },
+        "lentesSol": {
+            "alt": "Sunglasses",
+            "label": "Sunglasses"
+        },
+        "optico": {
+            "alt": "Optical Lenses",
+            "label": "Optical Lenses"
+        },
+        "discount": {
+            "alt": "Discounts"
+        },
+        "filterDiscounts": {
+            "alt": "Filter Discounts",
+            "label": "On Discount"
+        },
+        "filterPrices": {
+            "alt": "Filter Prices",
+            "label": "Cheapest"
+        }
+    },
+    "Notices":"Notices",
+    "whyChooseFramesGo": "Why choose FramesGo as your distributor?",
+    "reliablePartnerTitle": "Your reliable partner in optical fashion, always at the forefront.",
+    "chooseFramesGo": "Choosing FramesGo as your distributor means opting for over a decade of experience in the optical market.",
+    "marketExperience": "With 14 years of experience, we understand the needs and challenges that optical stores in Colombia face. We are dedicated to offering products that not only meet the highest quality standards but are also aligned with the latest fashion and technology trends. At FramesGo, trust is fundamental.",
+    "trustTransparency": "We have built long-lasting relationships with optical stores throughout the country, based on transparency and mutual commitment. We ensure that every order is handled with the utmost attention to detail, from product selection to final delivery, guaranteeing that our customers always receive the best.",
+    "diverseOffering": "Our offering is diverse and constantly evolving, allowing us to quickly adapt to the changing market demands.",
+    "globalPartners": "We work with renowned suppliers and collaborate with international companies to ensure that our clients have access to the most innovative and high-quality frames available. Lastly, at FramesGo, we believe in continuous support.",
+    "personalizedSupport": "We are not just a supplier, but a partner who is there every step of the way, offering personalized advice, support, and solutions tailored to the needs of each optical store. With FramesGo, you have the peace of mind of having a reliable ally who cares about the success of your business."
+
 }

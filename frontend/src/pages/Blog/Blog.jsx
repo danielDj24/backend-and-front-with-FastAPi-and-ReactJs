@@ -8,13 +8,14 @@ import useAuthStore from "../../components/store/userAuthToken";
 import Blogcomponent from "../../components/network/Blog/BlogComponent";
 import "./Blog.css"
 import BannerPlus from "../../assets/bannersBurn/framesgo-gafas-colombia-B2B.jpg"
-
+import { useTranslation } from "react-i18next";
 const Blog = () => {
     // Constantes para controlar el login y el registro en el modal de usuarios
+    const {t} = useTranslation();
     const [activeForm, setActiveForm] = useState('login');
     const [showLoginModal, setShowLoginModal] = useState(false);
 
-    // Control de rutas para el login admin
+    // Control de rutas para el login admin 
     const [userRole, setUserRole] = useState(null);
 
     const handleOpenLoginModal = () => setShowLoginModal(true);
@@ -48,7 +49,7 @@ const Blog = () => {
             <div className="banner-blog">
                         <div>
                         <img src={BannerPlus} alt="banner blog" />
-                            <p>Noticias</p>
+                            <p>{t('Notices')}</p>
                         </div>
                     </div>
             <div className="components-elements-blog">

@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from "react";
 import { axiosInstance, resourcesInstance } from "../../functions/axiosConfig";
-
+import { useTranslation } from "react-i18next";
 //styles 
 import "./FooterStyles.css"
 
@@ -17,6 +17,7 @@ import GithubIcon from "../../../assets/icons/github-logo.svg";
 
 
 const FooterComponent = ({handleOpenLoginModal, userRole, handleLogout}) => {
+    const { t } = useTranslation();
     const [primaryColor, setPrimaryColor] = useState('');
     const [secondaryColor, setSecondaryColor] = useState('');
     const [facebookLink, setFacebookLink] = useState('');
@@ -69,75 +70,76 @@ const FooterComponent = ({handleOpenLoginModal, userRole, handleLogout}) => {
         window.location.href = '/';
     };
     
-    return(
+    return (
         <footer className="footer-container" style={{ backgroundColor: secondaryColor, color: primaryColor }}>
-        <div className="footer-content">
-            <div className="footer-logo-container">
-                <img src={`${resourcesInstance.defaults.baseURL}${logo}`} alt="Logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}/>
-            </div>
-            <div className="address-container">
-                <div>
-                    <h3>Dirección</h3>
-                    <p>{address}</p>
+            <div className="footer-content">
+                <div className="footer-logo-container">
+                    <img src={`${resourcesInstance.defaults.baseURL}${logo}`} alt="Logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }} />
                 </div>
-            </div>
-            <div className="contact-container">
-                <div>
-                    <h3>Contáctenos</h3>
-                    <p>{contactEmail}</p>
-                    <p>{contactPhone}</p>
-                </div>
-            </div>
-            <div>
-                <div className="access-container">
-                    <h3>Acceder</h3>
-                    {!userRole ? (
-                        <button className="btn btn-dark" onClick={handleOpenLoginModal}>
-                            Ingresar
-                        </button>
-                    ) : (
-                        <button className="btn btn-dark" onClick={handleLogout}>
-                            Cerrar sesión
-                        </button>
-                    )}
-                </div>
-            </div>
-            <div>
-                <div className="social-links-container">
+                <div className="address-container">
                     <div>
-                        <h3>Redes sociales</h3>
-                        <a href={facebookLink}>
-                        <img src={FacebookIcon} alt="Facebook" className="social-icon"/></a>
-                        <a href={whatsappLink}>
-                        <img src={WhatsAppIcon} alt="WhatsApp" className="social-icon"/></a>
-                        <a href={youtubeLink}>
-                        <img src={YoutubeIcon} alt="Youtube" className="social-icon"/></a>
-                        <a href={twitterLink}>
-                        <img src={TwitterIcon} alt="twitter" className="social-icon" /></a>
+                        <h3>{t("addressTitle")}</h3>
+                        <p>{address}</p>
+                    </div>
+                </div>
+                <div className="contact-container">
+                    <div>
+                        <h3>{t("contactUsTitle")}</h3>
+                        <p>{contactEmail}</p>
+                        <p>{contactPhone}</p>
+                    </div>
+                </div>
+                <div>
+                    <div className="access-container">
+                        <h3>{t("accessTitle")}</h3>
+                        {!userRole ? (
+                            <button className="btn btn-dark" onClick={handleOpenLoginModal}>
+                                {t("loginButton")}
+                            </button>
+                        ) : (
+                            <button className="btn btn-dark" onClick={handleLogout}>
+                                {t("logoutButton")}
+                            </button>
+                        )}
+                    </div>
+                </div>
+                <div>
+                    <div className="social-links-container">
+                        <div>
+                            <h3>{t("socialMediaTitle")}</h3>
+                            <a href={facebookLink}>
+                                <img src={FacebookIcon} alt="Facebook" className="social-icon" /></a>
+                            <a href={whatsappLink}>
+                                <img src={WhatsAppIcon} alt="WhatsApp" className="social-icon" /></a>
+                            <a href={youtubeLink}>
+                                <img src={YoutubeIcon} alt="Youtube" className="social-icon" /></a>
+                            <a href={twitterLink}>
+                                <img src={TwitterIcon} alt="Twitter" className="social-icon" /></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div className="copyright-container">
-            <div>
-                <p>Copyright 2024 Frames. Todos los derechos reservados. Políticas De Privacidad</p>
-                <p>
-                <a href="https://github.com/danielDj24" target="_blank" rel="noopener noreferrer">
+            <div className="copyright-container">
+                <div>
+                    <p>{t("copyrightText")} 2024 Frames. {t("allRightsReserved")} {t("privacyPolicy")}</p>
+                    <p>
+                        <a href="https://github.com/danielDj24" target="_blank" rel="noopener noreferrer">
                             <img src={GithubIcon} alt="GitHub" className="github-icon" />
                         </a>
-                    Developed by danielDj24
-                </p>
-                <p>
-                <a href="https://www.behance.net/cristhirodrigu21" target="_blank" rel="noopener noreferrer">
+                        {t("developedBy")} danielDj24
+                    </p>
+                    <p>
+                        <a href="https://www.behance.net/cristhirodrigu21" target="_blank" rel="noopener noreferrer">
                             <img src={BehanceIcon} alt="Behance" className="behance-icon" />
                         </a>
-                    Desings by Camilo Mora
-                </p>
+                        {t("designsBy")} Camilo Mora
+                    </p>
+                </div>
             </div>
-        </div>
-    </footer>
+        </footer>
     );
 };
+
 
 
 export default FooterComponent;

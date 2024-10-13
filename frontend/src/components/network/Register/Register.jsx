@@ -2,8 +2,10 @@ import React, {useState} from "react";
 import { axiosInstance, axiosInstanceFilesRegister } from '../../functions/axiosConfig';
 import "./Register.css";
 import { ShowErrorAlter, ShowSuccesAlert } from '../../functions/Alerts';
+import { useTranslation } from "react-i18next";
 
 const Register = ({ onRegisterSuccess }) => {
+    const {t} = useTranslation();
     const [formData, setFormData ] = useState(
         {
             username : '',
@@ -98,125 +100,125 @@ const Register = ({ onRegisterSuccess }) => {
 
 
     return (
-        <div className="register-container">
-            {showFirstForm && (
-                <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>usuario:</label>
-                    <input 
-                    type = "text"
-                    name = "username"
-                    value={formData.username}
-                    onChange={handleChange}
-                    required
-                    className="form-control"
-                    />
-                </div>
-                <div className="form-group">
-                    <label>email:</label>
-                    <input
-                    type = "email"
-                    name = "email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="form-control"
-                    />
-                </div>
-                <div className="form-group">
-                    <label>contraseña:</label>
-                    <input 
-                    type = "password"
-                    name = "password"
-                    value = {formData.password}
-                    onChange={handleChange}
-                    required
-                    className="form-control"
-                    />
-                </div>
-                <div className="form-group">
-                    <label>confirmar contraseña:</label>
-                    <input
-                    type = "password"
-                    name = "confirmPassword"
-                    value = {formData.confirmPassword}
-                    onChange={handleChange}
-                    required
-                    className="form-control"
-                    />
-                </div >
-                <button className="btn btn-secondary mt-3" type="submit">
-                        Siguiente 
-                </button>
-            </form>
-            )}
-            {showSecondForm && (
-                <form onSubmit={adittionalHandleSubmit}>
-                    <div className="form-group">
-                        <label>Numero de contacto:</label>
-                        <input
-                            type="text"
-                            name="phone"
-                            value={additionalFormData.phone}
-                            onChange={HandleAdittionalChange}
-                            required
-                            className="form-control"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Dirección</label>
-                        <input
-                            type="text"
-                            name="address"
-                            value={additionalFormData.address}
-                            onChange={HandleAdittionalChange}
-                            required
-                            className="form-control"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Compañía</label>
-                        <input
-                            type="text"
-                            name="name_company"
-                            value={additionalFormData.name_company}
-                            onChange={HandleAdittionalChange}
-                            required
-                            className="form-control"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Nit de la Compañía</label>
-                        <input 
-                            type="text"
-                            name="nit_company"
-                            value={additionalFormData.nit_company}
-                            onChange={HandleAdittionalChange}
-                            required
-                            className="form-control"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Subir PDF:</label>
-                        <input
-                            type="file"
-                            onChange={handleFileChange}
-                            accept="application/pdf"
-                            required
-                            className="form-control"
-                        />
-                    </div>
-                    <div className="button-group">
-                    <button className="btn btn-secondary mt-3" onClick={() => { setShowFirstForm(true); setShowSecondForm(false); }}>
-                            Volver
+            <div className="register-container">
+                {showFirstForm && (
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label>{t("username")}</label>
+                            <input 
+                                type="text"
+                                name="username"
+                                value={formData.username}
+                                onChange={handleChange}
+                                required
+                                className="form-control"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>{t("email")}</label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                                className="form-control"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>{t("password")}</label>
+                            <input 
+                                type="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                                className="form-control"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>{t("confirmPassword")}</label>
+                            <input
+                                type="password"
+                                name="confirmPassword"
+                                value={formData.confirmPassword}
+                                onChange={handleChange}
+                                required
+                                className="form-control"
+                            />
+                        </div>
+                        <button className="btn btn-secondary mt-3" type="submit">
+                            {t("next")}
                         </button>
-                        <button className="btn btn-success mt-3" type="submit">
-                            Enviar
-                        </button>
-                    </div>
-                </form>
-            )}
-        </div>
+                    </form>
+                )}
+                {showSecondForm && (
+                    <form onSubmit={adittionalHandleSubmit}>
+                        <div className="form-group">
+                            <label>{t("contactNumber")}</label>
+                            <input
+                                type="text"
+                                name="phone"
+                                value={additionalFormData.phone}
+                                onChange={HandleAdittionalChange}
+                                required
+                                className="form-control"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>{t("address")}</label>
+                            <input
+                                type="text"
+                                name="address"
+                                value={additionalFormData.address}
+                                onChange={HandleAdittionalChange}
+                                required
+                                className="form-control"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>{t("company")}</label>
+                            <input
+                                type="text"
+                                name="name_company"
+                                value={additionalFormData.name_company}
+                                onChange={HandleAdittionalChange}
+                                required
+                                className="form-control"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>{t("companyNIT")}</label>
+                            <input 
+                                type="text"
+                                name="nit_company"
+                                value={additionalFormData.nit_company}
+                                onChange={HandleAdittionalChange}
+                                required
+                                className="form-control"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>{t("uploadPDF")}</label>
+                            <input
+                                type="file"
+                                onChange={handleFileChange}
+                                accept="application/pdf"
+                                required
+                                className="form-control"
+                            />
+                        </div>
+                        <div className="button-group">
+                            <button className="btn btn-secondary mt-3" onClick={() => { setShowFirstForm(true); setShowSecondForm(false); }}>
+                                {t("back")}
+                            </button>
+                            <button className="btn btn-success mt-3" type="submit">
+                                {t("send")}
+                            </button>
+                        </div>
+                    </form>
+                )}
+            </div>
     );
 };
 

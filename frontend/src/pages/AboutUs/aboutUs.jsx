@@ -5,7 +5,7 @@ import {CustomModal} from "../../components/functions/CustomModal";
 import Login from "../../components/network/Login/Login";
 import Register from "../../components/network/Register/Register";
 import useAuthStore from "../../components/store/userAuthToken";
-
+import { useTranslation } from "react-i18next";
 
 //estilos
 import BannerPlus from "../../assets/bannersBurn/framesgo-frames-video-gafas.jpg"
@@ -14,6 +14,7 @@ import Layout from "../../routes/LayoutControl/Layouts";
 import './aboutUs.css'
 
 const AboutUs = () => {
+    const {t} = useTranslation();
     const [activeForm, setActiveForm] = useState('login');
     const [showLoginModal, setShowLoginModal] = useState(false);
 
@@ -42,51 +43,50 @@ const AboutUs = () => {
 
     return (
         <div className="about-us-container">
-            <MenuComponent
+                <MenuComponent
                 handleOpenLoginModal={handleOpenLoginModal}
                 userRole={userRole}
                 handleLogout={handleLogout}
-            />
-            <div className="banner-about-us">
+                />
+                <div className="banner-about-us">
                 <div>
-                <img src={BannerPlus} alt="banner Aboutus" />
-                    <p>Mas de dos decadas en la distribucion de marcos para lentes</p>
+                    <img src={BannerPlus} alt="banner Aboutus" />
+                    <p>{t('aboutUs.banner.description')}</p>
                 </div>
-            </div>
-
-            <div className="about-us-elements">
-            <Layout/>
+                </div>
+                <div className="about-us-elements">
+                <Layout />
                 <div className="our-company-container">
                     <div className="title-company">
-                        <h1>Nuestra compañia</h1>
+                    <h1>{t('aboutUs.company.title')}</h1>
                     </div>
                     <div className="content-our-company">
-                        <div className="content-company-left">
-                            <h2>Con 14 años de experiencia, Frames se ha establecido como un referente en la distribución de monturas ópticas y de sol en Colombia.  </h2>
-                            <p>Desde nuestros inicios, hemos recorrido todo el país, llevando productos de alta calidad directamente a las ópticas locales. Nuestro compromiso con la excelencia nos ha permitido construir una sólida presencia en el mercado nacional</p>
-                            <p>A lo largo de estos años, hemos forjado relaciones de confianza con ópticas en las principales ciudades de Colombia. Cada visita ha fortalecido nuestra reputación como un socio confiable, dedicado a ofrecer soluciones personalizadas que ayuden a nuestros clientes a crecer y prosperar en el competitivo mercado óptico.</p>
-                        </div>
-                        <div className="content-company-right">
-                            <img  src={ExampleImg} alt="exaple-img" /> 
-                        </div>
+                    <div className="content-company-left">
+                        <h2>{t('aboutUs.company.content.0')}</h2>
+                        <p>{t('aboutUs.company.content.1')}</p>
+                        <p>{t('aboutUs.company.content.2')}</p>
+                    </div>
+                    <div className="content-company-right">
+                        <img src={ExampleImg} alt="example-img" />
+                    </div>
                     </div>
                 </div>
                 <div className="our-company-container">
                     <div className="title-company">
-                        <h1>Confianza en cada montura, calidad en cada detalle.</h1>
+                    <h1>{t('aboutUs.company.quality.title')}</h1>
                     </div>
                     <div className="content-our-company">
-                        <div className="content-company-left">
-                            <h2>Además, hemos expandido nuestras operaciones más allá de las fronteras, creando alianzas estratégicas con empresas en Estados Unidos. </h2>
-                            <p>Estas colaboraciones nos han permitido incorporar nuevas tendencias y tecnologías a nuestro catálogo, beneficiando a nuestros clientes con una oferta más diversa y avanzada.</p>
-                            <p>Nuestro objetivo es convertirnos en una de las principales distribuidoras de gafas para ópticas en Colombia. Con una trayectoria que respalda nuestra credibilidad y una visión enfocada en el crecimiento, estamos comprometidos a seguir liderando el mercado óptico del país.</p>
-                        </div>
-                        <div className="content-company-right">
-                            <img  src={ExampleImg} alt="exaple-img" /> 
-                        </div>
+                    <div className="content-company-left">
+                        <h2>{t('aboutUs.company.quality.content.0')}</h2>
+                        <p>{t('aboutUs.company.quality.content.1')}</p>
+                        <p>{t('aboutUs.company.quality.content.2')}</p>
+                    </div>
+                    <div className="content-company-right">
+                        <img src={ExampleImg} alt="example-img" />
+                    </div>
                     </div>
                 </div>
-            </div>
+                </div>
         
             <CustomModal show={showLoginModal} handleClose={handleCloseLoginModal} title="Iniciar sesión">
                 <div className="form-toggle"> 

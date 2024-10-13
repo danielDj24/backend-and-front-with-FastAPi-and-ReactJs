@@ -131,7 +131,9 @@
     padding: 2px;
 }
 
-
+.hamburger {
+    display: none; /* Ocultar el menú hamburguesa en pantallas grandes */
+}
 @media (max-width: 768px) {
     .hamburger {
         display: block; /* Mostrar el menú hamburguesa en pantallas pequeñas */

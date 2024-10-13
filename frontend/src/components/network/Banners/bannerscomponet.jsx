@@ -4,12 +4,14 @@ import { axiosInstance, resourcesInstance } from '../../functions/axiosConfig';
 //carrusel
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { useTranslation } from "react-i18next";
 
 //estilos
 import "./Banners.css";
 
 
 const Banners = ({ positionFilter }) => {
+    const { t } = useTranslation();
     const [banners, setBanners] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -29,11 +31,11 @@ const Banners = ({ positionFilter }) => {
 
     }, []);
 
-    if(loading){
-        return <div>Loading....</div>
+    if (loading) {
+        return <div>{t("cargando")}</div>; // Traduce el texto de carga
     }
-    if (error){
-        return <div>Error: {error}</div>
+    if (error) {
+        return <div>{t("error")}: {error}</div>; // Traduce el texto de error
     }
 
     const filteredBanners = banners.filter(banner => banner.position === positionFilter);
@@ -53,7 +55,7 @@ const Banners = ({ positionFilter }) => {
                                 {banner.link_url && (
                                     <div className="button-container-get">
                                         <a href={banner.link_url} className="btn btn-light" target="_blank" rel="noopener noreferrer">
-                                            Click para ver más
+                                            {t("ver_mas")} {/* Traduce el texto del botón */}
                                         </a>
                                     </div>
                                 )}
@@ -73,7 +75,7 @@ const Banners = ({ positionFilter }) => {
                             {banner.link_url && (
                                 <div className="button-container">
                                     <a href={banner.link_url} className="btn" target="_blank" rel="noopener noreferrer">
-                                        Click para ver más
+                                        {t("ver_mas")} {/* Traduce el texto del botón */}
                                     </a>
                                 </div>
                             )}

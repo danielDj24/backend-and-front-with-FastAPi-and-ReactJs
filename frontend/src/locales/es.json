@@ -14,6 +14,115 @@
     "por_que_nosotros": "Por Qué Nosotros",
     "blog": "Blog",
     "ingresar": "Ingresar",
-    "marcas":"Marcas"
-
+    "marcas":"Marcas",
+    "Confiabilidad": "Confiabilidad",
+    "Variedad": "Variedad",
+    "Flexibilidad": "Flexibilidad",
+    "Acompañamiento": "Acompañamiento",
+    "FramesGo es su aliado confiable en Colombia, ofreciendo una amplia selección de gafas de diseñador.": "FramesGo es su aliado confiable en Colombia, ofreciendo una amplia selección de gafas de diseñador.",
+    "Marcos para Hombre": "Marcos para Hombre",
+    "Marcos para Mujer": "Marcos para Mujer",
+    "Lentes de sol": "Lentes de sol",
+    "Lentes Ópticos": "Lentes Ópticos",
+    "Con 14 años de experiencia, FramesGo lidera la distribución de monturas ópticas y de sol en Colombia.": "Con 14 años de experiencia, FramesGo lidera la distribución de monturas ópticas y de sol en Colombia.",
+    "Todo el inventario en nuestra plataforma B2B está disponible para envío inmediato.": "Todo el inventario en nuestra plataforma B2B está disponible para envío inmediato.",
+    "Nuestra experiencia": "Nuestra experiencia",
+    "En FramesGo, hemos cultivado relaciones basadas en la confianza con ópticas en Colombia y Latinoamérica por más de 14 años.": "En FramesGo, hemos cultivado relaciones basadas en la confianza con ópticas en Colombia y Latinoamérica por más de 14 años.",
+    "En cada relación, comenzamos con una comunicación abierta y la meta compartida de prosperar juntos. Cada montura es cuidadosamente seleccionada para cumplir con los más altos estándares.": "En cada relación, comenzamos con una comunicación abierta y la meta compartida de prosperar juntos. Cada montura es cuidadosamente seleccionada para cumplir con los más altos estándares.",
+    "En FramesGo, ofrecemos un catálogo amplio de monturas ópticas y de sol.": "En FramesGo, ofrecemos un catálogo amplio de monturas ópticas y de sol.",
+    "Cada montura es cuidadosamente seleccionada para adaptarse a todos los estilos y preferencias. Actualizamos continuamente nuestra oferta para mantenernos al día.": "Cada montura es cuidadosamente seleccionada para adaptarse a todos los estilos y preferencias. Actualizamos continuamente nuestra oferta para mantenernos al día.",
+    "Ofrecemos una plataforma de e-commerce intuitiva y eficiente.": "Ofrecemos una plataforma de e-commerce intuitiva y eficiente.",
+    "Nuestra tienda en línea está pensada para ofrecer una experiencia de compra ágil y sin complicaciones.": "Nuestra tienda en línea está pensada para ofrecer una experiencia de compra ágil y sin complicaciones.",
+    "No solo vendemos gafas, sino que construimos relaciones sólidas.": "No solo vendemos gafas, sino que construimos relaciones sólidas.",
+    "Te ayudamos a seleccionar los productos adecuados para tu mercado y aseguramos que cada pedido llegue a tiempo.": "Te ayudamos a seleccionar los productos adecuados para tu mercado y aseguramos que cada pedido llegue a tiempo.",
+    "Noticias": "Noticias",
+    "Iniciar sesión": "Iniciar sesión",
+    "Registrarse": "Registrarse",
+    "cargando": "Cargando...",
+    "error": "Error",
+    "ver_mas": "Ver más",
+    "addressTitle": "Dirección",
+    "contactUsTitle": "Contáctenos",
+    "accessTitle": "Acceso",
+    "loginButton": "Iniciar sesión",
+    "logoutButton": "Cerrar sesión",
+    "socialMediaTitle": "Redes Sociales",
+    "copyrightText": "Derechos de autor",
+    "allRightsReserved": "Todos los derechos reservados.",
+    "privacyPolicy": "Política de privacidad",
+    "developedBy": "Desarrollado por",
+    "designsBy": "Diseños por",
+    "usernameOrEmail": "Usuario o Email:",
+    "password": "Contraseña:",
+    "username": "Usuario:",
+    "email": "Email:",
+    "confirmPassword": "Confirmar Contraseña:",
+    "next": "Siguiente",
+    "contactNumber": "Número de contacto:",
+    "address": "Dirección:",
+    "company": "Compañía:",
+    "companyNIT": "Nit de la Compañía:",
+    "uploadPDF": "Subir PDF:",
+    "back": "Volver",
+    "send": "Enviar",
+    "aboutUs": {
+    "banner": {
+        "description": "Mas de dos decadas en la distribucion de marcos para lentes"
+        },
+        "company": {
+        "title": "Nuestra compañia",
+        "content": [
+            "Con 14 años de experiencia, Frames se ha establecido como un referente en la distribución de monturas ópticas y de sol en Colombia.",
+            "Desde nuestros inicios, hemos recorrido todo el país, llevando productos de alta calidad directamente a las ópticas locales. Nuestro compromiso con la excelencia nos ha permitido construir una sólida presencia en el mercado nacional.",
+            "A lo largo de estos años, hemos forjado relaciones de confianza con ópticas en las principales ciudades de Colombia. Cada visita ha fortalecido nuestra reputación como un socio confiable, dedicado a ofrecer soluciones personalizadas que ayuden a nuestros clientes a crecer y prosperar en el competitivo mercado óptico."
+        ],
+        "quality": {
+            "title": "Confianza en cada montura, calidad en cada detalle.",
+            "content": [
+            "Además, hemos expandido nuestras operaciones más allá de las fronteras, creando alianzas estratégicas con empresas en Estados Unidos.",
+            "Estas colaboraciones nos han permitido incorporar nuevas tendencias y tecnologías a nuestro catálogo, beneficiando a nuestros clientes con una oferta más diversa y avanzada.",
+            "Nuestro objetivo es convertirnos en una de las principales distribuidoras de gafas para ópticas en Colombia. Con una trayectoria que respalda nuestra credibilidad y una visión enfocada en el crecimiento, estamos comprometidos a seguir liderando el mercado óptico del país."
+            ]
+        }
+        }
+    },
+    "ecommerce": {
+        "hombre": {
+            "alt": "Hombre con Gafas",
+            "label": "Hombre"
+        },
+        "mujer": {
+            "alt": "Mujer con Gafas",
+            "label": "Mujer"
+        },
+        "lentesSol": {
+            "alt": "Gafas de sol",
+            "label": "Lentes de sol"
+        },
+        "optico": {
+            "alt": "Lentes ópticos",
+            "label": "Lentes Ópticos"
+        },
+        "discount": {
+            "alt": "Descuentos"
+        },
+        "filterDiscounts": {
+            "alt": "Filtrar descuentos",
+            "label": "En descuento"
+        },
+        "filterPrices": {
+            "alt": "Filtrar precios",
+            "label": "Más económico"
+        }
+    },
+    "Notices":"Noticias",
+    "whyChooseFramesGo": "¿Por qué elegir FramesGo como tu distribuidora?",
+    "reliablePartnerTitle": "Tu socio confiable en moda óptica, siempre a la vanguardia.",
+    "chooseFramesGo": "Elegir a FramesGo como su distribuidor significa optar por más de una década de experiencia en el mercado óptico.",
+    "marketExperience": "Con 14 años de trayectoria, conocemos las necesidades y desafíos que enfrentan las ópticas en Colombia. Nos dedicamos a ofrecer productos que no solo cumplen con los más altos estándares de calidad, sino que también están en sintonía con las últimas tendencias de moda y tecnología. En FramesGo, la confianza es fundamental.",
+    "trustTransparency": "Hemos construido relaciones duraderas con ópticas en todo el país, basadas en la transparencia y el compromiso mutuo. Nos aseguramos de que cada pedido se maneje con la máxima atención al detalle, desde la selección de los productos hasta la entrega final, garantizando que nuestros clientes siempre reciban lo mejor.",
+    "diverseOffering": "Nuestra oferta es diversa y está en constante evolución, lo que nos permite adaptarnos rápidamente a las cambiantes demandas del mercado.",
+    "globalPartners": "Trabajamos con proveedores de renombre y colaboramos con empresas internacionales para asegurar que nuestros clientes tengan acceso a las monturas más innovadoras y de alta calidad disponibles. Finalmente, en FramesGo creemos en el acompañamiento continuo.",
+    "personalizedSupport": "No solo somos un proveedor, sino un socio que está ahí en cada paso del camino, ofreciendo asesoramiento personalizado, soporte y soluciones adaptadas a las necesidades de cada óptica. Con FramesGo, usted tiene la tranquilidad de contar con un aliado confiable que se preocupa por el éxito de su negocio."  
+    
 }

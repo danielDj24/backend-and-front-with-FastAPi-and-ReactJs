@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { axiosInstanceAuth } from "../../components/functions/axiosConfig";
 import { ShowErrorAlter } from "../../components/functions/Alerts";
 import useAuthStore from "../../components/store/userAuthToken";
-
+import { useTranslation } from "react-i18next";
 
 
 import './homeStore.css'
@@ -20,6 +20,7 @@ import FilterDiscounts from "../../assets/resources-ecommerce/opticas-mujer-gafa
 import FilterPrices from "../../assets/resources-ecommerce/mujer-gafas-opticas-colombia.jpg";
 
     const HomeEcomerce = () =>{
+        const { t } = useTranslation(); // Usa useTranslation para obtener la función t
         // Constantes para controlar el login y el registro en el modal de usuarios
         const [ setShowLoginModal] = useState(false);
 
@@ -75,44 +76,44 @@ import FilterPrices from "../../assets/resources-ecommerce/mujer-gafas-opticas-c
             <Banners positionFilter={2} />
 
             <div className="ecommerce-elements-home">
-                <div className="container-images-e-commerce">
-                    <div onClick={() => handleNavigate('Hombre')}>
-                        <img src={HombreGafas} alt="Hombre con Gafas" />
-                        <p>Hombre</p>
-                    </div>
-                    <div onClick={() => handleNavigate('Mujer')}>
-                        <img src={MujerGafas} alt="Mujer con Gafas" />
-                        <p>Mujer</p>
-                    </div>
-                    <div onClick={() => handleNavigate('Lentes de sol')}>
-                        <img src={GafasSol} alt="Gafas de sol" />
-                        <p>Lentes de sol</p>
-                    </div>
-                    <div onClick={() => handleNavigate('Optico')}>
-                        <img src={GafasOpticos} alt="Lentes ópticos" />
-                        <p>Lentes Ópticos</p>
-                    </div>
+            <div className="container-images-e-commerce">
+                <div onClick={() => handleNavigate('Hombre')}>
+                    <img src={HombreGafas} alt={t('ecommerce.hombre.alt')} />
+                    <p>{t('ecommerce.hombre.label')}</p>
                 </div>
-                <div className="discount-element">
-                    <div onClick={() => handleNavigateDiscounts(2)}>
-                        <img src={Discounts} alt="discount" />
-                    </div>
+                <div onClick={() => handleNavigate('Mujer')}>
+                    <img src={MujerGafas} alt={t('ecommerce.mujer.alt')} />
+                    <p>{t('ecommerce.mujer.label')}</p>
                 </div>
-                <div className="filter-elements">
-                    <div>
-                        <a href="/e-commerce/products/discounts">
-                        <img src={FilterDiscounts} alt="filter discounts" />
-                            <p>En descuento</p>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="/e-commerce/products/price">
-                        <img src={FilterPrices} alt="filter prices" />
-                            <p>Más económico</p>
-                        </a>
-                    </div>
+                <div onClick={() => handleNavigate('Lentes de sol')}>
+                    <img src={GafasSol} alt={t('ecommerce.lentesSol.alt')} />
+                    <p>{t('ecommerce.lentesSol.label')}</p>
+                </div>
+                <div onClick={() => handleNavigate('Optico')}>
+                    <img src={GafasOpticos} alt={t('ecommerce.optico.alt')} />
+                    <p>{t('ecommerce.optico.label')}</p>
                 </div>
             </div>
+            <div className="discount-element">
+                <div onClick={() => handleNavigateDiscounts(2)}>
+                    <img src={Discounts} alt={t('ecommerce.discount.alt')} />
+                </div>
+            </div>
+            <div className="filter-elements">
+                <div>
+                    <a href="/e-commerce/products/discounts">
+                        <img src={FilterDiscounts} alt={t('ecommerce.filterDiscounts.alt')} />
+                        <p>{t('ecommerce.filterDiscounts.label')}</p>
+                    </a>
+                </div>
+                <div>
+                    <a href="/e-commerce/products/price">
+                        <img src={FilterPrices} alt={t('ecommerce.filterPrices.alt')} />
+                        <p>{t('ecommerce.filterPrices.label')}</p>
+                    </a>
+                </div>
+            </div>
+        </div>
             <FooterComponent 
             handleOpenLoginModal={handleOpenLoginModal} 
             userRole={userRole}
