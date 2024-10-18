@@ -34,3 +34,7 @@ def decode_token(token : Annotated[str, Depends(oauth2_scheme)]) -> str:
         raise HTTPException(status_code=401, detail="Invalid token")
     
 
+def encode_reset_password_token(user_id: int) -> str:
+    expiration = datetime.now() + timedelta(hours=1)  # El token expirará en 1 hora
+    token = jwt.encode({"exp": expiration, "user_id": user_id}, getenv("SECRET_KEYS"), algorithm="HS256")
+    return token

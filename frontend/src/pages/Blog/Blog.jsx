@@ -7,7 +7,7 @@ import Register from "../../components/network/Register/Register";
 import useAuthStore from "../../components/store/userAuthToken";
 import Blogcomponent from "../../components/network/Blog/BlogComponent";
 import "./Blog.css"
-import BannerPlus from "../../assets/bannersBurn/framesgo-gafas-colombia-B2B.jpg"
+import BannerBlog from "../../assets/bannersBurn/blog-framesgo-lentes-hombre.jpg"
 import { useTranslation } from "react-i18next";
 const Blog = () => {
     // Constantes para controlar el login y el registro en el modal de usuarios
@@ -48,7 +48,7 @@ const Blog = () => {
 
             <div className="banner-blog">
                         <div>
-                        <img src={BannerPlus} alt="banner blog" />
+                        <img src={BannerBlog} alt="banner blog" />
                             <p>{t('Notices')}</p>
                         </div>
                     </div>

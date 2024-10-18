@@ -8,8 +8,9 @@ import useAuthStore from "../../components/store/userAuthToken";
 import { useTranslation } from "react-i18next";
 
 //estilos
-import BannerPlus from "../../assets/bannersBurn/framesgo-frames-video-gafas.jpg"
-import ExampleImg from "../../assets/imgsBurn/example.jpg"
+import BannerAboutus from "../../assets/bannersBurn/framesgo-lentes-azules-tigre.jpg"
+import Img1Aboutus from "../../assets/imgsBurn/framesgo-lentes-opticas-inventario.jpg"
+import Img2Aboutus from "../../assets/imgsBurn/lentes-tendencia-rojo-framesgo.jpg"
 import Layout from "../../routes/LayoutControl/Layouts";
 import './aboutUs.css'
 
@@ -50,7 +51,7 @@ const AboutUs = () => {
                 />
                 <div className="banner-about-us">
                 <div>
-                    <img src={BannerPlus} alt="banner Aboutus" />
+                    <img src={BannerAboutus} alt="banner Aboutus" />
                     <p>{t('aboutUs.banner.description')}</p>
                 </div>
                 </div>
@@ -67,7 +68,7 @@ const AboutUs = () => {
                         <p>{t('aboutUs.company.content.2')}</p>
                     </div>
                     <div className="content-company-right">
-                        <img src={ExampleImg} alt="example-img" />
+                        <img src={Img1Aboutus} alt="example-img" />
                     </div>
                     </div>
                 </div>
@@ -82,7 +83,7 @@ const AboutUs = () => {
                         <p>{t('aboutUs.company.quality.content.2')}</p>
                     </div>
                     <div className="content-company-right">
-                        <img src={ExampleImg} alt="example-img" />
+                        <img src={Img2Aboutus} alt="example-img" />
                     </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@ import React, {useState,useEffect} from "react";
 
 //estilos
 import './homeIntranet.css'
-import BannerPlus from "../../assets/bannersBurn/framesgo-frames-video-gafas.jpg"
+import BannerIntranet from "../../assets/bannersBurn/home-framesgo-mujer-gafas.jpg"
 import ExampleImg from "../../assets/imgsBurn/intranetexample.jpg"
 import Layout from "../../routes/LayoutControl/Layouts";
 
@@ -52,7 +52,7 @@ const Intranet = () => {
 
             <div className="banner-intranet">
                 <div>
-                    <img src={BannerPlus} alt="banner intranet" />
+                    <img src={BannerIntranet} alt="banner intranet" />
                     <p>Bienvenido a la intranet</p>
                 </div>
             </div>

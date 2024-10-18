@@ -14,7 +14,6 @@ from routes.products import product_routes
 from routes.shapes import shapes_routes
 from routes.discounts import discount_routes
 from routes.cart import cart_routes
-from routes.emails import email_routes
 from fastapi.staticfiles import StaticFiles
 
 
@@ -40,7 +39,6 @@ app.include_router(shapes_routes, prefix="/api")
 app.include_router(discount_routes, prefix="/api")
 app.include_router(product_routes, prefix="/api")
 app.include_router(cart_routes, prefix="/api")
-app.include_router(email_routes, prefix="/api")
 add_pagination(app)
 
 """ruta del front"""

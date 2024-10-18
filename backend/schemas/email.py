@@ -1,9 +1,4 @@
 from pydantic import BaseModel, EmailStr
 
-
-class EmailSchema(BaseModel):
+class ResetPasswordRequest(BaseModel):
     email: EmailStr
-    name:str
-    subject: str
-    message: str
-    

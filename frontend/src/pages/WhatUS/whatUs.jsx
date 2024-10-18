@@ -10,8 +10,9 @@ import { useTranslation } from "react-i18next";
 //estilos
 import './whatUs.css'
 
-import BannerPlus from "../../assets/bannersBurn/framesgo-frames-video-gafas.jpg"
-import ExampleImg from "../../assets/imgsBurn/example.jpg"
+import Bannerwhatus from "../../assets/bannersBurn/lentes-elegantes-mujer-framesgo-rosa.jpg"
+import Img1whatus from "../../assets/imgsBurn/lentes-opticos-opticas-confianza-variedad-framesgo.jpg"
+import Img2whatus from "../../assets/imgsBurn/variedad-lentes-mujer-gafas-optica.jpg"
 
 const WhatUs = () => {
     const {t} = useTranslation();
@@ -50,7 +51,7 @@ const WhatUs = () => {
             />
             <div className="banner-what-us">
                 <div>
-                    <img src={BannerPlus} alt="banner WhatUS" />
+                    <img src={Bannerwhatus} alt="banner WhatUS" />
                     <p>{t('whyChooseFramesGo')}</p>
                 </div>
             </div>
@@ -67,10 +68,10 @@ const WhatUs = () => {
                             <p>{t('trustTransparency')}</p>
                         </div>
                         <div className="content-what-us-right">
-                            <img src={ExampleImg} alt="example-img" />
+                            <img src={Img1whatus} alt="example-img" />
                         </div>
                         <div className="content-what-us-right">
-                            <img src={ExampleImg} alt="example-img" />
+                            <img src={Img2whatus} alt="example-img" />
                         </div>
                         <div className="content-what-us-left">
                             <h2>{t('diverseOffering')}</h2>

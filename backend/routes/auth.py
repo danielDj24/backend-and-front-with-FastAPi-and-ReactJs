@@ -1,4 +1,5 @@
 from fastapi import APIRouter,Depends
+from schemas.email import ResetPasswordRequest
 from schemas.users import UserID, pwd_context
 from services.userscrud import get_user_by_name,delete_users_by_id, activate_user, GetUserID,GetUsers
 from sqlalchemy.orm import session
@@ -6,11 +7,10 @@ from fastapi.exceptions import HTTPException
 from typing import List
 from services.dbconnection import GetDB
 
-from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
-from utils.functions_jwt import encode_token, decode_token, blacklist
-
+from utils.functions_jwt import encode_token, decode_token, blacklist, encode_reset_password_token
+from utils.functions_send_email import send_email
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/token")
 
@@ -67,3 +67,35 @@ def logout(token: Annotated[str, Depends(oauth2_scheme)]):
     blacklist.add(token)  # Agregar el token a la lista negra
     return {"detail": "Successfully logged out"}
 
+#restablecer contraseña
+@auth_routes.post("/reset-password")
+async def reset_password(request: ResetPasswordRequest, db: session = Depends(GetDB)):
+    user = get_user_by_name(db, request.email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Generar un token de restablecimiento de contraseña
+    reset_token = encode_reset_password_token(user.id)
+
+    # Preparar el contenido del correo
+    subject = "Restablecimiento de Contraseña"
+    body = f"""
+    <html>
+    <body>
+        <h2>Solicitud de Restablecimiento de Contraseña</h2>
+        <p>Hola {user.username},</p>
+        <p>Recibimos una solicitud para restablecer la contraseña de tu cuenta.</p>
+        <p>Si no solicitaste este cambio, puedes ignorar este correo.</p>
+        <p>Para restablecer tu contraseña, haz clic en el siguiente enlace:</p>
+        <a href="https://framesgo.com/reset-password/{reset_token}">Restablecer Contraseña</a>
+        <p>Gracias,</p>
+        <p>El equipo de soporte</p>
+    </body>
+    </html>
+    """
+    recipient_email = request.email
+
+    # Enviar el correo
+    send_email(subject, body, recipient_email)
+
+    return {"message": "Correo de restablecimiento de contraseña enviado exitosamente"}
