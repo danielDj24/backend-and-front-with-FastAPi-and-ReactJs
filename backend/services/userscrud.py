@@ -1,6 +1,7 @@
+import bcrypt
 from sqlalchemy.orm import session
 from models.users import User 
-from schemas.users import UserData, UserID
+from schemas.users import UserData
 from fastapi.exceptions import HTTPException
 
 """Obtener todos los usuarios"""
@@ -46,4 +47,16 @@ def activate_user(db: session, user_id: int):
     user.is_active = True
     db.commit()
     db.refresh(user)
+    return user
+
+def update_user_password(db: session, user: User, new_password: str):
+    # Encriptar la nueva contraseña
+    hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
+
+    # Actualizar la contraseña en la base de datos
+    user.password = hashed_password.decode('utf-8')
+    db.add(user)
+    db.commit()
+    db.refresh(user)  # Refrescar la instancia del usuario en caso de que sea necesario
+
     return user

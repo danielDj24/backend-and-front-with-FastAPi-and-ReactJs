@@ -1,7 +1,8 @@
-from fastapi import APIRouter,Depends
+
+from fastapi import APIRouter,Depends,Form
 from schemas.email import ResetPasswordRequest
 from schemas.users import UserID, pwd_context
-from services.userscrud import get_user_by_name,delete_users_by_id, activate_user, GetUserID,GetUsers
+from services.userscrud import get_user_by_name,delete_users_by_id, activate_user, GetUserID,GetUsers, update_user_password
 from sqlalchemy.orm import session
 from fastapi.exceptions import HTTPException
 from typing import List
@@ -9,8 +10,9 @@ from services.dbconnection import GetDB
 
 from typing import Annotated
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
-from utils.functions_jwt import encode_token, decode_token, blacklist, encode_reset_password_token
+from utils.functions_jwt import encode_token, decode_token, blacklist, encode_reset_password_token,decode_reset_password_token
 from utils.functions_send_email import send_email
+from fastapi.responses import HTMLResponse
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/token")
 
@@ -68,7 +70,7 @@ def logout(token: Annotated[str, Depends(oauth2_scheme)]):
     return {"detail": "Successfully logged out"}
 
 #restablecer contraseña
-@auth_routes.post("/reset-password")
+@auth_routes.post("/reset-password/send-email")
 async def reset_password(request: ResetPasswordRequest, db: session = Depends(GetDB)):
     user = get_user_by_name(db, request.email)
     if not user:
@@ -81,21 +83,52 @@ async def reset_password(request: ResetPasswordRequest, db: session = Depends(Ge
     subject = "Restablecimiento de Contraseña"
     body = f"""
     <html>
-    <body>
-        <h2>Solicitud de Restablecimiento de Contraseña</h2>
-        <p>Hola {user.username},</p>
-        <p>Recibimos una solicitud para restablecer la contraseña de tu cuenta.</p>
-        <p>Si no solicitaste este cambio, puedes ignorar este correo.</p>
-        <p>Para restablecer tu contraseña, haz clic en el siguiente enlace:</p>
-        <a href="https://framesgo.com/reset-password/{reset_token}">Restablecer Contraseña</a>
-        <p>Gracias,</p>
-        <p>El equipo de soporte</p>
+    <body style="font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; background-color: #f4f4f4;">
+        <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <h2 style="color: #333;">Solicitud de Restablecimiento de Contraseña</h2>
+            <p style="color: #555;">Hola <strong>{user.username}</strong>,</p>
+            <p style="color: #555;">Recibimos una solicitud para restablecer la contraseña de tu cuenta.</p>
+            <p style="color: #555;">Si no solicitaste este cambio, puedes ignorar este correo.</p>
+            <p style="color: #555;">Para restablecer tu contraseña, haz clic en el siguiente enlace:</p>
+            <a href="http://localhost:3000/reset-password/{reset_token}" style="display: inline-block; background-color: #28a745; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;">Restablecer Contraseña</a>
+            
+            <hr style="margin: 20px 0; border: 1px solid #ddd;" />
+            
+            <p style="color: #555;">Por favor, no contestar este mensaje. Todos los derechos reservados a Frames S.A.S.</p>
+            
+            <p style="color: #555;">Gracias,</p>
+            <p style="color: #555;">El equipo de soporte</p>
+            <a  href="http://framesgo.com/>framesgo.com</a>
+        </div>
     </body>
     </html>
     """
+
     recipient_email = request.email
 
+
     # Enviar el correo
-    send_email(subject, body, recipient_email)
+    send_email(subject, body, recipient_email)  # <-- Corregido: Ahora se pasa el 'recipient_email'
 
     return {"message": "Correo de restablecimiento de contraseña enviado exitosamente"}
+
+
+@auth_routes.post("/reset-password")
+async def post_reset_password(
+    token: str = Form(...),
+    new_password: str = Form(...),
+    db: session = Depends(GetDB)
+):
+    user_id = decode_reset_password_token(token)
+    if not user_id:
+        raise HTTPException(status_code=404, detail="Token inválido o expirado")
+
+    user = GetUserID(db, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+
+    # Actualizar la contraseña del usuario
+    update_user_password(db, user, new_password)
+
+    return {"message": "Contraseña restablecida correctamente"}
+

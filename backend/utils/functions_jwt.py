@@ -38,3 +38,12 @@ def encode_reset_password_token(user_id: int) -> str:
     expiration = datetime.now() + timedelta(hours=1)  # El token expirará en 1 hora
     token = jwt.encode({"exp": expiration, "user_id": user_id}, getenv("SECRET_KEYS"), algorithm="HS256")
     return token
+
+def decode_reset_password_token(token: str) -> int:
+    try:
+        payload = jwt.decode(token, getenv("SECRET_KEYS"), algorithms=["HS256"])
+        return payload.get("user_id")  # Extraer el user_id del token
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=400, detail="El token ha expirado")
+    except jwt.JWTError:
+        raise HTTPException(status_code=400, detail="Token inválido")

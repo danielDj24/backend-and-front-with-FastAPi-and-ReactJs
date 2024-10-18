@@ -40,6 +40,22 @@ const axiosInstanceLogin = axios.create({
     }
 });
 
+// Función para enviar el correo de restablecimiento de contraseña
+const axiosResetPassword = axios.create({
+    baseURL: process.env.REACT_APP_API_BASE_URL,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+});
+
+const sendResetPasswordEmail = axios.create ({
+    baseURL:process.env.REACT_APP_API_BASE_URL,
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
+
+
 const resourcesInstance = axios.create({
     baseURL: process.env.REACT_APP_RESOURCES_URL, 
     timeout: 10000, 
@@ -62,5 +78,5 @@ const deleteUser = async (token, userId) => {
     return response.data;
 };
 
-export  { axiosInstance, resourcesInstance, axiosInstanceLogin, axiosInstanceAuth, axiosInstanceFiles, activateUser, deleteUser, axiosInstanceFilesRegister };
+export  { axiosInstance, resourcesInstance, axiosInstanceLogin, axiosInstanceAuth, axiosInstanceFiles, activateUser, deleteUser, axiosInstanceFilesRegister, sendResetPasswordEmail, axiosResetPassword };
 

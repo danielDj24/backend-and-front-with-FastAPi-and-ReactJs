@@ -25,6 +25,7 @@ const Register = ({ onRegisterSuccess }) => {
             nit_company:'',
         });
     const [selectedFile, setSelectedFile] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
 
         const handleChange = (e) =>{
             const {name, value} = e.target;
@@ -51,6 +52,12 @@ const Register = ({ onRegisterSuccess }) => {
             ShowErrorAlter('Error', "Las contraseñas no coinciden");
             return;
         }
+
+        if (!isPasswordValid(formData.password)) {
+            setErrorMessage("La contraseña debe tener entre 8 y 16 caracteres, incluir al menos una letra mayúscula y un número.");
+            return;
+        }
+
         try {
             const response = await axiosInstance.post('/register', formData);
             if (response.data.phone === null || response.data.address === null || response.data.name_company === null || response.data.nit_company === null) {
@@ -98,127 +105,132 @@ const Register = ({ onRegisterSuccess }) => {
         }
     };
 
-
+    // Función para validar la contraseña
+    const isPasswordValid = (password) => {
+        const passwordPattern = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,16}$/; // Patrón: al menos una mayúscula, un número, entre 8 y 16 caracteres
+        return passwordPattern.test(password);
+    };
     return (
-            <div className="register-container">
-                {showFirstForm && (
-                    <form onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label>{t("username")}</label>
-                            <input 
-                                type="text"
-                                name="username"
-                                value={formData.username}
-                                onChange={handleChange}
-                                required
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>{t("email")}</label>
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                required
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>{t("password")}</label>
-                            <input 
-                                type="password"
-                                name="password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                required
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>{t("confirmPassword")}</label>
-                            <input
-                                type="password"
-                                name="confirmPassword"
-                                value={formData.confirmPassword}
-                                onChange={handleChange}
-                                required
-                                className="form-control"
-                            />
-                        </div>
-                        <button className="btn btn-secondary mt-3" type="submit">
-                            {t("next")}
+        <div className="register-container">
+            {showFirstForm && (
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label>{t("username")}</label>
+                        <input 
+                            type="text"
+                            name="username"
+                            value={formData.username}
+                            onChange={handleChange}
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>{t("email")}</label>
+                        <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>{t("password")}</label>
+                        <input 
+                            type="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>{t("confirmPassword")}</label>
+                        <input
+                            type="password"
+                            name="confirmPassword"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Muestra el mensaje de error si existe */}
+                    <button className="btn btn-secondary mt-3" type="submit">
+                        {t("next")}
+                    </button>
+                </form>
+            )}
+            {showSecondForm && (
+                <form onSubmit={adittionalHandleSubmit}>
+                    <div className="form-group">
+                        <label>{t("contactNumber")}</label>
+                        <input
+                            type="text"
+                            name="phone"
+                            value={additionalFormData.phone}
+                            onChange={HandleAdittionalChange}
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>{t("address")}</label>
+                        <input
+                            type="text"
+                            name="address"
+                            value={additionalFormData.address}
+                            onChange={HandleAdittionalChange}
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>{t("company")}</label>
+                        <input
+                            type="text"
+                            name="name_company"
+                            value={additionalFormData.name_company}
+                            onChange={HandleAdittionalChange}
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>{t("companyNIT")}</label>
+                        <input 
+                            type="text"
+                            name="nit_company"
+                            value={additionalFormData.nit_company}
+                            onChange={HandleAdittionalChange}
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>{t("uploadPDF")}</label>
+                        <input
+                            type="file"
+                            onChange={handleFileChange}
+                            accept="application/pdf"
+                            required
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="button-group">
+                        <button className="btn btn-secondary mt-3" onClick={() => { setShowFirstForm(true); setShowSecondForm(false); }}>
+                            {t("back")}
                         </button>
-                    </form>
-                )}
-                {showSecondForm && (
-                    <form onSubmit={adittionalHandleSubmit}>
-                        <div className="form-group">
-                            <label>{t("contactNumber")}</label>
-                            <input
-                                type="text"
-                                name="phone"
-                                value={additionalFormData.phone}
-                                onChange={HandleAdittionalChange}
-                                required
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>{t("address")}</label>
-                            <input
-                                type="text"
-                                name="address"
-                                value={additionalFormData.address}
-                                onChange={HandleAdittionalChange}
-                                required
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>{t("company")}</label>
-                            <input
-                                type="text"
-                                name="name_company"
-                                value={additionalFormData.name_company}
-                                onChange={HandleAdittionalChange}
-                                required
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>{t("companyNIT")}</label>
-                            <input 
-                                type="text"
-                                name="nit_company"
-                                value={additionalFormData.nit_company}
-                                onChange={HandleAdittionalChange}
-                                required
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>{t("uploadPDF")}</label>
-                            <input
-                                type="file"
-                                onChange={handleFileChange}
-                                accept="application/pdf"
-                                required
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="button-group">
-                            <button className="btn btn-secondary mt-3" onClick={() => { setShowFirstForm(true); setShowSecondForm(false); }}>
-                                {t("back")}
-                            </button>
-                            <button className="btn btn-success mt-3" type="submit">
-                                {t("send")}
-                            </button>
-                        </div>
-                    </form>
-                )}
-            </div>
+                        <button className="btn btn-success mt-3" type="submit">
+                            {t("send")}
+                        </button>
+                    </div>
+                </form>
+            )}
+        </div>
     );
 };
 

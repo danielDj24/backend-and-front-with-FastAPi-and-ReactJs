@@ -29,13 +29,8 @@ def send_email(subject: str, body: str, to_email: str):
     try:
         # Conectar al servidor SMTP y enviar el correo
         with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
-            server.starttls()  # Habilitar TLS
             server.login(from_email, password)  # Iniciar sesión
             server.sendmail(from_email, to_email, msg.as_string())  # Enviar el correo
         print("Email sent successfully")
     except Exception as e:
         print(f"Failed to send email: {e}")
-
-
-    # Enviar el correo
-    send_email(subject, body)

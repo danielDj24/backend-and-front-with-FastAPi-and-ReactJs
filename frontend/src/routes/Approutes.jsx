@@ -27,6 +27,7 @@ import WhatUs from "../pages/WhatUS/whatUs";
 import Intranet from "../pages/HomeIntranet/HomeIntranet";
 import DetailProduct from "../pages/Detail/Detailproduct";
 import ProductsByPrice from "../pages/EconomicProducts/ProductsbyPrice";
+import ResetPassword from "../components/network/Reset-password/ResetPassword";
 
 //importacion paginas del e-commerce 
 import HomeEcomerce from "../pages/homeStore/homeStore";
@@ -54,9 +55,10 @@ const AppRoutes = () => {
                 <Route path="/por-que-nosotros" element={< WhatUs/>}/>
                 <Route path="/blog/*" element={<Blog view="blog" />} />
                 <Route path="/notice/*" element={<Blogcomponent view="detail" />} />
-                
+                <Route path= "/reset-password/:token" element={<ResetPassword/>} />
                 <Route path="/register" element = {<Register/>} />
                 <Route path="/login" element={<Login/>} />
+
                 
 
                 {/* rutas de la intranet */}
