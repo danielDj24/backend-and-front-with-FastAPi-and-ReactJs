@@ -6,7 +6,10 @@ import MenuComponent from "../../components/network/Menu/MenuComponent";
 import FooterComponent from "../../components/network/Footer/footerComponent";
 import Layout from "../../routes/LayoutControl/Layouts";
 import { ShowErrorAlter } from "../../components/functions/Alerts";
+import WompiPayment from "../../components/paymentWidget/paymentWidget";
 import './Cart.css';
+import { v4 as uuidv4 } from 'uuid';
+
 
 const CartShop = () => {
     const [cart, setCart] = useState(null);
@@ -20,6 +23,10 @@ const CartShop = () => {
     const [loading, setLoading] = useState(false);
     const [userRole, setUserRole] = useState(null);
     const [setShowLoginModal] = useState(false);
+
+    const generatePaymentReference = () => `order-${uuidv4()}`;
+    const [paymentReference, setPaymentReference] = useState(generatePaymentReference());
+
 
     useEffect(() => {
         checkToken();
@@ -224,6 +231,7 @@ const CartShop = () => {
                     <div className="cart-summary">
                         <h3>Total de Productos: {calculateTotalQuantity()}</h3>
                         <h3>Valor Total del Carrito: ${formatPrice(cart.total_value)}</h3>
+                        <WompiPayment amount={cart.total_value * 100} reference={paymentReference} />
                     </div>
                 </div>
             </div>

@@ -14,7 +14,7 @@ from routes.products import product_routes
 from routes.shapes import shapes_routes
 from routes.discounts import discount_routes
 from routes.cart import cart_routes
-from fastapi.staticfiles import StaticFiles
+from fastapi.staticfiles import StaticFiles 
 
 
 Base.metadata.create_all(bind=engine)
@@ -28,7 +28,6 @@ app.mount("/resources", StaticFiles(directory="resources"), name="resources")
 
 """Mount de media para los recursos por parte de los usuarios"""
 app.mount("/media", StaticFiles(directory="media"), name="media")
-
 
 app.include_router(auth_routes, prefix="/api")
 app.include_router(registration_router, prefix="/api")
