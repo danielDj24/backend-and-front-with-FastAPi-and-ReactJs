@@ -11,7 +11,7 @@ const WompiPayment = ({ amount, reference }) => {
         script.setAttribute("data-currency", "COP");
         script.setAttribute("data-amount-in-cents", amount);
         script.setAttribute("data-reference", reference);
-        script.setAttribute("data-signature:integrity", "tu_firma_de_integridad"); // Opcional
+        script.setAttribute("data-signature:integrity", "tu_firma_de_integridad"); 
 
         // Agregar el script al formulario
         const form = document.getElementById("wompi-form");

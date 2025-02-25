@@ -49,6 +49,17 @@ def activate_user(db: session, user_id: int):
     db.refresh(user)
     return user
 
+"""Definir como cliente preferencial"""
+def activate_user_preferencial(db: session, user_id: int):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code = 404, detail = "user not found")
+    user.preferencial_client = True
+    db.commit()
+    db.refresh(user)
+    return user
+
+
 def update_user_password(db: session, user: User, new_password: str):
     # Encriptar la nueva contraseña
     hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())

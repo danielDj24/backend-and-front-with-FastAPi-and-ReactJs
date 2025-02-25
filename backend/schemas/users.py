@@ -19,6 +19,7 @@ class UserData(BaseModel):
     """campo para permitir el ingreso de los usuarios"""
     is_active:  Optional[bool] = False
     role :  Optional[str] = "client"
+    preferencial_client: Optional[bool] = False
 
     def hash_password(self):
         self.password = pwd_context.hash(self.password) 

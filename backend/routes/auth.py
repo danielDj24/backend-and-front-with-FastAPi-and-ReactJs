@@ -2,7 +2,7 @@
 from fastapi import APIRouter,Depends,Form
 from schemas.email import ResetPasswordRequest
 from schemas.users import UserID, pwd_context
-from services.userscrud import get_user_by_name,delete_users_by_id, activate_user, GetUserID,GetUsers, update_user_password
+from services.userscrud import get_user_by_name,delete_users_by_id, activate_user, activate_user_preferencial,GetUserID,GetUsers, update_user_password
 from sqlalchemy.orm import session
 from fastapi.exceptions import HTTPException
 from typing import List
@@ -28,7 +28,7 @@ def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],db: session
         raise HTTPException(status_code=400, detail="Incorrect username or password")
     if not user.is_active:
         raise HTTPException(status_code = 400, detail= "User is not active")
-    token = encode_token({"id": user.id,"username" : user.username, "email" : user.email, "role": user.role}) 
+    token = encode_token({"id": user.id,"username" : user.username, "email" : user.email, "role": user.role, "preferencial_client": user.preferencial_client}) 
     return {"access_token" : token, "role": user.role} 
 
 """obtener toda la informacion de los usuarios"""
@@ -63,6 +63,15 @@ def active_user(user_id :int,token: str = Depends(oauth2_scheme), db : session =
     user = activate_user(db, user_id)
     return {"detail": "User activated successfully", "user": user}
 
+@auth_routes.patch("/user/preferencial/{user_id}")
+def active_user_preferencial(user_id :int,token: str = Depends(oauth2_scheme), db : session = Depends(GetDB)):
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+    if user.role != "admin":
+        raise HTTPException(status_code=403, detail="Not authorized to update users")
+    user = activate_user_preferencial(db, user_id)
+    return {"detail": "User Preferencial activated", "user": user}
+    
 
 @auth_routes.post("/logout")
 def logout(token: Annotated[str, Depends(oauth2_scheme)]):

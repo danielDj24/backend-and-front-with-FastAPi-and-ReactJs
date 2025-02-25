@@ -70,6 +70,12 @@ const activateUser = async (token, userId) => {
     return response.data;
 };
 
+const activateUserPreferencial = async (token, userId) => {
+    const axiosAuth = axiosInstanceAuth(token);
+    const response = await axiosAuth.patch(`/user/preferencial/${userId}`);
+    return response.data;
+};
+
 
 const deleteUser = async (token, userId) => {
     const axiosAuth = axiosInstanceAuth(token);
@@ -77,5 +83,5 @@ const deleteUser = async (token, userId) => {
     return response.data;
 };
 
-export  { axiosInstance, resourcesInstance, axiosInstanceLogin, axiosInstanceAuth, axiosInstanceFiles, activateUser, deleteUser, axiosInstanceFilesRegister, sendResetPasswordEmail, axiosResetPassword };
+export  { axiosInstance, resourcesInstance, axiosInstanceLogin, axiosInstanceAuth, axiosInstanceFiles, activateUser, deleteUser, axiosInstanceFilesRegister, sendResetPasswordEmail, axiosResetPassword,activateUserPreferencial };
 

@@ -16,5 +16,6 @@ class User(Base):
     rut_company = Column(Text)
     is_active = Column(Boolean, default=True)
     role = Column(String(50))
+    preferencial_client = Column(Boolean, default=False)
 
 

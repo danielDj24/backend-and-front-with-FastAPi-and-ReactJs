@@ -11,6 +11,9 @@ from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
 
 """ORM"""
+
+from models.orders import Order, OrderItem  
+from schemas.orders import OrderDataResponse
 from models.products import Product
 from models.cart import Cart,CartItem
 from schemas.cart import CarItemCreate, CartItemDataResponse, CartItemBase, CartCreate, CartDataResponse, CartBase
@@ -176,34 +179,76 @@ def delete_item_from_cart(item_id: int, current_user: int, db: session = Depends
     if not item:
         raise HTTPException(status_code=404, detail="Item not found in the cart")
 
-    # Recuperar el producto correspondiente
     product = db.query(Product).filter(Product.id == item.product_id).first()
 
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
 
-    # Restar la cantidad reservada por el usuario al reserved_quantity del producto
-    product.reserved_quantity -= item.quantity  # Aquí se resta la cantidad del item que se está eliminando
-
-    # Verificar que reserved_quantity no sea menor que 0
+    product.reserved_quantity -= item.quantity  
     if product.reserved_quantity < 0:
-        product.reserved_quantity = 0  # Asegúrate de que no se vuelva negativo
+        product.reserved_quantity = 0  
 
+    product.quantity += item.quantity  
 
-    # Sumar la cantidad del item eliminado al quantity del producto
-    product.quantity += item.quantity  # Aquí se suma la cantidad que se está eliminando
-
-    # Actualizar el producto en la base de datos
     db.add(product)
 
-    # Eliminar el item del carrito
     db.delete(item)
 
-    # Actualizar el valor total del carrito
     cart = db.query(Cart).filter(Cart.id == item.cart_id).first()
     cart.total_value = db.query(func.sum(CartItem.total_price)).filter(CartItem.cart_id == cart.id).scalar()
 
-    db.commit()  # Asegúrate de hacer commit para guardar todos los cambios
+    db.commit()  
     return {"detail": "Item deleted successfully"}
 
-
+"""ruta para manejar la orden"""
+@cart_routes.post("/cart/checkout/{current_user}", response_model=OrderDataResponse)
+def checkout_cart(current_user: int, db: session = Depends(GetDB), token: str = Depends(oauth2_scheme)):
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+    
+    if user.role not in ["admin", "client"]:
+        raise HTTPException(status_code=403, detail="Not authorized to checkout")
+    
+    # Obtener el carrito del usuario
+    cart = db.query(Cart).filter(Cart.user_id == current_user).first()
+    
+    if not cart or not cart.cart_items:
+        raise HTTPException(status_code=400, detail="Cart is empty")
+    
+    # Crear un nuevo pedido
+    new_order = Order(
+        user_id=current_user,
+        total_value=cart.total_value,
+        created_at=datetime.utcnow()
+    )
+    db.add(new_order)
+    db.commit()
+    db.refresh(new_order)
+    
+    # Mover los productos del carrito al pedido
+    for item in cart.cart_items:
+        order_item = OrderItem(
+            order_id=new_order.id,
+            product_id=item.product_id,
+            quantity=item.quantity,
+            total_price=item.total_price
+        )
+        db.add(order_item)
+        
+        # Reducir el stock real del producto
+        product = db.query(Product).filter(Product.id == item.product_id).first()
+        if product:
+            product.reserved_quantity -= item.quantity  # Liberar la reserva
+            product.quantity -= item.quantity  # Reducir el stock
+            db.add(product)
+    
+    # Vaciar el carrito
+    db.query(CartItem).filter(CartItem.cart_id == cart.id).delete()
+    cart.total_value = 0.0
+    db.add(cart)
+    
+    # Confirmar todos los cambios
+    db.commit()
+    db.refresh(new_order)
+    
+    return new_order
