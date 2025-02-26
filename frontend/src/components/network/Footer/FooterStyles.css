@@ -1,6 +1,6 @@
 :root {
     --primary-color:#DDDDDD 0% 0% no-repeat padding-box;
-    --secondary-color: #white; 
+    --secondary-color: #blue; 
     
     }
     .footer-container {
@@ -9,7 +9,7 @@
         align-items: center;
         padding: 5px;
         background-color: var(--secondary-color);
-        color: var(--primary-color);
+        
         
     }
     

@@ -25,7 +25,6 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
     const [hamburgerOpen, setHamburgerOpen] = useState(false); 
 
     useEffect(() => {
-        fetchBrands();
         axiosInstance.get('/config')
             .then(response => {
                 const data = response.data;
@@ -39,19 +38,6 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
             });
     }, []);
 
-    const fetchBrands = async () => {
-        if (token) {
-            const axiosAuth = axiosInstanceAuth(token);
-            try {
-                const response = await axiosAuth.get("/uploaded/brands");
-                setBrands(response.data);
-            } catch (error) {
-                console.error(error.response ? error.response.data.detail : "Error fetching brands");
-            } finally {
-                setLoading(false);
-            }
-        }
-    };
 
     const handleLogoClick = () => {
         if (storedToken) {
@@ -106,7 +92,7 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
                     <i className={`fa-solid ${hamburgerOpen ? 'fa-times' : 'fa-bars'}`}></i>
                 </div>
 
-                <div className={`menu-items ${hamburgerOpen ? 'open' : ''}`} style={{ backgroundColor: primaryColor }}>
+                <div className={`menu-items ${hamburgerOpen ? 'open' : ''}`} style={{ backgroundColor: secondaryColor }}>
                     {(roleFromToken === 'admin' || roleFromToken === 'client') && isECommerce ? (
                         <>
                             <div className="menu-item" onClick={toggleSubmenu}>

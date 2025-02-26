@@ -215,40 +215,47 @@ def checkout_cart(current_user: int, db: session = Depends(GetDB), token: str = 
     if not cart or not cart.cart_items:
         raise HTTPException(status_code=400, detail="Cart is empty")
     
-    # Crear un nuevo pedido
-    new_order = Order(
-        user_id=current_user,
-        total_value=cart.total_value,
-        created_at=datetime.utcnow()
-    )
-    db.add(new_order)
-    db.commit()
-    db.refresh(new_order)
-    
-    # Mover los productos del carrito al pedido
-    for item in cart.cart_items:
-        order_item = OrderItem(
-            order_id=new_order.id,
-            product_id=item.product_id,
-            quantity=item.quantity,
-            total_price=item.total_price
+    try:
+        # Crear un nuevo pedido
+        new_order = Order(
+            user_id=current_user,
+            total_value=cart.total_value,
+            created_at=datetime.utcnow()
         )
-        db.add(order_item)
-        
-        # Reducir el stock real del producto
-        product = db.query(Product).filter(Product.id == item.product_id).first()
-        if product:
-            product.reserved_quantity -= item.quantity  # Liberar la reserva
-            product.quantity -= item.quantity  # Reducir el stock
-            db.add(product)
-    
-    # Vaciar el carrito
-    db.query(CartItem).filter(CartItem.cart_id == cart.id).delete()
-    cart.total_value = 0.0
-    db.add(cart)
-    
-    # Confirmar todos los cambios
-    db.commit()
-    db.refresh(new_order)
-    
-    return new_order
+        db.add(new_order)
+        db.commit()
+        db.refresh(new_order)
+
+        # Mover los productos del carrito al pedido
+        for item in cart.cart_items:
+            order_item = OrderItem(
+                order_id=new_order.id,
+                product_id=item.product_id,
+                quantity=item.quantity,
+                total_price=item.total_price
+            )
+            db.add(order_item)
+
+            # Reducir el stock real del producto
+            product = db.query(Product).filter(Product.id == item.product_id).first()
+            if product:
+                product.reserved_quantity -= item.quantity  # Liberar la reserva
+                product.quantity -= item.quantity  # Reducir el stock
+                db.add(product)
+
+        # Vaciar y eliminar el carrito actual
+        db.query(CartItem).filter(CartItem.cart_id == cart.id).delete()
+        db.delete(cart)
+        db.commit()
+
+        # Crear un nuevo carrito vacío con un nuevo ID
+        new_cart = Cart(user_id=current_user, created_at=datetime.utcnow(), total_value=0.0)
+        db.add(new_cart)
+        db.commit()
+        db.refresh(new_cart)
+
+        return new_order
+
+    except Exception as e:
+        db.rollback()  # Revertir cambios en caso de error
+        raise HTTPException(status_code=500, detail=f"Failed to complete checkout: {str(e)}")

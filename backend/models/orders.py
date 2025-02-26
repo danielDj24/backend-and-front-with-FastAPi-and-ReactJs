@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, ForeignKey, Float, DateTime
+from sqlalchemy import Column, Integer, ForeignKey, Float, DateTime,String
 from sqlalchemy.orm import relationship
 from config.database import Base
 
@@ -8,8 +8,11 @@ class Order(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    order_id = Column(String, nullable=False, unique=True)
     total_value = Column(Float, nullable=False, default=0.0)
+    state_order = Column(String, nullable=False, default="En proceso")
     created_at = Column(DateTime, default=datetime.utcnow)
+
 
     order_items = relationship("OrderItem", back_populates="order")
 
