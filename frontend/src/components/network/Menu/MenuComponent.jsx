@@ -5,7 +5,7 @@ import useAuthStore from "../../store/userAuthToken";
 import { useNavigate } from "react-router-dom";
 import getUserIdFromToken from "../../functions/UserByToken";
 import { useTranslation } from "react-i18next";
-
+import userSvg from "../../../assets/resources-ecommerce/user.svg";
 // estilos
 import "./menuStyles.css";
 
@@ -25,6 +25,7 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
     const [hamburgerOpen, setHamburgerOpen] = useState(false); 
 
     useEffect(() => {
+        fetchBrands();
         axiosInstance.get('/config')
             .then(response => {
                 const data = response.data;
@@ -38,6 +39,19 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
             });
     }, []);
 
+    const fetchBrands = async () => {
+        if (token) {
+            const axiosAuth = axiosInstanceAuth(token);
+            try {
+                const response = await axiosAuth.get("/uploaded/brands");
+                setBrands(response.data);
+            } catch (error) {
+                console.error(error.response ? error.response.data.detail : "Error fetching brands");
+            } finally {
+                setLoading(false);
+            }
+        }
+    };
 
     const handleLogoClick = () => {
         if (storedToken) {
@@ -77,6 +91,11 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
         i18n.changeLanguage(newLanguage);
     };
 
+    const handleUserIconClick = () => {
+        const userId = getUserIdFromToken(token);
+        navigate(`/e-commerce/account/${userId}`);  // Navegar a la ruta de Account pasando el userId
+    };
+    
     return (
         <div className="Menu">
             <div className="menu-container" style={{ backgroundColor: primaryColor }}>
@@ -121,7 +140,7 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
                                     ))}
                                 </div>
                             )}
-
+                        
                             <a href="/e-commerce/products/search" className="menu-item">{t("buscador")}</a>
                             <a href="/e-commerce/contactanos" className="menu-item">{t("contactanos")}</a>
                             <div className="language-toggle">
@@ -130,7 +149,10 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
                                     <option value="en">Inglés</option>
                                 </select>
                             </div>
+                            
                             <div className="current-buttons-control">
+                                
+
                                 <button className="btn btn-dark" onClick={handleLogout}>
                                     {t("cerrar_sesion")}
                                 </button>
@@ -138,6 +160,7 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
                                 <button className="btn btn-dark" onClick={handleCartClick}>
                                     {t("carrito")}
                                 </button>
+                                
                             </div>
                             {roleFromToken === 'admin' && (
                                 <div className="admin-container">
@@ -145,7 +168,15 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
                                         {t("configuraciones_web")}
                                     </button>
                                 </div>
+                                
                             )}
+                            <img
+                                src={userSvg}
+                                alt="Usuario"
+                                className="user-icon"
+                                onClick={handleUserIconClick} 
+                            />
+
                         </>
                     ) : (
                         <>
@@ -169,6 +200,7 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
                                     </button>
                                 )}
                             </div>
+                            
                         </>
                     )}
                 </div>

@@ -71,7 +71,7 @@ const FooterComponent = ({handleOpenLoginModal, userRole, handleLogout}) => {
     };
     
     return (
-        <footer className="footer-container" style={{ backgroundColor: secondaryColor }}>
+        <footer className="footer-container" style={{ backgroundColor: primaryColor}}>
             <div className="footer-content">
                 <div className="footer-logo-container">
                     <img src={`${resourcesInstance.defaults.baseURL}${logo}`} alt="Logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }} />

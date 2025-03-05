@@ -38,6 +38,7 @@ import ProductsByType from "../components/e-commerce/productsType/productsCompon
 import ProductsByDiscounts from "../components/e-commerce/productsDiscounts/productsDiscounts";
 import ProductsByBrand from "../components/e-commerce/productsBrands/productsBrands";
 import CartShop from "../pages/Cart/Cart";
+import Account from "../pages/Account/Account";
 //proteccion de rutas 
 import ProtectedRoute from "../components/store/ProtectedRoute";
 import UpdateTitleAndFavIcon from "../components/functions/updateTitlendFavIcon";
@@ -144,7 +145,11 @@ const AppRoutes = () => {
                     path="/e-commerce/products/price"
                     element={<ProtectedRoute roles={['admin', 'client']} element={ProductsByPrice} />}
                 />
-                
+                <Route 
+                    path="/e-commerce/account/:userId"
+                    element={<ProtectedRoute roles={['admin', 'client']} element={Account} />}
+                />
+
             </Routes>
         </BrowserRouter>
     );

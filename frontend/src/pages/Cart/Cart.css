@@ -112,3 +112,51 @@ html, body {
         width: 100%; /* Botones de ancho completo en pantallas pequeñas */
     }
 }
+
+
+/* Estilos para el mensaje cuando el carrito está vacío */
+.cart-empty-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px; /* Espacio desde el top */
+}
+
+.cart-empty-message h2 {
+    font-size: 2rem;  /* Tamaño grande para el encabezado */
+    color: #333;  /* Color oscuro para el texto */
+    margin-top: 20px;
+}
+
+.cart-empty-message p {
+    font-size: 1.2rem; /* Tamaño adecuado para el mensaje */
+    color: #666;  /* Color gris claro para el mensaje */
+    margin-top: 10px;
+    max-width: 400px;  /* Limita el ancho para que no se expanda demasiado */
+    line-height: 1.5;
+}
+
+/* Estilos para la imagen del carrito vacío */
+.empty-cart-image {
+    width: 400px;  /* Tamaño ajustado */
+    height: auto;
+    margin-top: 20px;
+}
+
+/* Estilos de la imagen en pantallas más pequeñas */
+@media (max-width: 768px) {
+    .empty-cart-image {
+        width: 150px;  
+    }
+
+    .cart-empty-message h2 {
+        font-size: 1.5rem;  /* Tamaño más pequeño para el encabezado */
+    }
+
+    .cart-empty-message p {
+        font-size: 1rem;  /* Tamaño más pequeño para el mensaje */
+    }
+}
+

@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import useAuthStore from "../../components/store/userAuthToken";
 import { axiosInstanceAuth, resourcesInstance } from '../../components/functions/axiosConfig';
-import { useParams,useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import MenuComponent from "../../components/network/Menu/MenuComponent";
 import FooterComponent from "../../components/network/Footer/footerComponent";
 import Layout from "../../routes/LayoutControl/Layouts";
-import { ShowErrorAlter } from "../../components/functions/Alerts";
-import WompiPayment from "../../components/paymentWidget/paymentWidget";
+import { ShowErrorAlter, ShowSuccesAlert } from "../../components/functions/Alerts";
+import cartEmpty from "../../assets/resources-ecommerce/cart-empty.svg";
 import './Cart.css';
 import { v4 as uuidv4 } from 'uuid';
-
 
 const CartShop = () => {
     const [cart, setCart] = useState(null);
@@ -27,7 +26,6 @@ const CartShop = () => {
     const generatePaymentReference = () => `order-${uuidv4()}`;
     const [paymentReference, setPaymentReference] = useState(generatePaymentReference());
 
-
     useEffect(() => {
         checkToken();
     }, [checkToken]);
@@ -42,7 +40,7 @@ const CartShop = () => {
     }, [userId]);
 
     const handleLogout = async () => {
-        const token = useAuthStore.getState().token;  // Obtener el token almacenado en el frontend
+        const token = useAuthStore.getState().token;  
         try {
             // Consumir la ruta del backend para invalidar el token
             const response = await axiosInstanceAuth(token).post('/logout');
@@ -162,18 +160,77 @@ const CartShop = () => {
         setNewQuantity(inputValue);
     };
 
+    const handleCreateOrder = async () => {
+        if (!cart || cart.cart_items.length === 0) {
+            alert("Carrito vacío");
+            return;
+        }
+    
+        const orderData = {
+            user_id: Number(userId), 
+            order_id: generatePaymentReference(),
+            state_order: "En proceso",  
+            total_value: cart.total_value,  
+            order_items: cart.cart_items.map(item => ({
+                product_id: item.product.id,
+                product_name: item.product.name_product, 
+                product_color: item.product.color,
+                product_brand: item.product.brand.name,
+                product_picture: item.product.side_picture,
+                quantity: item.quantity,        
+                total_price: item.total_price  
+            })),
+        };
+
+        console.log("Enviando orden:", JSON.stringify(orderData, null, 2));
+        
+        try {
+            const axiosAuth = axiosInstanceAuth(token);
+            const response = await axiosAuth.post('/create/order', orderData);
+    
+            if (response.status === 201 || response.status === 200) {
+                ShowSuccesAlert("Orden creada con éxito");
+            } else {
+                ShowErrorAlter("Error al crear la orden");
+            }
+        } catch (error) {
+            console.error("Error al crear la orden:", error.response?.data || error.message);
+            ShowErrorAlter("Error al crear la orden");
+        }
+    };
+    
+    
     if (loading) {
-        return <div>Loading...</div>; // O cualquier indicador de carga que estés utilizando
+        return <div>Loading...</div>; 
     }
 
-    if (!cart || cart.length === 0) {
+    // Si el carrito está vacío
+    if (!cart || cart.cart_items.length === 0) {
         return (
-            <div>
-                <div><h1>404 No encontrado</h1></div>
-                <div><h1>Carrito no encontrado</h1></div>
+            <div className="cart-empty">
+                <MenuComponent
+                    handleOpenLoginModal={handleOpenLoginModal}
+                    userRole={userRole}
+                    handleLogout={() => useAuthStore.getState().clearToken()}
+                    isECommerce={true}
+                />
+
+                <div className="cart-empty-message">
+                    <img src={cartEmpty} alt="Carrito vacío" className="empty-cart-image" />
+                    <h2>Tu carrito está vacío</h2>
+                    <p>¡Añade productos a tu carrito para continuar con la compra!</p>
+                </div>
+
+                <FooterComponent
+                    handleOpenLoginModal={handleOpenLoginModal}
+                    userRole={userRole}
+                    handleLogout={handleLogout}
+                />
             </div>
         );
-    }    return (
+    }
+
+    return (
         <div className="cart-items-page">
             <MenuComponent
                 handleOpenLoginModal={handleOpenLoginModal}
@@ -183,7 +240,7 @@ const CartShop = () => {
             />
 
             <div className="background-container-cart">
-            <Layout/>
+                <Layout />
                 <div className="product-list-cart">
                     <div className="cart-items">
                         {cart.cart_items.map(item => (
@@ -231,8 +288,9 @@ const CartShop = () => {
                     <div className="cart-summary">
                         <h3>Total de Productos: {calculateTotalQuantity()}</h3>
                         <h3>Valor Total del Carrito: ${formatPrice(cart.total_value)}</h3>
-                        <WompiPayment amount={cart.total_value * 100} reference={paymentReference} />
                     </div>
+
+                    <button onClick={handleCreateOrder} className="btn btn-primary">Crear Orden</button>
                 </div>
             </div>
 

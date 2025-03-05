@@ -60,5 +60,6 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "i18next-scanner": "^4.5.0"
-  }
+  },
+  "proxy": "https://api-sandbox.wompi.co"
 }

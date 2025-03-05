@@ -212,6 +212,16 @@
     }
 }
 
+.user-icon {
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    margin-right: 10px;
+    width: 50px;
+    padding: 10px;
+    height: 50px;
+    margin-top: 5px;
+    cursor: pointer;
+}
 
 
 

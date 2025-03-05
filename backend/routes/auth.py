@@ -1,7 +1,7 @@
 
 from fastapi import APIRouter,Depends,Form
 from schemas.email import ResetPasswordRequest
-from schemas.users import UserID, pwd_context
+from schemas.users import UserID, pwd_context, UserData
 from services.userscrud import get_user_by_name,delete_users_by_id, activate_user, activate_user_preferencial,GetUserID,GetUsers, update_user_password
 from sqlalchemy.orm import session
 from fastapi.exceptions import HTTPException
@@ -13,6 +13,7 @@ from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from utils.functions_jwt import encode_token, decode_token, blacklist, encode_reset_password_token,decode_reset_password_token
 from utils.functions_send_email import send_email
 from fastapi.responses import HTMLResponse
+from models.users import User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/token")
 
@@ -52,6 +53,25 @@ def delete_user(user_id: int, db: session = Depends(GetDB),token: str = Depends(
     delete_users_by_id(db, user_id)
     return {"detail": "User deleted successfully"}
     
+
+"""obtener los datos del usuario"""
+@auth_routes.get("/user/{user_id}", response_model=UserID)
+def get_user_by_id(user_id: int, db: session = Depends(GetDB), token: str = Depends(oauth2_scheme)):
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+
+    # Verificar que el usuario tenga permisos para ver la información
+    if user.role not in ["admin", "client"]:
+        raise HTTPException(status_code=403, detail="Not authorized to view user data")
+    
+    # Buscar el usuario por su ID
+    user_data = db.query(User).filter(User.id == user_id).first()
+
+    if not user_data:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    return user_data
+
 
 """activar usuarios"""
 @auth_routes.patch("/user/active/{user_id}")

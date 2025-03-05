@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #595959;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 40px;
+      }
+    </style>
+  </defs>
+  <g id="user-svgrepo-com">
+    <path id="Path_4" data-name="Path 4" class="cls-1" d="M344.22,132.23c0,52.04-42.19,94.23-94.23,94.23s-94.23-42.19-94.23-94.23c0-52.04,42.19-94.23,94.23-94.23,0,0,0,0,.01,0,52.04,0,94.21,42.19,94.21,94.23Z"/>
+    <path id="Path_5" data-name="Path 5" class="cls-1" d="M250.01,297.11c-91.07,0-164.89,73.82-164.89,164.89h329.77c0-91.06-73.82-164.89-164.88-164.89Z"/>
+  </g>
+</svg>
