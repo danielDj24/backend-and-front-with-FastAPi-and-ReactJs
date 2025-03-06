@@ -29,12 +29,12 @@ const ContactUs = () => {
 
     const [formData, setFormData] = useState({
         name: "",
-        lastName: "",
+        last_name: "", 
         company: "",
         email: "",
         message: "",
     });
-
+    
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -49,7 +49,7 @@ const ContactUs = () => {
             const response = await axiosInstance.post("/contact", formData);
             if (response.status === 200) {
                 ShowSuccesAlert("Mensaje enviado correctamente");
-                setFormData({ name: "",lastName:"", company: "", email: "", message: "" }); 
+                setFormData({ name: "",last_name:"", company: "", email: "", message: "" }); 
             }
         } catch (error) {
             ShowErrorAlter("Hubo un error al enviar el mensaje. Inténtalo de nuevo.");
@@ -177,8 +177,8 @@ const ContactUs = () => {
                                         <input 
                                             type="text" 
                                             placeholder="Apellido" 
-                                            name="lastName" 
-                                            value={formData.lastName} 
+                                            name="last_name" 
+                                            value={formData.last_name} 
                                             onChange={handleChange} 
                                             required 
                                         />

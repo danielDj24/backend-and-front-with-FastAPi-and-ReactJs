@@ -14,6 +14,9 @@ from utils.functions_jwt import encode_token, decode_token, blacklist, encode_re
 from utils.functions_send_email import send_email
 from models.users import User
 from schemas.email import ContactForm
+from dotenv import load_dotenv
+
+load_dotenv()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/token")
 
@@ -179,7 +182,7 @@ async def contact_form_submission(request: ContactForm):
     </html>
     """
     
-    recipient_email = os.getenv("ADMIN_EMAIL")  
+    recipient_email = os.getenv("FROM_EMAIL")  
 
     send_email(subject, body, recipient_email)
 
