@@ -1,7 +1,7 @@
-
+import os
 from fastapi import APIRouter,Depends,Form
 from schemas.email import ResetPasswordRequest
-from schemas.users import UserID, pwd_context, UserData
+from schemas.users import UserID, pwd_context
 from services.userscrud import get_user_by_name,delete_users_by_id, activate_user, activate_user_preferencial,GetUserID,GetUsers, update_user_password
 from sqlalchemy.orm import session
 from fastapi.exceptions import HTTPException
@@ -12,8 +12,8 @@ from typing import Annotated
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from utils.functions_jwt import encode_token, decode_token, blacklist, encode_reset_password_token,decode_reset_password_token
 from utils.functions_send_email import send_email
-from fastapi.responses import HTMLResponse
 from models.users import User
+from schemas.email import ContactForm
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/token")
 
@@ -161,3 +161,26 @@ async def post_reset_password(
 
     return {"message": "Contraseña restablecida correctamente"}
 
+
+@auth_routes.post("/contact")
+async def contact_form_submission(request: ContactForm):
+    subject = f"Nuevo Mensaje de Contacto de {request.name}"
+    body = f"""
+    <html>
+    <body>
+        <h2>Solicitud de mensaje</h2>
+        <p>Has recibido un nuevo mensaje de contacto:</p>
+        <p><strong>Compañia:</strong> {request.company}</p>
+        <p><strong>Nombre:</strong> {request.name}</p>
+        <P><strong>Apellido:</strong> {request.last_name}</p>
+        <p><strong>Email:</strong> {request.email}</p>
+        <p><strong>Mensaje:</strong> {request.message}</p>
+    </body>
+    </html>
+    """
+    
+    recipient_email = os.getenv("ADMIN_EMAIL")  
+
+    send_email(subject, body, recipient_email)
+
+    return {"message": "Formulario enviado correctamente"}

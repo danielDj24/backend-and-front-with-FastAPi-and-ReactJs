@@ -29,6 +29,7 @@ import Intranet from "../pages/HomeIntranet/HomeIntranet";
 import DetailProduct from "../pages/Detail/Detailproduct";
 import ProductsByPrice from "../pages/EconomicProducts/ProductsbyPrice";
 import ResetPassword from "../components/network/Reset-password/ResetPassword";
+import ContactUs from "../pages/ContactUs/ContactUs";
 
 //importacion paginas del e-commerce 
 import HomeEcomerce from "../pages/homeStore/homeStore";
@@ -157,6 +158,10 @@ const AppRoutes = () => {
                 <Route 
                     path="/e-commerce/payment/response"
                     element={<ProtectedRoute roles={['admin', 'client']} element={PaymentResponse} />}
+                />
+                <Route 
+                    path="/e-commerce/contact-us"
+                    element={<ProtectedRoute roles={['admin', 'client']} element={ContactUs} />}
                 />
             </Routes>
         </BrowserRouter>

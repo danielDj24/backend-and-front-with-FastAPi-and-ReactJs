@@ -142,7 +142,7 @@ const MenuComponent = ({ handleOpenLoginModal, userRole, handleLogout, isECommer
                             )}
                         
                             <a href="/e-commerce/products/search" className="menu-item">{t("buscador")}</a>
-                            <a href="/e-commerce/contactanos" className="menu-item">{t("contactanos")}</a>
+                            <a href="/e-commerce/contact-us" className="menu-item">{t("contactanos")}</a>
                             <div className="language-toggle">
                                 <select value={i18n.language} onChange={handleLanguageChange}>
                                     <option value="es">Español</option>
