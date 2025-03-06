@@ -25,11 +25,17 @@ const Account = () => {
     const [orderProducts, setOrderProducts] = useState(null);
     const [selectedOrderId, setSelectedOrderId] = useState(null); 
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [isPreferencialClient, setIsPreferencialClient] = useState(false);
 
 
-    const generatePaymentReference = () => `order-${uuidv4()}`;
-    const [paymentReference] = useState(generatePaymentReference());
+    const [paymentReference, setPaymentReference] = useState(null);
 
+    useEffect(() => {
+        if (selectedOrder) {
+            setPaymentReference(selectedOrder.order_id);
+        }
+    }, [selectedOrder]);
+    
     useEffect(() => {
         if (!token) {
             checkToken();
@@ -61,7 +67,7 @@ const Account = () => {
     useEffect(() => {
         useAuthStore.getState().checkToken();
         const storedToken = useAuthStore.getState().token;
-        setUserRole(storedToken ? 'admin' : null);
+        setUserRole(storedToken ? 'admin' : null ? 'client' : null);
     }, []);
 
     const fetchDataUsers = async (userId) => {
@@ -76,6 +82,10 @@ const Account = () => {
             const response = await axiosAuth.get(`/user/${userId}`);
             const userData = response.data;
             setUsers(Array.isArray(userData) ? userData : [userData]);
+    
+            // Almacena el preferencial_client en un estado separado
+            const user = Array.isArray(userData) ? userData[0] : userData;
+            setIsPreferencialClient(user.preferencial_client);
         } catch (err) {
             console.error("Error fetching users:", err);
             setError("Failed to fetch users. Please try again later.");
@@ -83,6 +93,7 @@ const Account = () => {
             setLoading(false);
         }
     };
+    
 
     const fetchOrders = async (userId) => {
         if (!token) {
@@ -111,7 +122,7 @@ const Account = () => {
             if (order && order.order_items && order.order_items.length > 0) {
                 setOrderProducts(order.order_items);
                 setSelectedOrderId(order.order_id);
-                setSelectedOrder(order); // Guardamos la orden completa
+                setSelectedOrder(order);
             } else {
                 ShowErrorAlter("No se encontraron productos para esta orden.");
             }
@@ -119,8 +130,6 @@ const Account = () => {
             ShowErrorAlter("Error al obtener los productos de la orden.");
         }
     };
-
-    
 
     const handleDeleteOrder = async (orderId) => {
         try {
@@ -134,6 +143,28 @@ const Account = () => {
             ShowErrorAlter("Error al eliminar la orden. Intente nuevamente.");
         }
     };
+
+    const handleConfirmOrderStatus = async (orderId) => {
+        try {
+            const response = await axiosInstanceAuth(token).put(`/order/update/${orderId}`, {
+                state_order: "Orden confirmada",
+            });
+    
+            if (response.status === 200) {
+                const updatedOrders = orders.map((order) =>
+                    order.id === orderId ? { ...order, state_order: "Orden confirmada" } : order
+                );
+                setOrders(updatedOrders);
+                ShowSuccesAlert("Orden confirmada exitosamente.");
+            } else {
+                ShowErrorAlter("Error al confirmar la orden.");
+            }
+        } catch (error) {
+            ShowErrorAlter("Error al actualizar el estado de la orden.");
+        }
+    };
+    
+
 
     if (loading) {
         return <div>Loading...</div>;
@@ -290,10 +321,21 @@ const Account = () => {
                                             </tbody>
                                         </table>
 
-                                        <WompiPayment 
-                                            amount={selectedOrder.total_value * 100} 
-                                            reference={paymentReference} 
+                                        {selectedOrder.state_order === "Orden creada" && (
+                                            <WompiPayment 
+                                                amount={selectedOrder.total_value * 100} 
+                                                reference={paymentReference} 
                                             />
+                                            
+                                        )}
+                                        {selectedOrder.state_order === "Orden creada" && isPreferencialClient && (
+                                            <button
+                                                className="btn-confirm-state"
+                                                onClick={() => handleConfirmOrderStatus(selectedOrder.order_id)}
+                                            >
+                                                Confirmar Orden como cliente preferencial
+                                            </button>
+                                        )}
                                     </div>
                                 )}
 

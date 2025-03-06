@@ -18,6 +18,7 @@ import UploadNotices from "../components/intranet/NoticesControl/NoticesControl"
 import CreateProduct from "../components/intranet/ProductsControl/ProductsControl";
 import CreateShape from "../components/intranet/ShapeControl/shapeControl";
 import CreateDiscount from "../components/intranet/DiscountsControl/discountControl";
+import OrdersControl from "../components/intranet/OrdersControl/OrdersControl";
 //importacion de las paginas principales del sitio
 
 import Home from "../pages/Home/Home";
@@ -39,6 +40,7 @@ import ProductsByDiscounts from "../components/e-commerce/productsDiscounts/prod
 import ProductsByBrand from "../components/e-commerce/productsBrands/productsBrands";
 import CartShop from "../pages/Cart/Cart";
 import Account from "../pages/Account/Account";
+import PaymentResponse from "../pages/pagesResponse/PagesResponse";
 //proteccion de rutas 
 import ProtectedRoute from "../components/store/ProtectedRoute";
 import UpdateTitleAndFavIcon from "../components/functions/updateTitlendFavIcon";
@@ -100,7 +102,10 @@ const AppRoutes = () => {
                     path="/intranet/config/upload/discounts"
                     element={<ProtectedRoute roles={['admin']} element={CreateDiscount} />}
                 />
-                
+                <Route
+                    path="/intranet/config/orders/state"
+                    element={<ProtectedRoute roles={['admin']} element={OrdersControl} />}
+                />
                 {/* rutas e-commerce */}
                 
                 <Route
@@ -149,7 +154,10 @@ const AppRoutes = () => {
                     path="/e-commerce/account/:userId"
                     element={<ProtectedRoute roles={['admin', 'client']} element={Account} />}
                 />
-
+                <Route 
+                    path="/e-commerce/payment/response"
+                    element={<ProtectedRoute roles={['admin', 'client']} element={PaymentResponse} />}
+                />
             </Routes>
         </BrowserRouter>
     );

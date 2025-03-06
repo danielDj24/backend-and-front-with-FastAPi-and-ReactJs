@@ -173,3 +173,25 @@ tr:nth-child(even) {
     color: #707070;
     opacity: 1;
 }
+
+
+.btn-confirm-state {
+    margin-top: 10px;
+    background-color: #007BFF; 
+    color: white; 
+    font-size: 16px; 
+    padding: 9px 15px; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-confirm-state:hover {
+    background-color: #0056b3; 
+}
+
+.btn-confirm-state:disabled {
+    background-color: #ccc; 
+    cursor: not-allowed; 
+}

@@ -169,7 +169,7 @@ const CartShop = () => {
         const orderData = {
             user_id: Number(userId), 
             order_id: generatePaymentReference(),
-            state_order: "En proceso",  
+            state_order: "Orden creada",  
             total_value: cart.total_value,  
             order_items: cart.cart_items.map(item => ({
                 product_id: item.product.id,

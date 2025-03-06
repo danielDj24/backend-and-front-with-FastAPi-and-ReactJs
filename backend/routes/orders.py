@@ -167,49 +167,34 @@ def get_order(order_id: int, db: session = Depends(GetDB), token: str = Depends(
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
 
-    return order  # Devuelve directamente el objeto SQLAlchemy
+    return order 
 
-from pydantic import BaseModel
-
-class OrderStatusUpdate(BaseModel):
-    state_order: str
-
-@order_router.put("/order/update/status/{order_id}")
-def update_order_status(
-    order_id: int,
-    status_data: OrderStatusUpdate, 
-    db: Session = Depends(GetDB),
-    token: str = Depends(oauth2_scheme)
-):
+@order_router.get("/order/{order_id}/item", response_model=OrderDataResponse)
+def get_order_by_order_id(order_id: str, db: Session = Depends(GetDB), token: str = Depends(oauth2_scheme)):
     decoded_token = decode_token(token)
     user = GetUserID(db, decoded_token["id"])
-
+    
     if user.role not in ["admin", "client"]:
-        raise HTTPException(status_code=403, detail="Not authorized to update order status")
+        raise HTTPException(status_code=403, detail="Not authorized to search orders")
 
-    # Buscar la orden
-    order = db.query(Order).filter(Order.id == order_id).first()
+    order = db.query(Order).filter(Order.order_id == order_id).first()
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
 
-    # Actualizar el estado de la orden
-    order.state_order = status_data.state_order
-    db.commit()
-    db.refresh(order)
-
-    return {"message": "Order status updated successfully", "order_id": order.id, "new_status": order.state_order}
+    return order 
 
 # Actualizar una orden
-@order_router.put("/order/update/status/{order_id}")
-def update_order_status(order_id: int, status_data: OrderStatusUpdate, db: Session = Depends(GetDB), token: str = Depends(oauth2_scheme)):
+@order_router.put("/order/update/{order_id}")
+def update_order_status(order_id: str, status_data: OrderStatusUpdate, db: Session = Depends(GetDB), token: str = Depends(oauth2_scheme)):  
+    print("Recibido status_data:", status_data)  # Agrega un log para depuración
     decoded_token = decode_token(token)
     user = GetUserID(db, decoded_token["id"])
 
     if user.role not in ["admin", "client"]:
         raise HTTPException(status_code=403, detail="Not authorized to update order status")
 
-    # Buscar la orden
-    order = db.query(Order).filter(Order.id == order_id).first()
+    # Buscar la orden usando el order_id
+    order = db.query(Order).filter(Order.order_id == order_id).first()
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
 
@@ -218,7 +203,7 @@ def update_order_status(order_id: int, status_data: OrderStatusUpdate, db: Sessi
     db.commit()
     db.refresh(order)
 
-    return {"message": "Order status updated successfully", "order_id": order.id, "new_status": order.state_order}
+    return {"message": "Order status updated successfully", "order_id": order.order_id, "new_status": order.state_order}
 
 # Eliminar una orden
 @order_router.delete("/order/delete/{order_id}")
@@ -236,3 +221,20 @@ def delete_order(order_id: int,db : session=Depends(GetDB), token : str = Depend
     db.commit()
     return {"message": "Order deleted successfully"}
 
+
+@order_router.get("/orders/confirmed", response_model=Page[OrderDataResponse])
+def get_confirmed_orders(db: Session = Depends(GetDB), token: str = Depends(oauth2_scheme)):
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+    
+    if user.role not in ["admin"]:
+        raise HTTPException(status_code=403, detail="Not authorized to view orders")
+
+    # Filtrar órdenes con el estado "Orden confirmada"
+    confirmed_orders = db.query(Order).filter(Order.state_order == "Orden confirmada").all()
+
+    if not confirmed_orders:
+        raise HTTPException(status_code=404, detail="No confirmed orders found")
+
+    # Retornar datos paginados
+    return paginate(confirmed_orders)
