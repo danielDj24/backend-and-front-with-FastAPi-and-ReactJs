@@ -33,7 +33,7 @@ def get_search_fields(db : session=Depends(GetDB), token : str = Depends(oauth2_
     shapes = db.query(Shape.id, Shape.name_shape).all()
     brands = db.query(Brand.id, Brand.name).all()
     frame_materials = db.query(Product.frame_material.distinct()).all()
-    colors = db.query(Product.color.distinct()).all()
+    colors = db.query(Product.name_color.distinct()).all()
     genders = db.query(Product.gender.distinct()).all()
     min_price = db.query(func.min(Product.price_product)).scalar()
     max_price = db.query(func.max(Product.price_product)).scalar()
@@ -82,8 +82,8 @@ def search_products(shape_id: Optional[int] = None, brand_id: Optional[int] = No
         query = query.filter(Product.frame_material.ilike(f"%{frame_material}%"))
     
     if color is not None:
-        query = query.filter(Product.color.ilike(f"%{color}%"))
-    
+        query = query.filter(Product.name_color.ilike(f"%{color}%"))
+
     if gender is not None:
         query = query.filter(Product.gender.ilike(f"%{gender}%"))
     
@@ -432,8 +432,6 @@ def create_product(product_data : ProductsCreateData, db : session = Depends(Get
         if not shape:
             raise HTTPException(status_code=400, detail="shape ID not found")
     
-    total_quantity = (product_data.quantity_col or 0) + (product_data.quantity_usa or 0)
-    
     product = Product(
         brand_id = product_data.brand_id,
         discount_id = product_data.discount_id,
@@ -441,12 +439,15 @@ def create_product(product_data : ProductsCreateData, db : session = Depends(Get
         name_product = product_data.name_product,
         frame_material = product_data.frame_material,
         color = product_data.color,
+        name_color = product_data.name_color,
         size = product_data.size,
         size_caliber = product_data.size_caliber,
+        size_tall = product_data.size_tall,
         size_vertical = product_data.size_vertical,
         size_arm = product_data.size_arm,
         gender = product_data.gender,
-        quantity = total_quantity,
+        quantity = product_data.quantity,
+        location = product_data.location,
         price_product = product_data.price_product,
         created_at = datetime.utcnow()
     )

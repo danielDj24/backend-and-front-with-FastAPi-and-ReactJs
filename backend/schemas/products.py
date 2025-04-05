@@ -36,14 +36,15 @@ class ProductsData(BaseModel):
     name_product :  Optional[str] = None
     frame_material : Optional[str] = None
     color :  Optional[str] = None
+    name_color : Optional[str] = None
     size : Optional[str] = None
     size_caliber : Optional[str] = None
     size_vertical : Optional[str] = None
+    size_tall : Optional[str] = None
     size_arm : Optional[str] = None 
     gender :  Optional[str] = None
-    quantity_col : Optional[int] = None
-    quantity_usa : Optional[int] = None
     quantity : Optional[int] = None
+    location :  Optional[str] = "Bodega"
     price_product :  Optional[int] = None
     created_at : datetime
 

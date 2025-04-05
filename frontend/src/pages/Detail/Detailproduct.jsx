@@ -73,7 +73,7 @@ const DetailProduct = () => {
             const axiosAuth = axiosInstanceAuth(token);
             try {
                 const response = await axiosAuth.get(`/products/existing/${productId}`);
-                setMainImage(`${resourcesInstance.defaults.baseURL}${response.data.center_picture}`); // Configurar la imagen principal
+                setMainImage(`${resourcesInstance.defaults.baseURL}${response.data.side_picture}`); // Configurar la imagen principal
 
                 setProduct(response.data);
                 fetchRelatedProducts();
@@ -194,7 +194,6 @@ const DetailProduct = () => {
             <div className="background-container-detail-shop">
             <Layout/>
                 <div className="detail-title-product">
-                <h1>Detalles del producto</h1>
                 </div>
                 <div key={product.id} className="product-item-detail mb-3">
                 
@@ -210,19 +209,17 @@ const DetailProduct = () => {
                         </div>
                         <div className="product-image-container-detail">
                             <img
-                                src={`${resourcesInstance.defaults.baseURL}${product.side_picture}`}
-                                alt={`Product ${product.id}`}
-                                className="side-imagen-detail"
-                                onClick={() => handleImageMainClick(`${resourcesInstance.defaults.baseURL}${product.side_picture}`)}
-                            />
-                            <img
                                 src={`${resourcesInstance.defaults.baseURL}${product.center_picture}`}
                                 alt={`Product ${product.id}`}
                                 className="side-imagen-detail"
                                 onClick={() => handleImageMainClick(`${resourcesInstance.defaults.baseURL}${product.center_picture}`)}
                             />
-                            
-                        
+                            <img
+                                src={`${resourcesInstance.defaults.baseURL}${product.side_picture}`}
+                                alt={`Product ${product.id}`}
+                                className="side-imagen-detail"
+                                onClick={() => handleImageMainClick(`${resourcesInstance.defaults.baseURL}${product.side_picture}`)}
+                            />
                         </div>
                         
                     </div>
@@ -272,42 +269,45 @@ const DetailProduct = () => {
                         
                     </div>
                     <div className="related-products">
-                            {relatedProducts.length > 0 && (
-                                <div style={{ marginBottom: '5px' }} className="related-products-section">
-                                    <h5>Colores disponibles:</h5>
-                                    <div className="related-products-list">
-                                        {relatedProducts.map(relatedProduct => (
-                                            <div key={relatedProduct.id} className="related-product-item" onClick={() => handleProductClick(relatedProduct.id)}>
-                                                <img src={`${resourcesInstance.defaults.baseURL}${relatedProduct.center_picture}`} alt={relatedProduct.color} className="related-product-image" />
-                                                <p>{relatedProduct.color}</p>
-                                            </div>
-                                        ))}
-                                    </div>
+                        {relatedProducts.length > 0 && (
+                            <div style={{ marginBottom: '5px' }} className="related-products-section">
+                                <h5>Colores disponibles:</h5>
+                                <div className="related-products-list">
+                                    {relatedProducts.map(relatedProduct => (
+                                        <div key={relatedProduct.id} className="related-product-item" onClick={() => handleProductClick(relatedProduct.id)}>
+                                            <img src={`${resourcesInstance.defaults.baseURL}${relatedProduct.center_picture}`} alt={relatedProduct.color} className="related-product-image" />
+                                            <p>{relatedProduct.color}</p>
+                                        </div>
+                                    ))}
                                 </div>
-                            )}
-                        </div>
+                            </div>
+                        )}
+                    </div>
                 
                     <div  className="info-product">
-                    <h5>Información del producto:</h5>
                     <div className="content-info-product">
-                        <p className="product-info">color: {product.color}</p>
-                        <p className="product-info">material: {product.frame_material}</p>
+                        <p className="product-info"> codigo de color: {product.color}</p>
+                        <p className="product-info">material del marco: {product.frame_material}</p>
                         <p className="product-info">publico destino: {product.gender ? product.gender : 'N/A'}</p>
-                        <p className="product-info">forma: {shapeName}</p>
-                        <p className="product-info">medida: {product.size}</p>
-                        <p className="product-info">Puente: {product.size_caliber}</p>
-                        <p className="product-info">vertical: {product.size_vertical}</p>
-                        <p className="product-info">brazo: {product.size_arm}</p>
+                        <p className="product-info">forma del marco: {shapeName}</p>
                     </div>
-                    
                 </div> 
+                <div className="detail-shape-product-container">
+                        
+                        <img  src={shapeImage} alt={shapeName}  className="shape-image" /> 
+                        <table className="horizontal-table-detail">
+                            <tbody>
+                                <tr>
+                                    <td>{product.size_vertical}</td>
+                                    <td>{product.size_caliber}</td>
+                                    <td>{product.size_arm}</td>
+                                    <td>{product.size_tall}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
             </div>
         </div>
-        
-        <div className="detail-shape-product">
-            <h2>Información sobre el tamaño</h2>
-            <img src={shapeImage} alt={shapeName} className="shape-image" /> 
-        </div> 
     </div>
             <FooterComponent 
                 handleOpenLoginModal={handleOpenLoginModal} 

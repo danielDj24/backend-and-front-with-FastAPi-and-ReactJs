@@ -10,14 +10,15 @@ const CreateProduct = () => {
     const [nameProduct, setNameProduct ] = useState('');
     const [frameMaterial, setFrameMaterial] = useState('');
     const [color, setColor] = useState('');
+    const [nameColor, setNameColor] = useState('');
     const [size, setSize] = useState('');
     const [sizeCaliber, setSizeCaliber] = useState('');
+    const [sizeTall, setSizeTall] = useState('');
     const [sizeVertical, setSizeVertical] = useState('');
     const [sizeArm, setSizeArm] = useState('');
     const [gender, setGender] = useState('');
-    const [quantityCol, setQuantityCol] = useState('');
-    const [quantityUsa, setQuantityUsa] = useState('');
     const [quantity, setQuantity] = useState('');
+    const [location, setLocation] = useState('');
     const [priceProduct, setPriceProduct] = useState('');
     const [brand, setBrand] = useState('');
     const [shape, setShape] = useState('');
@@ -130,20 +131,21 @@ const CreateProduct = () => {
                     name_product: nameProduct,
                     frame_material: frameMaterial,
                     color: color,
+                    name_color: nameColor,
                     size: size,
                     size_caliber: sizeCaliber,
                     size_vertical: sizeVertical,
+                    size_tall:sizeTall,
                     size_arm: sizeArm, 
                     gender: gender,
-                    quantity_col:quantityCol,
-                    quantity_usa : quantityUsa,
-                    quantity: 0,
+                    quantity: quantity, 
+                    location: location,
                     price_product: priceProduct,
                     created_at: new Date().toISOString(),
                     shape_id: shape,
                     brand_id: brand,
                     discount_id: discount
-                });
+                });                
                 const centerPictureId = response.data.id;
                 await handleUploadCenterImage(centerPictureId);
                 const sidePictureId = response.data.id;
@@ -294,7 +296,7 @@ const CreateProduct = () => {
             <h2 className = "titles-control">Crear Productos</h2>
             <form onSubmit={(e) => {e.preventDefault(); handleOpenModal();}}>
                 <div className="form-group">
-                    <label>Nombre del producto:</label>
+                    <label>Referencia del producto:</label>
                     <input type="text" value={nameProduct} onChange={(e) => setNameProduct(e.target.value)} className="form-control" />
                 </div>
                 <div className="form-group">
@@ -302,7 +304,11 @@ const CreateProduct = () => {
                     <input type="text" value={frameMaterial} onChange={(e) => setFrameMaterial(e.target.value)} className="form-control" />
                 </div>
                 <div className="form-group">
-                    <label>Color del Marco:</label>
+                    <label>Nombre del Color:</label>
+                    <input type="text" value={nameColor} onChange={(e) => setNameColor(e.target.value)} className="form-control" />
+                </div>
+                <div className="form-group">
+                    <label>Codigo de Color:</label>
                     <input type="text" value={color} onChange={(e) => setColor(e.target.value)} className="form-control" />
                 </div>
                 <div className="form-group">
@@ -310,15 +316,19 @@ const CreateProduct = () => {
                     <input type="text" value={size} onChange={(e) => setSize(e.target.value)}  className="form-control"/>
                 </div>
                 <div className="form-group">
-                    <label>Calibre del Marco:</label>
+                    <label>Ancho del Marco:</label>
                     <input type="text" value={sizeCaliber} onChange={(e) => setSizeCaliber(e.target.value)}  className="form-control"/>
                 </div>
                 <div className="form-group">
-                    <label>Medida Vertical del Marco:</label>
+                    <label>Puente del Marco:</label>
                     <input type="text" value={sizeVertical} onChange={(e) => setSizeVertical(e.target.value)}  className="form-control"/>
                 </div>
                 <div className="form-group">
-                    <label>Medida del brazo del Marco:</label>
+                    <label>Alto del Marco:</label>
+                    <input type="text" value={sizeTall} onChange={(e) => setSizeTall(e.target.value)}  className="form-control"/>
+                </div>
+                <div className="form-group">
+                    <label>Medida del brazo Marco:</label>
                     <input type="text" value={sizeArm} onChange={(e) => setSizeArm(e.target.value)}  className="form-control"/>
                 </div>
                 <div className="form-group">
@@ -333,12 +343,16 @@ const CreateProduct = () => {
                     </select>
                 </div>
                 <div className="form-group">
-                    <label>Cantidad en Colombia:</label>
-                    <input type="number" value={quantityCol} onChange={(e) => setQuantityCol(e.target.value)} className="form-control"/>
+                    <label>Cantidad </label>
+                    <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} className="form-control"/>
                 </div>
                 <div className="form-group">
-                    <label>Cantidad en Usa:</label>
-                    <input type="number" value={quantityUsa} onChange={(e) => setQuantityUsa(e.target.value)} className="form-control"/>
+                    <label>Ubicación del producto:</label>
+                    <select value={location} onChange={(e) => setLocation(e.target.value)} className="form-control">
+                        <option value="">Seleccionar Ubicación del producto</option>
+                        <option value="Bodega">Bodega</option>
+                        <option value="Para importar">Para importar</option>
+                    </select>
                 </div>
                 <div className="form-group">
                     <label>Precio:</label>
