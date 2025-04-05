@@ -344,18 +344,16 @@ const SearchPage = () => {
                     <div key={product.id} className="product-item-search mb-3" >
                         <div className="product-image-container-search">
                             <img
-                                src={`${resourcesInstance.defaults.baseURL}${product.center_picture}`}
-                                alt={`Product ${product.id}`}
-                                className="center-image"
-                                onClick={() => handleImageClick(product.id)}
-
-                            />
-                            <img
                                 src={`${resourcesInstance.defaults.baseURL}${product.side_picture}`}
                                 alt={`Product ${product.id}`}
                                 className="side-imagen"
                                 onClick={() => handleImageClick(product.id)}
-
+                            />
+                            <img
+                                src={`${resourcesInstance.defaults.baseURL}${product.center_picture}`}
+                                alt={`Product ${product.id}`}
+                                className="center-image"
+                                onClick={() => handleImageClick(product.id)}
                             />
                         </div>
                         <div className="product-details-search">

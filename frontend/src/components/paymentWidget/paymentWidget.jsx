@@ -42,30 +42,33 @@ const WompiPayment = ({ amount, reference }) => {
 
     useEffect(() => {
         if (!signature) return;
-
+    
+        const amountWithVAT = Math.round(amount * 1.19 );
+    
         const script = document.createElement("script");
         script.src = "https://checkout.wompi.co/widget.js";
         script.async = true;
         script.setAttribute("data-render", "button");
         script.setAttribute("data-public-key", process.env.REACT_APP_WOMPI_SANDBOX_PUBLIC_KEY);
         script.setAttribute("data-currency", "COP");
-        script.setAttribute("data-amount-in-cents", amount);
+        script.setAttribute("data-amount-in-cents", amountWithVAT);
         script.setAttribute("data-reference", reference);
-        script.setAttribute("data-signature:integrity", signature); // Corregido
-
+        script.setAttribute("data-signature:integrity", signature);
+    
         const form = document.getElementById("wompi-form");
         if (form) {
             form.appendChild(script);
         } else {
             console.error("Formulario 'wompi-form' no encontrado en el DOM.");
         }
-
+    
         return () => {
             if (form) {
                 form.removeChild(script);
             }
         };
-    }, [signature]); // Solo se ejecuta cuando la firma cambia
+    }, [signature]);
+    
 
     return (
         <form id="wompi-form">

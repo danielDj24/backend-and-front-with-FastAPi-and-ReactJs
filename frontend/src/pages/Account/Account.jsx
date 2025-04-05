@@ -104,8 +104,12 @@ const Account = () => {
         try {
             const axiosAuth = axiosInstanceAuth(token);
             const response = await axiosAuth.get(`/orders/user/${userId}`);
-            const orderData = response.data;
-            setOrders(Array.isArray(orderData) ? orderData : [orderData]);
+            let orderData = Array.isArray(response.data) ? response.data : [response.data];
+    
+            // 🧠 Ordenar por fecha descendente
+            orderData.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    
+            setOrders(orderData);
         } catch (err) {
             console.error("Error fetching orders:", err);
             setError("Failed to fetch orders. Please try again later.");
@@ -113,6 +117,7 @@ const Account = () => {
             setLoading(false);
         }
     };
+    
 
     const handleConfirmOrder = async (orderId) => {
         try {
@@ -255,15 +260,35 @@ const Account = () => {
                                                     <tr key={order.id}>
                                                         <td>{order.order_id}</td>
                                                         <td>{new Date(order.created_at).toLocaleDateString("es-ES", { day: "2-digit", month: "short", year: "numeric" })}</td>
-                                                        <td>{order.total_value.toFixed(2)}</td>
+                                                        <td>
+                                                        {isPreferencialClient ? "" : order.total_value.toFixed(2)}
+                                                        </td>
+
                                                         <td>{order.state_order}</td>
                                                         <td>
-                                                            <button onClick={() => handleConfirmOrder(order.id)} className="btn btn-confirm">
-                                                                Confirmar
+                                                            <button 
+                                                                onClick={() => handleConfirmOrder(order.id)} 
+                                                                className="btn btn-details"
+                                                            >
+                                                                Ver detalles
                                                             </button>
-                                                            <button onClick={() => handleDeleteOrder(order.id)} className="btn btn-delete">
-                                                                Eliminar
-                                                            </button>
+
+                                                            {order.state_order !== "Orden confirmada" && (
+                                                                <>
+                                                                    <button 
+                                                                        onClick={() => handleConfirmOrderStatus(order.order_id)} 
+                                                                        className="btn btn-confirm"
+                                                                    >
+                                                                        Confirmar
+                                                                    </button>
+                                                                    <button 
+                                                                        onClick={() => handleDeleteOrder(order.id)} 
+                                                                        className="btn btn-delete"
+                                                                    >
+                                                                        Eliminar
+                                                                    </button>
+                                                                </>
+                                                            )}
                                                         </td>
                                                     </tr>
                                                 ))}
@@ -292,7 +317,7 @@ const Account = () => {
                                                     <th>Referencia</th>
                                                     <th>Color</th>
                                                     <th>Cantidad</th>
-                                                    <th>Total $</th>
+                                                    {isPreferencialClient ? "" : <th>Total $</th> }
                                                     <th>Foto</th>
                                                 </tr>
                                             </thead>
@@ -303,7 +328,7 @@ const Account = () => {
                                                         <td>{item.product_name}</td>
                                                         <td>{item.product_color}</td>
                                                         <td>{item.quantity}</td>
-                                                        <td>{item.total_price.toFixed(2)}</td>
+                                                        {isPreferencialClient ? "" : <td>{item.total_price.toFixed(2)}</td> }
                                                         <td>
                                                             {item.product_picture ? (
                                                                 <img 
@@ -320,13 +345,13 @@ const Account = () => {
                                             </tbody>
                                         </table>
 
-                                        {selectedOrder.state_order === "Orden creada" && (
+                                        {selectedOrder.state_order === "Orden creada" && !isPreferencialClient && (
                                             <WompiPayment 
                                                 amount={selectedOrder.total_value * 100} 
                                                 reference={paymentReference} 
                                             />
-                                            
                                         )}
+
                                         {selectedOrder.state_order === "Orden creada" && isPreferencialClient && (
                                             <button
                                                 className="btn-confirm-state"

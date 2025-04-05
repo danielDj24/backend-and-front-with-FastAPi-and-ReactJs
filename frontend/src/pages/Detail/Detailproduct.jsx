@@ -210,17 +210,18 @@ const DetailProduct = () => {
                         </div>
                         <div className="product-image-container-detail">
                             <img
-                                src={`${resourcesInstance.defaults.baseURL}${product.center_picture}`}
-                                alt={`Product ${product.id}`}
-                                className="side-imagen-detail"
-                                onClick={() => handleImageMainClick(`${resourcesInstance.defaults.baseURL}${product.center_picture}`)}
-                            />
-                            <img
                                 src={`${resourcesInstance.defaults.baseURL}${product.side_picture}`}
                                 alt={`Product ${product.id}`}
                                 className="side-imagen-detail"
                                 onClick={() => handleImageMainClick(`${resourcesInstance.defaults.baseURL}${product.side_picture}`)}
                             />
+                            <img
+                                src={`${resourcesInstance.defaults.baseURL}${product.center_picture}`}
+                                alt={`Product ${product.id}`}
+                                className="side-imagen-detail"
+                                onClick={() => handleImageMainClick(`${resourcesInstance.defaults.baseURL}${product.center_picture}`)}
+                            />
+                            
                         
                         </div>
                         

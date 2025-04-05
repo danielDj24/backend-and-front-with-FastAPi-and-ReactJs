@@ -202,18 +202,16 @@ const ProductsByPrice = () => {
                     <div key={product.id} className="product-item-pgprice mb-3" >
                         <div className="product-image-container-pgprice">
                             <img
-                                src={`${resourcesInstance.defaults.baseURL}${product.center_picture}`}
-                                alt={`Product ${product.id}`}
-                                className="center-image"
-                                onClick={() => handleImageClick(product.id)}
-
-                            />
-                            <img
                                 src={`${resourcesInstance.defaults.baseURL}${product.side_picture}`}
                                 alt={`Product ${product.id}`}
                                 className="side-imagen"
                                 onClick={() => handleImageClick(product.id)}
-
+                            />
+                            <img
+                                src={`${resourcesInstance.defaults.baseURL}${product.center_picture}`}
+                                alt={`Product ${product.id}`}
+                                className="center-image"
+                                onClick={() => handleImageClick(product.id)}
                             />
                         </div>
                         <div className="product-details-pgprice">

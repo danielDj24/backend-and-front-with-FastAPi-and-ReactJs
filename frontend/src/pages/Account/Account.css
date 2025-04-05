@@ -166,6 +166,13 @@ tr:nth-child(even) {
     border: none;
 }
 
+
+.orders-table .btn-details {
+    background-color: #3740eb;
+    color: white;
+    border: none;
+}
+
 .order-products-container h3{
     text-align: center;
     font: normal normal medium 53px/70px Roboto;
