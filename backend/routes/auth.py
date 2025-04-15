@@ -1,6 +1,6 @@
 import os
 from fastapi import APIRouter,Depends,Form
-from schemas.email import ResetPasswordRequest
+from schemas.email import ResetPasswordRequest,ContactForm,EmailRequest,NotifyOrderRequest
 from schemas.users import UserID, pwd_context
 from services.userscrud import get_user_by_name,delete_users_by_id, activate_user, activate_user_preferencial,GetUserID,GetUsers, update_user_password
 from sqlalchemy.orm import session
@@ -15,6 +15,12 @@ from utils.functions_send_email import send_email
 from models.users import User
 from schemas.email import ContactForm
 from dotenv import load_dotenv
+from fastapi import UploadFile, File, Form
+from fastapi.responses import JSONResponse
+
+from sqlalchemy.orm import Session
+from fastapi import Depends
+from models.orders import Order, OrderItem
 
 load_dotenv()
 
@@ -187,3 +193,184 @@ async def contact_form_submission(request: ContactForm):
     send_email(subject, body, recipient_email)
 
     return {"message": "Formulario enviado correctamente"}
+
+@auth_routes.post("/send-confirmation")
+async def send_confirmation_email(request: EmailRequest, db: Session = Depends(GetDB)):
+    order_id = request.order_id
+    client_email = request.client_email
+    client_name = request.client_name
+
+    # Consultar la orden desde la base de datos
+    order = db.query(Order).filter(Order.order_id == order_id).first()
+
+    if not order:
+        return {"message": "Orden no encontrada"}
+
+    # Generar el cuerpo del correo
+    subject = "Confirmación de Orden"
+    
+    # Tabla con los detalles de los productos
+    order_items = db.query(OrderItem).filter(OrderItem.order_id == order.id).all()
+
+    table_rows = ""
+    for item in order_items:
+        table_rows += f"""
+        <tr>
+            <td style="padding: 8px; border-bottom: 1px solid #ddd;">{item.product_name}</td>
+            <td style="padding: 8px; border-bottom: 1px solid #ddd;">{item.quantity}</td>
+            <td style="padding: 8px; border-bottom: 1px solid #ddd;">{item.product_brand}</td>
+        </tr>
+        """
+
+    body = f"""
+    <html>
+    <body style="font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; background-color: #f4f4f4;">
+        <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <h2 style="color: #333;">¡Hola {client_name}!</h2>
+            <p style="color: #555;">Tu orden con ID <strong>{order_id}</strong> ha sido confirmada por nuestro equipo.</p>
+            <p style="color: #555;">Gracias por confiar en nosotros. A continuación, te mostramos los detalles de tu compra:</p>
+            
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                <thead>
+                    <tr style="background-color: #f4f4f4; border-bottom: 1px solid #ddd;">
+                        <th style="padding: 8px; text-align: left; color: #333;">Producto</th>
+                        <th style="padding: 8px; text-align: left; color: #333;">Cantidad</th>
+                        <th style="padding: 8px; text-align: left; color: #333;">Marca</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {table_rows}
+                </tbody>
+            </table>
+
+            <p style="color: #555; margin-top: 20px;">Si tienes alguna pregunta, no dudes en contactarnos.</p>
+            <p style="color: #555;">Gracias por tu compra,</p>
+            <p style="color: #555;">El equipo de soporte</p>
+
+            <hr style="margin: 20px 0; border: 1px solid #ddd;" />
+            <p style="color: #555; font-size: 12px; text-align: center;">Este es un correo automático, por favor no lo respondas. Todos los derechos reservados a Frames S.A.S.</p>
+        </div>
+    </body>
+    </html>
+    """
+
+    # Enviar el correo al cliente
+    send_email(subject, body, client_email)
+
+    return {"message": "Correo de confirmación enviado al cliente"}
+
+from pydantic import BaseModel
+
+class NotifyOrderRequest(BaseModel):
+    order_id: str
+    client_name: str
+    client_email: str
+
+@auth_routes.post("/notify-order")
+async def notify_internal_order(
+    data: NotifyOrderRequest,
+    db: Session = Depends(GetDB)
+):
+    try:
+        # Extraer los datos
+        order_id = data.order_id
+        client_name = data.client_name
+        client_email = data.client_email
+
+        # Obtener la orden con los productos asociados desde la base de datos
+        order = db.query(Order).filter(Order.order_id == order_id).first()
+        if not order:
+            return JSONResponse(status_code=404, content={"error": "Orden no encontrada"})
+
+        order_items = db.query(OrderItem).filter(OrderItem.order_id == order.id).all()
+        if not order_items:
+            return JSONResponse(status_code=404, content={"error": "No se encontraron productos para esta orden"})
+
+        # Crear el cuerpo del correo
+        body = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; background-color: #f4f4f4;">
+            <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                <h2 style="color: #333;">Nueva Orden Recibida</h2>
+                <p style="color: #555;">Se ha recibido una nueva orden con el ID: <strong>{order.order_id}</strong>.</p>
+                <p style="color: #555;">Realizada por: <strong>{client_name}</strong> ({client_email})</p>
+
+                <h3 style="color: #333;">Productos de la Orden</h3>
+                <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">Producto</th>
+                            <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">Cantidad</th>
+                            <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2; text-align: left;">Marca</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        """
+
+        for item in order_items:
+            body += f"""
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 8px;">{item.product_name}</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">{item.quantity}</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">{item.product_brand}</td>
+            </tr>
+            """
+
+        body += """
+                    </tbody>
+                </table>
+                <hr style="margin: 20px 0; border: 1px solid #ddd;" />
+            </div>
+        </body>
+        </html>
+        """
+
+        # Enviar el correo interno
+        internal_email = os.getenv("FROM_EMAIL")  # Asegúrate de tener esta variable en tu .env
+        send_email(subject=f"Nueva Orden Recibida - {order_id}", body=body, to_email=internal_email)
+
+        return {"message": "Notificación interna enviada"}
+
+    except Exception as e:
+        print(f"[ERROR] Error en endpoint /notify-order: {e}")
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
+
+@auth_routes.post("/send-document")
+async def send_document(
+    file: UploadFile = File(...),
+    email: str = Form(...),
+):
+    try:
+        file_bytes = await file.read()
+        filename = file.filename
+        print(f"[DEBUG] Archivo recibido: {filename}, tamaño: {len(file_bytes)} bytes")
+
+        subject = "Factura de compra"
+        body = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; background-color: #f4f4f4;">
+            <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                <h2 style="color: #333; text-align: center;">Factura de compra</h2>
+                <p style="color: #555; text-align: center;">Estimado/a cliente,</p>
+                <p style="color: #555;">Gracias por tu compra. Aquí está la factura de tus productos.</p>
+
+                <p style="color: #555; margin-top: 20px;">Si tienes alguna pregunta, no dudes en contactarnos.</p>
+                <p style="color: #555;">Gracias por tu compra,</p>
+                <p style="color: #555;">El equipo de soporte</p>
+
+                <hr style="margin: 20px 0; border: 1px solid #ddd;" />
+                <p style="color: #555; font-size: 12px; text-align: center;">Este es un correo automático, por favor no lo respondas. Todos los derechos reservados a Frames S.A.S.</p>
+            </div>
+        </body>
+        </html>
+        """
+        # Ahora se envía al correo del usuario
+        send_email(subject, body, email, attachments=[(filename, file_bytes)])
+
+        return JSONResponse(content={"message": "Documento enviado correctamente"})
+    except Exception as e:
+        print(f"[ERROR] Error en endpoint /send-document: {e}")
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
+

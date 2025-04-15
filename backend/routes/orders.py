@@ -238,3 +238,20 @@ def get_confirmed_orders(db: Session = Depends(GetDB), token: str = Depends(oaut
 
     # Retornar datos paginados
     return paginate(confirmed_orders)
+
+@order_router.get("/orders/send", response_model=Page[OrderDataResponse])
+def get_confirmed_orders(db: Session = Depends(GetDB), token: str = Depends(oauth2_scheme)):
+    decoded_token = decode_token(token)
+    user = GetUserID(db, decoded_token["id"])
+    
+    if user.role not in ["admin"]:
+        raise HTTPException(status_code=403, detail="Not authorized to view orders")
+
+    # Filtrar órdenes con el estado "Orden confirmada"
+    confirmed_orders = db.query(Order).filter(Order.state_order == "Orden enviada").all()
+
+    if not confirmed_orders:
+        raise HTTPException(status_code=404, detail="No confirmed orders found")
+
+    # Retornar datos paginados
+    return paginate(confirmed_orders)

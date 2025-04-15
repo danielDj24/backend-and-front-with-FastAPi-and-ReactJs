@@ -9,3 +9,13 @@ class ContactForm(BaseModel):
     last_name: str
     email: EmailStr
     message: str
+
+class EmailRequest(BaseModel):
+    order_id: str
+    client_email: str
+    client_name: str
+
+class NotifyOrderRequest(BaseModel):
+    order_id: str
+    client_name: str
+    client_email: str

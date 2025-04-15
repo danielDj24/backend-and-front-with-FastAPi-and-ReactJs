@@ -2,7 +2,7 @@ import jsPDF from "jspdf";
 
 const generatePdf = async (products) => {
     const doc = new jsPDF();
-    const baseUrl = "http://localhost:8000/"; // Reemplaza con el dominio correcto
+    const baseUrl = "https://www.framesgo.com/"; // Reemplaza con el dominio correcto
     const pageHeight = doc.internal.pageSize.height; // Altura de la página
     let yOffset = 10; // Posición inicial
 

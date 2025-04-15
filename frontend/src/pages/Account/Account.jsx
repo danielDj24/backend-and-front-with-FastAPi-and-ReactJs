@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { axiosInstanceAuth,resourcesInstance } from "../../components/functions/axiosConfig";
+import { axiosInstanceAuth,resourcesInstance,axiosInstance } from "../../components/functions/axiosConfig";
 import useAuthStore from "../../components/store/userAuthToken";
 import MenuComponent from "../../components/network/Menu/MenuComponent";
 import FooterComponent from "../../components/network/Footer/footerComponent";
@@ -135,6 +135,74 @@ const Account = () => {
         }
     };
 
+    const sendConfirmationEmail = async (orderId) => {
+        try {
+            console.log("userId:", userId);  // Verifica que userId es el correcto
+            console.log("users:", users);  // Verifica que users tiene datos
+            
+            // Verifica que users tiene datos antes de continuar
+            if (users.length === 0) {
+                console.error("No se ha cargado la información de los usuarios.");
+                return;
+            }
+    
+            // Encuentra el usuario con el id correcto
+            const user = users.find(user => user.id === parseInt(userId));  // Asegúrate de que userId es un número
+    
+            if (!user) {
+                console.error("Usuario no encontrado.");
+                return;
+            }
+    
+            const emailData = {
+                order_id: orderId,
+                client_email: user.email,
+                client_name: user.username,
+            };
+    
+            console.log("Datos enviados al servidor:", emailData);
+    
+            const response = await axiosInstance.post("/send-confirmation", emailData);
+    
+            console.log("Correo de confirmación enviado:", response.data);
+        } catch (err) {
+            console.error("Error al enviar el correo de confirmación:", err);
+        }
+    };
+    
+    const notifyInternalEmail = async (orderId) => {
+        try {
+            console.log("userId:", userId);
+            console.log("users:", users);
+    
+            if (users.length === 0) {
+                console.error("No se ha cargado la información de los usuarios.");
+                return;
+            }
+    
+            const user = users.find(user => user.id === parseInt(userId));
+    
+            if (!user) {
+                console.error("Usuario no encontrado.");
+                return;
+            }
+    
+            const emailData = {
+                order_id: orderId,
+                client_email: user.email,
+                client_name: user.username,
+            };
+    
+            console.log("Datos enviados al servidor (notificación interna):", emailData);
+    
+            const response = await axiosInstance.post("/notify-order", emailData);
+    
+            console.log("Notificación interna enviada:", response.data);
+        } catch (err) {
+            console.error("Error al enviar la notificación interna:", err);
+        }
+    };
+    
     const handleDeleteOrder = async (orderId) => {
         try {
             const response = await axiosInstanceAuth(token).delete(`/order/delete/${orderId}`);
@@ -155,21 +223,22 @@ const Account = () => {
             });
     
             if (response.status === 200) {
-                const updatedOrders = orders.map((order) =>
-                    order.id === orderId ? { ...order, state_order: "Orden confirmada" } : order
-                );
-                setOrders(updatedOrders);
+                // Llamar a fetchOrders nuevamente para actualizar la lista de órdenes
+                await fetchOrders(userId); // Asegúrate de pasar el userId correcto
+    
                 ShowSuccesAlert("Orden confirmada exitosamente.");
+    
+                // Enviar correos de confirmación
+                await sendConfirmationEmail(orderId);
+                await notifyInternalEmail(orderId);
             } else {
                 ShowErrorAlter("Error al confirmar la orden.");
             }
         } catch (error) {
             ShowErrorAlter("Error al actualizar el estado de la orden.");
         }
-    };
+    };    
     
-
-
     if (loading) {
         return <div>Loading...</div>;
     }

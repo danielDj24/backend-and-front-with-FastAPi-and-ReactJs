@@ -19,6 +19,7 @@ import CreateProduct from "../components/intranet/ProductsControl/ProductsContro
 import CreateShape from "../components/intranet/ShapeControl/shapeControl";
 import CreateDiscount from "../components/intranet/DiscountsControl/discountControl";
 import OrdersControl from "../components/intranet/OrdersControl/OrdersControl";
+import GeneratedQrCode from "../components/intranet/GeneratedQrCode/generatedQrcode";
 //importacion de las paginas principales del sitio
 
 import Home from "../pages/Home/Home";
@@ -74,6 +75,10 @@ const AppRoutes = () => {
                 <Route
                     path="/intranet/config/control/users"
                     element={<ProtectedRoute roles={['admin']} element={UsersList} />}
+                />
+                <Route
+                    path="/intranet/config/generated_qr"
+                    element={<ProtectedRoute roles={['admin']} element={GeneratedQrCode} />}
                 />
                 <Route
                     path="/intranet/config/upload/banners"

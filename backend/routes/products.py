@@ -3,11 +3,13 @@ from typing import Optional, List
 from datetime import datetime 
 
 from fastapi_pagination import Page, paginate
+from fastapi.responses import FileResponse
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from services.dbconnection import GetDB
 from sqlalchemy.orm import session
 from services.userscrud import GetUserID
 from utils.functions_jwt import decode_token
+from utils.generated_qr import generate_qr_code
 from routes.auth import oauth2_scheme
 from sqlalchemy import func
 
@@ -531,3 +533,11 @@ def delete_product(product_id: int, db: session = Depends(GetDB), token: str = D
     db.commit()
     
     return product
+
+@product_routes.get("/generated_qr/{product_id}")
+def generate_qr(product_id: int, product_name: str):
+    path = generate_qr_code(product_id, product_name)
+    if os.path.exists(path):
+        return FileResponse(path, media_type="image/png", filename=f"{product_id}_qr.png")
+    else:
+        return {"error": "QR code generation failed"}

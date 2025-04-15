@@ -167,29 +167,31 @@ const CartShop = () => {
         }
     
         const orderData = {
-            user_id: Number(userId), 
+            user_id: Number(userId),
             order_id: generatePaymentReference(),
-            state_order: "Orden creada",  
-            total_value: cart.total_value,  
+            state_order: "Orden creada",
+            total_value: cart.total_value,
             order_items: cart.cart_items.map(item => ({
                 product_id: item.product.id,
-                product_name: item.product.name_product, 
+                product_name: item.product.name_product,
                 product_color: item.product.color,
                 product_brand: item.product.brand.name,
                 product_picture: item.product.side_picture,
-                quantity: item.quantity,        
-                total_price: item.total_price  
+                quantity: item.quantity,
+                total_price: item.total_price
             })),
         };
-
+    
         console.log("Enviando orden:", JSON.stringify(orderData, null, 2));
-        
+    
         try {
             const axiosAuth = axiosInstanceAuth(token);
             const response = await axiosAuth.post('/create/order', orderData);
     
             if (response.status === 201 || response.status === 200) {
                 ShowSuccesAlert("Orden creada con éxito");
+                // Redirigir a la cuenta del usuario después de crear la orden
+                navigate(`/e-commerce/account/${userId}`);
             } else {
                 ShowErrorAlter("Error al crear la orden");
             }
@@ -198,8 +200,7 @@ const CartShop = () => {
             ShowErrorAlter("Error al crear la orden");
         }
     };
-    
-    
+        
     if (loading) {
         return <div>Loading...</div>; 
     }

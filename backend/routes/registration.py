@@ -11,7 +11,7 @@ registration_router = APIRouter()
 
 """ruta de registro con los datos iniciales"""
 
-@registration_router.post('/register/', response_model=UserID)
+@registration_router.post('/register', response_model=UserID)
 def create_user(user: UserData, db:session=Depends(GetDB)):
     try:
         user.hash_password()
